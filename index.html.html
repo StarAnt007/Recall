@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recall – Sistema Completo</title>
+<style>
+body { font-family: Arial, sans-serif; background-color: #121212; color: #fff; padding: 20px; text-align:center; }
+h1 { color:#ffcc00; }
+button { padding:10px 15px; margin:5px; cursor:pointer; border:none; border-radius:5px; background-color:#333; color:#fff; transition:.2s; }
+button:hover{background-color:#555;}
+.group-title { font-size:1.8em; margin-top:20px; color:#00ffff; }
+.character-list { margin:10px 0 30px 0; font-size:1.2em; color:#fff; }
+.character-name { cursor:pointer; margin:5px 0; font-weight:bold; }
+.info { display:none; margin-top:5px; background-color:#2a2a2a; padding:5px 10px; border-radius:5px; }
+.rarity-comum { color: gray; }
+.rarity-raro { color: #00f; }
+.rarity-epico { color: #800080; }
+.rarity-lendario { color: #FFD700; }
+.hidden { display:none; }
+.money-table { margin:20px auto; text-align:left; max-width:600px; }
+.money-table table { width:100%; border-collapse:collapse; }
+.money-table th, .money-table td { border:1px solid #555; padding:8px; }
+.money-table th { background-color:#333; }
+
+/* Tracker */
+#tracker table { width:100%; max-width:100%; margin:20px auto; border-collapse:collapse; color:#fff; background-color:#1a1a1a; }
+#tracker th, #tracker td { border:1px solid #555; padding:8px; text-align:center; }
+#tracker th { background-color:#333; }
+#tracker button { margin-top:10px; padding:10px 15px; border:none; border-radius:5px; background-color:#444; color:#fff; cursor:pointer; }
+#tracker button:hover { background-color:#666; }
+</style>
+</head>
+<body>
+<h1>Recall – Sistema Completo</h1>
+<div>
+<button onclick="showSection('type')">Por Tipo</button>
+<button onclick="showSection('rarity')">Por Raridade</button>
+<button onclick="showSection('shop')">Loja</button>
+<button onclick="showSection('money')">Como Ganhar Dinheiro</button>
+<button onclick="showSection('tracker')">Tracker de Jogadores</button>
+</div>
+
+<div id="type" class="section"></div>
+<div id="rarity" class="section hidden"></div>
+<div id="shop" class="section hidden"></div>
+<div id="money" class="section hidden"></div>
+<div id="tracker" class="section hidden"></div>
+
+<script>
+const characters=[
+{name:"Seraphina", type:"Sobrevivente", rarity:"comum", ability:"Revive 1 jogador eliminado (1x)", phrase:"“Rise again!” / “Levante-se de novo!”", price:0},
+{name:"Nyra", type:"Sobrevivente", rarity:"comum", ability:"Escapa de 1 captura (1x)", phrase:"“Too fast for you!” / “Rápida demais pra você!”", price:0},
+{name:"Gideon", type:"Sobrevivente", rarity:"raro", ability:"Protege alguém de 1 ataque (1x)", phrase:"“Stay behind me!” / “Fiquem atrás de mim!”", price:500},
+{name:"Aether", type:"Sobrevivente", rarity:"raro", ability:"Pergunta ao assassino o próximo alvo (1x)", phrase:"“Who’s your next target?” / “Qual é o seu próximo alvo?”", price:550},
+{name:"Elara", type:"Sobrevivente", rarity:"epico", ability:"Corre duas vezes seguidas sem ser pega (1x)", phrase:"“Double move!” / “Movimento duplo!”", price:900},
+{name:"Orion", type:"Sobrevivente", rarity:"epico", ability:"Diz 'Illusion!' → assassino persegue outro alvo por 10s (1x)", phrase:"“Can you catch a shadow of me?” / “Consegue pegar só minha sombra?”", price:950},
+{name:"Liora", type:"Sobrevivente", rarity:"lendario", ability:"Atrasa assassino por 8s (1x)", phrase:"“Now you forget me…” / “Agora você me esquece…”", price:1500},
+{name:"Marin", type:"Sobrevivente", rarity:"lendario", ability:"Ativa 'Time Snare': assassino não pode correr por 5s (1x)", phrase:"“Slow down, time obeys me!” / “Diminua, o tempo me obedece!”", price:1600},
+{name:"Umbra", type:"Assassino", rarity:"comum", ability:"Só ativa se tentar pegar alguém e falhar (1x)", phrase:"“Shadow strike!” / “Golpe das sombras!”", price:0},
+{name:"Darius", type:"Assassino", rarity:"raro", ability:"Marca sobrevivente, bloqueando habilidades 15s (1x)", phrase:"“Marked!” / “Marcado!”", price:500},
+{name:"Echo", type:"Assassino", rarity:"epico", ability:"Anula 1 poder usado contra ele (1x)", phrase:"“Echo!” / “Eco!”", price:950},
+{name:"Requiem", type:"Assassino", rarity:"lendario", ability:"Local de morte letal por 15s (1x)", phrase:"“Death remains... even after me.” / “A morte permanece... mesmo depois de mim.”", price:1600},
+];
+
+function createCharDiv(character, showPrice=false){
+const charDiv=document.createElement('div'); charDiv.className=`character-name rarity-${character.rarity}`;
+charDiv.textContent=showPrice?`${character.name} – ${character.price}E`:character.name;
+const infoDiv=document.createElement('div'); infoDiv.className="info"; infoDiv.innerHTML=`<strong>Habilidade:</strong> ${character.ability}<br><strong>Frase:</strong> ${character.phrase}`;
+charDiv.appendChild(infoDiv);
+charDiv.addEventListener("click",()=>{infoDiv.style.display=infoDiv.style.display==="block"?"none":"block";});
+return charDiv;
+}
+
+function showSection(sectionId){
+document.querySelectorAll('.section').forEach(s=>s.classList.add('hidden'));
+document.getElementById(sectionId).classList.remove('hidden');
+if(sectionId==='type') populateByType();
+if(sectionId==='rarity') populateByRarity();
+if(sectionId==='shop') populateShop();
+if(sectionId==='money') populateMoney();
+if(sectionId==='tracker') populateTracker();
+}
+
+function populateByType(){
+const display=document.getElementById('type'); display.innerHTML='';
+['Sobrevivente','Assassino'].forEach(tipo=>{
+const title=document.createElement('div'); title.className='group-title'; title.textContent=tipo.toUpperCase();
+display.appendChild(title);
+const list=document.createElement('div'); list.className='character-list';
+characters.filter(c=>c.type===tipo).forEach(c=>list.appendChild(createCharDiv(c)));
+display.appendChild(list);
+});
+}
+
+function populateByRarity(){
+const display=document.getElementById('rarity'); display.innerHTML='';
+['comum','raro','epico','lendario'].forEach(r=>{
+const title=document.createElement('div'); title.className='group-title'; title.textContent=r.toUpperCase();
+display.appendChild(title);
+const list=document.createElement('div'); list.className='character-list';
+characters.filter(c=>c.rarity===r).forEach(c=>list.appendChild(createCharDiv(c)));
+display.appendChild(list);
+});
+}
+
+function populateShop(){
+const display=document.getElementById('shop'); display.innerHTML="<div class='group-title'>LOJA</div>";
+['Sobrevivente','Assassino'].forEach(tipo=>{
+['comum','raro','epico','lendario'].forEach(r=>{
+const filtered=characters.filter(c=>c.type===tipo&&c.rarity===r);
+if(filtered.length>0){
+const title=document.createElement('div'); title.className='group-title'; title.textContent=`${tipo.toUpperCase()} – ${r.toUpperCase()}`;
+display.appendChild(title);
+const list=document.createElement('div'); list.className='character-list';
+filtered.forEach(c=>list.appendChild(createCharDiv(c,true)));
+display.appendChild(list);
+}
+});
+});
+}
+
+function populateMoney(){
+const display=document.getElementById('money');
+display.innerHTML=`
+<div class='group-title'>Como Ganhar Dinheiro</div>
+<div class="money-table">
+<table>
+<tr><th>💥 Ação</th><th>💸 Essence</th></tr>
+<tr><td>🧍 Sobrevive até o fim</td><td>+50E</td></tr>
+<tr><td>💖 Revive alguém</td><td>+25E</td></tr>
+<tr><td>✨ Usa habilidade com sucesso</td><td>+20E</td></tr>
+<tr><td>💀 Morre antes de 2min</td><td>+10E</td></tr>
+<tr><td>⏳ Morre depois de 2min</td><td>+30E</td></tr>
+<tr><td>🔪 Assassino elimina alguém</td><td>+20E</td></tr>
+<tr><td>🩸 Assassino vence partida</td><td>+100E</td></tr>
+<tr><td>⚖️ Respeita as regras</td><td>+5E</td></tr>
+<tr><td>🏆 Melhor da rodada</td><td>+25E</td></tr>
+</table>
+</div>`;
+}
+
+// Tracker
+const TRACKER_PASSWORD="BATATA";
+let players=JSON.parse(localStorage.getItem('players'))||[];
+
+function populateTracker(){
+const display=document.getElementById('tracker');
+display.innerHTML=`
+<div id="loginDiv">
+<p>Digite a senha para acessar o Tracker:</p>
+<input type="password" id="trackerPass" placeholder="Senha">
+<button onclick="checkPassword()">Entrar</button>
+</div>
+<div id="trackerContent" style="display:none;">
+<table id="playerTable">
+<thead>
+<tr>
+<th>Jogador</th>
+<th>Seraphina</th><th>Nyra</th><th>Gideon</th><th>Aether</th>
+<th>Elara</th><th>Orion</th><th>Liora</th><th>Marin</th>
+<th>Umbra</th><th>Darius</th><th>Echo</th><th>Requiem</th>
+</tr>
+</thead>
+<tbody id="playerBody"></tbody>
+</table>
+<button onclick="addPlayer()">Adicionar Jogador</button>
+</div>`;
+}
+
+function checkPassword(){
+const input=document.getElementById('trackerPass').value;
+if(input===TRACKER_PASSWORD){
+document.getElementById('loginDiv').style.display='none';
+document.getElementById('trackerContent').style.display='block';
+renderTable();
+}else{alert("Senha incorreta!");}
+}
+
+function renderTable(){
+const tbody=document.getElementById('playerBody'); tbody.innerHTML='';
+players.forEach((p,index)=>{
+const tr=document.createElement('tr');
+const tdName=document.createElement('td'); tdName.textContent=p.name; tr.appendChild(tdName);
+const chars=["Seraphina","Nyra","Gideon","Aether","Elara","Orion","Liora","Marin","Umbra","Darius","Echo","Requiem"];
+chars.forEach(char=>{
+const td=document.createElement('td'); const cb=document.createElement('input'); cb.type='checkbox'; cb.checked=p.characters[char]||false;
+cb.addEventListener('change',()=>{players[index].characters[char]=cb.checked; localStorage.setItem('players',JSON.stringify(players));});
+td.appendChild(cb); tr.appendChild(td);
+});
+tbody.appendChild(tr);
+});
+}
+
+function addPlayer(){
+const name=prompt("Digite o nome do jogador:"); if(!name) return;
+players.push({name:name, characters:{}});
+localStorage.setItem('players',JSON.stringify(players));
+renderTable();
+}
+
+// Inicializa seção Tipo
+showSection('type');
+</script>
+</body>
+</html>
