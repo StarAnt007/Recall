@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recall WI</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+    body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background-color:#121212; color:#fff; transition: all 0.3s;}
+    header { background: linear-gradient(90deg, #ff416c, #ff4b2b); text-align:center; padding:25px 10px; font-size:2em; font-weight:bold; letter-spacing:1px; }
+    nav { display:flex; justify-content:center; gap:10px; padding:15px; background-color:#1f1f1f; flex-wrap:wrap; }
+    button { padding:10px 20px; border:none; border-radius:8px; background-color:#333; color:#fff; cursor:pointer; transition:0.2s; font-weight:bold;}
+    button:hover { background-color:#555; }
+    section { display:none; padding:20px; max-width:900px; margin:auto; }
+    .active { display:block; }
+    .character { border-radius:10px; padding:15px; margin:10px 0; transition:0.2s; border:2px solid #555; }
+    .survivor { background-color:#222; border-color:#00bfff; }
+    .assassin { background-color:#2b0000; border-color:#ff0000; }
+    h2 { margin-top:0; }
+    h3 { margin:5px 0; }
+    .secret-input { margin:10px 0; padding:10px; border-radius:5px; border:none; width:100%; }
+    textarea { border-radius:5px; border:none; padding:10px; resize:none; }
+    .dark-mode { background-color:#121212; color:#fff;}
+    .light-mode { background-color:#f4f4f4; color:#000;}
+</style>
+</head>
+<body class="dark-mode">
+
+<header>Recall WI</header>
+
+<nav>
+    <button onclick="showSection('characters')">Personagens</button>
+    <button onclick="showSection('shop')">Loja</button>
+    <button onclick="showSection('update')">Update</button>
+    <button onclick="showSecretPrompt()">Lista Secreta 🔒</button>
+    <button onclick="toggleMode()">Trocar Modo</button>
+</nav>
+
+<!-- PERSONAGENS -->
+<section id="characters">
+<h2>Personagens</h2>
+
+<div class="character survivor">
+<h3>SERAPHINA – THE HEALER (A Curandeira)</h3>
+✨ Habilidade: Revive 1 jogador eliminado (1x)<br>
+🗣 EN: “Rise again!”<br>
+🗣 PT: “Levante-se de novo!”
+</div>
+
+<div class="character survivor">
+<h3>AETHER – THE WATCHER (O Observador)</h3>
+👁 Habilidade: Pergunta ao assassino o próximo alvo (1x)<br>
+🗣 EN: “Who’s your next target?”<br>
+🗣 PT: “Qual é o seu próximo alvo?”
+</div>
+
+<div class="character survivor">
+<h3>NYRA – THE SWIFT (A Veloz)</h3>
+⚡ Habilidade: Escapa de 1 captura (1x)<br>
+🗣 EN: “Too fast for you!”<br>
+🗣 PT: “Rápida demais pra você!”
+</div>
+
+<div class="character survivor">
+<h3>GIDEON – THE GUARDIAN (O Guardião)</h3>
+🛡 Habilidade: Protege alguém de 1 ataque (1x)<br>
+🗣 EN: “Stay behind me!”<br>
+🗣 PT: “Fiquem atrás de mim!”
+</div>
+
+<div class="character survivor">
+<h3>ELARA – THE STRATEGIST (A Estratégica)</h3>
+♟ Habilidade: Pode correr duas vezes seguidas sem ser pega (1x)<br>
+🗣 EN: “Double move!”<br>
+🗣 PT: “Movimento duplo!”
+</div>
+
+<div class="character survivor">
+<h3>ORION – THE ILLUSIONIST (O Ilusionista)</h3>
+🌀 Habilidade: Quando for pego, diz “Illusion!” / “Ilusão!”. Assassino deve perseguir outro jogador por 10s (1x)<br>
+🗣 EN: “Can you catch a shadow of me?”<br>
+🗣 PT: “Consegue pegar só minha sombra?”
+</div>
+
+<div class="character survivor">
+<h3>LIORA – THE WATCHER (A Observadora)</h3>
+👁 Habilidade: Revela 2 jogadores mais próximos (1x)<br>
+🗣 EN: “I see you!”<br>
+🗣 PT: “Eu vejo vocês!”
+</div>
+
+<div class="character survivor">
+<h3>MARIN – THE HUNTER (A Caçadora)</h3>
+💥 Habilidade: Ataca o assassino: ele não pode correr por 10s (1x)<br>
+🗣 EN: “Freeze!”<br>
+🗣 PT: “Congele!”
+</div>
+
+<h2>Assassinos</h2>
+
+<div class="character assassin">
+<h3>UMBRA – THE SHADOW (A Sombra)</h3>
+🌑 Habilidade: Elimina 1 pessoa sem encostar, **só se falhar tentar pegar** (1x)<br>
+🗣 EN: “Shadow strike!”<br>
+🗣 PT: “Golpe das sombras!”
+</div>
+
+<div class="character assassin">
+<h3>DARIUS – THE HUNTER (O Caçador)</h3>
+🎯 Habilidade: Obriga 1 sobrevivente a revelar se ainda tem poder (1x)<br>
+🗣 EN: “Reveal!”<br>
+🗣 PT: “Revele-se!”
+</div>
+
+<div class="character assassin">
+<h3>ECHO – THE TRICKSTER (O Trapaceiro)</h3>
+🎭 Habilidade: Anula 1 poder usado contra ele (1x)<br>
+🗣 EN: “Echo!”<br>
+🗣 PT: “Eco!”
+</div>
+
+<div class="character assassin">
+<h3>REQUIEM – THE REAPER (O Ceifador)</h3>
+💀 Habilidade: Local da morte de um jogador por 15s faz qualquer um que passar por perto morrer (1x)<br>
+🗣 EN: “Death follows!”<br>
+🗣 PT: “A morte segue!”
+</div>
+
+<div class="character assassin">
+<h3>MARIN – THE TRICKSTER (A Trapaceira)</h3>
+💥 Habilidade: Muda o alvo do assassino (1x)<br>
+🗣 EN: “Switch target!”<br>
+🗣 PT: “Troque de alvo!”
+</div>
+</section>
+
+<!-- LOJA -->
+<section id="shop">
+<h2>Loja</h2>
+
+<p><strong>Raridade:</strong></p>
+<ul>
+<li>Comum – Demonstração (início)</li>
+<li>Raro – 500E+</li>
+<li>Épico – 900E+</li>
+<li>Lendário – 1500E+</li>
+</ul>
+
+
+<section id="Essences">
+<h2>Ganho de Money</h2>
+
+<p><strong>Ganhos de Essence:</strong></p>
+<ul>
+<li>Sobrevive até o fim: +50E</li>
+<li>Revive alguém: +25E</li>
+<li>Usa habilidade com sucesso: +20E</li>
+<li>Morre antes de 2min: +10E</li>
+<li>Morre depois de 2min: +30E</li>
+<li>Assassino elimina alguém: +20E</li>
+<li>Assassino vence partida: +100E</li>
+<li>Respeita regras: +5E</li>
+<li>Melhor da rodada: +25E</li>
+</ul>
+</section>
+
+<!-- UPDATE -->
+<section id="update">
+<h2>Update do Jogo</h2>
+<p><strong>Update 2:</strong></p>
+<ul>
+<li>Novos personagens: Liora, Marin</li>
+<li>Habilidades atualizadas: Umbra, Darius</li>
+<li>Ajustes de raridade e preço</li>
+<li>Correções de bugs nas habilidades</li>
+</ul>
+</section>
+
+<!-- LISTA SECRETA -->
+<section id="secret" style="display:none">
+<h2>Lista Secreta 🔒</h2>
+<p>Somente você pode editar.</p>
+<div>
+<input type="text" placeholder="Digite senha" id="secretPass" class="secret-input">
+<button onclick="checkPassword()">Entrar</button>
+</div>
+<div id="secretContent" style="display:none">
+<h3>Marque quem já comprou quem:</h3>
+<textarea id="secretList" rows="10" style="width:100%"></textarea>
+</div>
+</section>
+
+<script>
+function showSection(id){
+    document.querySelectorAll('section').forEach(s => s.style.display='none');
+    document.getElementById(id).style.display='block';
+}
+function toggleMode(){
+    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('light-mode');
+}
+function showSecretPrompt(){
+    showSection('secret');
+}
+function checkPassword(){
+    const pass = document.getElementById('secretPass').value;
+    if(pass==='BATATA'){
+        document.getElementById('secretContent').style.display='block';
+    } else {
+        alert('Senha incorreta!');
+    }
+}
+</script>
+
+</body>
+</html>
