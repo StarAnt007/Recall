@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Recall WI</title>
+<style>
+  :root{
+    --bg:#0f1114; --panel:#15181b; --muted:#9aa4ad; --accent:#00d1ff;
+    --gold:#ffd700; --purple:#a44bff; --blue:#2196f3; --card:#1b1f23;
+    --glass: rgba(255,255,255,0.03); --success:#4caf50; --danger:#ff6b6b; --text:#e9eef2;
+  }
+  [data-theme="light"]{
+    --bg:#f5f7fa; --panel:#ffffff; --muted:#4b5563; --accent:#0b84ff;
+    --gold:#b8860b; --purple:#6b21a8; --blue:#0b79d0; --card:#ffffff;
+    --glass: rgba(0,0,0,0.03); --success:#087f23; --danger:#c23b3b; --text:#0b1220;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:var(--bg); color:var(--text);}
+  header{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:18px 22px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));border-bottom:1px solid rgba(255,255,255,0.03);position:sticky;top:0;z-index:50;}
+  .brand{display:flex;gap:12px;align-items:center;}
+  .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:700;color:#021;box-shadow:0 6px 18px rgba(0,0,0,0.35);font-size:18px;}
+  .title h1{margin:0;font-size:18px;} .title p{margin:0;font-size:12px;color:var(--muted);}
+  nav{display:flex;gap:8px;align-items:center;}
+  .navbtn{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600;}
+  .navbtn:hover{transform:translateY(-2px)} .navbtn.active{outline:2px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,0.4)}
+  .controls{display:flex;gap:8px;align-items:center;}
+  .themeToggle{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04); cursor:pointer;background:transparent;}
+  main{padding:22px; max-width:1100px;margin:0 auto;}
+  .panel{background:var(--panel); border-radius:12px; padding:18px; margin-bottom:18px; box-shadow: 0 6px 20px rgba(0,0,0,0.45);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+  .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);}
+  .group-title{font-size:18px;color:var(--accent);margin-bottom:10px;font-weight:700} .small{font-size:13px;color:var(--muted);}
+  .char-name{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;cursor:pointer} .char-name:hover{background:var(--glass)}
+  .char-ability{display:none;margin-top:8px;padding:8px;background:rgba(0,0,0,0.06);border-radius:8px}
+  .tag{padding:6px 8px;border-radius:8px;font-weight:700;font-size:12px}
+  .comum{background:rgba(128,128,128,0.12); color:gray;border:1px solid rgba(255,255,255,0.03)}
+  .raro{background:rgba(0,123,255,0.08); color:var(--blue);border:1px solid rgba(0,120,255,0.08)}
+  .epico{background:rgba(164,75,255,0.08); color:var(--purple);border:1px solid rgba(164,75,255,0.08)}
+  .lendario{background:linear-gradient(90deg,#ffd70020,#ff9a0020); color:var(--gold);border:1px solid rgba(255,215,0,0.08)}
+  .shop-line{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px}
+  .shop-line:hover{background:var(--glass)}
+  table{width:100%;border-collapse:collapse} th,td{padding:10px;border:1px solid rgba(255,255,255,0.04);text-align:left} th{background:rgba(255,255,255,0.02);font-weight:700}
+  #trackerArea{margin-top:8px} #playerTable{width:100%;border-collapse:collapse;font-size:13px} #playerTable th, #playerTable td{padding:8px;border:1px solid rgba(255,255,255,0.04);text-align:center} #playerTable th{background:rgba(255,255,255,0.02)}
+  .btn{padding:8px 10px;border-radius:8px;border: none;background:var(--accent);color:#021;font-weight:700;cursor:pointer} .danger{background:var(--danger); color:#fff}
+  .update-block{background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); padding:12px;border-radius:8px}
+  .update-title{font-weight:800;color:var(--gold);margin-bottom:8px} .update-section{margin:6px 0}
+  @media (max-width:720px){header{flex-direction:column;align-items:flex-start;gap:10px} .controls{width:100%;justify-content:space-between}}
+  .hidden{display:none;}
+</style>
+</head>
+<body data-theme="dark">
+<header>
+  <div class="brand">
+    <div class="logo">RW</div>
+    <div class="title">
+      <h1>Recall WI</h1>
+      <p class="small">Tudo que você precisa saber do Recall</p>
+    </div>
+  </div>
+  <nav>
+    <button class="navbtn active" data-section="characters">Personagens</button>
+    <button class="navbtn" data-section="shop">Loja</button>
+    <button class="navbtn" data-section="money">Economia</button>
+    <button class="navbtn" data-section="tracker">Lista secreta</button>
+    <button class="navbtn" data-section="updates">Atualizações</button>
+  </nav>
+  <div class="controls">
+    <button class="themeToggle" id="themeBtn">Mudar tema</button>
+  </div>
+</header>
+<main>
+  <section id="characters" class="panel"></section>
+  <section id="shop" class="panel hidden"></section>
+  <section id="money" class="panel hidden"></section>
+  <section id="tracker" class="panel hidden"></section>
+  <section id="updates" class="panel hidden"></section>
+</main>
+<script>
+/* ---------- DATA ---------- */
+const characters=[
+{key:"Seraphina",display:"Seraphina — The Healer",type:"Sobrevivente",rarity:"comum",price:0,ability:"Revive 1 jogador eliminado (1x).",phraseEN:"Rise again!",phrasePT:"Levante-se de novo!"},
+{key:"Nyra",display:"Nyra — The Swift",type:"Sobrevivente",rarity:"comum",price:0,ability:"Escapa de 1 captura (1x).",phraseEN:"Too fast for you!",phrasePT:"Rápida demais pra você!"},
+{key:"Gideon",display:"Gideon — The Guardian",type:"Sobrevivente",rarity:"raro",price:500,ability:"Protege alguém de 1 ataque (escudo 10s).",phraseEN:"Stay behind me!",phrasePT:"Fiquem atrás de mim!"},
+{key:"Aether",display:"Aether — The Watcher",type:"Sobrevivente",rarity:"raro",price:500,ability:"Pergunta ao assassino o próximo alvo (1x).",phraseEN:"Who’s your next target?",phrasePT:"Qual é o seu próximo alvo?"},
+{key:"Elara",display:"Elara — The Strategist",type:"Sobrevivente",rarity:"epico",price:900,ability:"Pode correr duas vezes seguidas sem ser pega (1x).",phraseEN:"Double move!",phrasePT:"Movimento duplo!"},
+{key:"Orion",display:"Orion — The Illusionist",type:"Sobrevivente",rarity:"epico",price:950,ability:"Diz 'Illusion!' → assassino deve perseguir outro alvo por 10s (1x).",phraseEN:"Can you catch a shadow of me?",phrasePT:"Consegue pegar só minha sombra?"},
+{key:"Liora",display:"Liora — The Veiled",type:"Sobrevivente",rarity:"lendario",price:1500,ability:"Faz assassino contar 8s parado (1x).",phraseEN:"Now you forget me…",phrasePT:"Agora você me esquece…"},
+{key:"Marin",display:"Marin — The Timebinder",type:"Sobrevivente",rarity:"lendario",price:1600,ability:"Ativa 'Time Snare': assassino NÃO PODE CORRER 5s (1x).",phraseEN:"Slow down, time obeys me!",phrasePT:"Diminua, o tempo me obedece!"},
+{key:"Umbra",display:"Umbra — The Shadow",type:"Assassino",rarity:"comum",price:0,ability:"Habilidade só ativa se tentar pegar alguém e falhar (1x).",phraseEN:"Shadow strike!",phrasePT:"Golpe das sombras!"},
+{key:"Darius",display:"Darius — The Hunter",type:"Assassino",rarity:"raro",price:500,ability:"Marked: bloqueia habilidades do alvo 15s (1x).",phraseEN:"Marked!",phrasePT:"Marcado!"},
+{key:"Echo",display:"Echo — The Returned",type:"Assassino",rarity:"epico",price:950,ability:"Anula 1 poder usado contra ele (1x).",phraseEN:"Echo!",phrasePT:"Eco!"},
+{key:"Requiem",display:"Requiem — The Reaper",type:"Assassino",rarity:"lendario",price:1600,ability:"Local de morte se torna letal 15s (1x).",phraseEN:"Death remains...",phrasePT:"A morte permanece..."}
+];
+
+const moneyTable=[
+{action:"🧍 Sobrevive até o fim",value:"+50E"},
+{action:"💖 Revive alguém",value:"+25E"},
+{action:"✨ Usa habilidade com sucesso",value:"+20E"},
+{action:"💀 Morre antes de 2min",value:"+10E"},
+{action:"⏳ Morre depois de 2min",value:"+30E"},
+{action:"🔪 Assassino elimina alguém",value:"+20E"},
+{action:"🩸 Assassino vence partida",value:"+100E"},
+{action:"⚖️ Respeita as regras",value:"+5E"},
+{action:"🏆 Melhor da rodada",value:"+25E"}
+];
+
+/* ---------- UI HELPERS ---------- */
+function $(sel){return document.querySelector(sel)}
+function $all(sel){return Array.from(document.querySelectorAll(sel))}
+
+/* ---------- THEME ---------- */
+function setTheme(t){document.body.setAttribute('data-theme',t==='light'?'light':'dark');localStorage.setItem('recall_theme',t);}
+function toggleTheme(){const cur=localStorage.getItem('recall_theme')||'dark';setTheme(cur==='dark'?'light':'dark');}
+const savedTheme=localStorage.getItem('recall_theme')||'dark';setTheme(savedTheme);
+document.getElementById('themeBtn').addEventListener('click',toggleTheme);
+
+/* ---------- NAV ---------- */
+$all('.navbtn').forEach(b=>{
+  b.addEventListener('click',()=>{ $all('.navbtn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); showSection(b.dataset.section); });
+});
+function showSection(id){
+  ['characters','shop','money','tracker','updates'].forEach(s=>{
+    const el=document.getElementById(s);
+    if(el) el.classList.toggle('hidden',s!==id);
+  });
+  if(id==='characters') renderCharacters();
+  if(id==='shop') renderShop();
+  if(id==='money') renderMoney();
+  if(id==='tracker') renderTracker();
+  if(id==='updates') renderUpdates();
+}
+
+/* ---------- CHARACTERS ---------- */
+function renderCharacters(){
+  const container=$('#characters'); container.innerHTML='<div class="group-title">Personagens</div><div class="small">Clique no nome para ver habilidade e frase (EN / PT)</div><div class="grid" id="charactersGrid" style="margin-top:12px"></div>';
+  const grid=$('#charactersGrid'); grid.innerHTML='';
+  characters.forEach(ch=>{
+    const card=document.createElement('div'); card.className='card';
+    const header=document.createElement('div'); header.className='char-name';
+    header.innerHTML=`<div style="font-weight:800">${ch.display}</div><div class="small">${ch.type} • ${ch.rarity.toUpperCase()}</div>`;
+    const ability=document.createElement('div'); ability.className='char-ability';
+    ability.innerHTML=`<strong>Habilidade:</strong> ${ch.ability}<br><strong>EN:</strong> ${ch.phraseEN} &nbsp; <strong>PT:</strong> ${ch.phrasePT}`;
+    header.addEventListener('click',()=>ability.style.display=ability.style.display==='block'?'none':'block');
+    card.appendChild(header); card.appendChild(ability); grid.appendChild(card);
+  });
+}
+
+/* ---------- SHOP ---------- */
+function renderShop(){
+  const area=$('#shop'); area.innerHTML='<div class="group-title">Loja</div><div class="small">Preços mostrados somente aqui. Agrupado por Tipo → Raridade.</div>';
+  const types=["Sobrevivente","Assassino"]; const rarities=["comum","raro","epico","lendario"];
+  types.forEach(type=>{
+    rarities.forEach(r=>{
+      const list=characters.filter(c=>c.type===type&&c.rarity===r);
+      if(list.length===0) return;
+      const title=document.createElement('div'); title.className='group-title'; title.textContent=`${type.toUpperCase()} — ${r.toUpperCase()}`; area.appendChild(title);
+      const box=document.createElement('div'); box.className='panel';
+      list.forEach(c=>{
+        const line=document.createElement('div'); line.className='shop-line';
+        line.innerHTML=`<div style="display:flex;flex-direction:column"><div style="font-weight:800">${c.display}</div><div class="small">${c.ability}</div></div><div style="text-align:right"><div class="small">Preço</div><div style="font-weight:900;font-size:16px">${c.price}E</div><div style="margin-top:6px"><span class="tag ${c.rarity}">${c.rarity.toUpperCase()}</span></div></div>`;
+        box.appendChild(line);
+      });
+      area.appendChild(box);
+    });
+  });
+}
+
+/* ---------- MONEY ---------- */
+function renderMoney(){
+  const area=$('#money'); area.innerHTML='<div class="group-title">Economia – Como ganhar Essence</div><table><thead><tr><th>💥 Ação</th><th>💸 Essence</th></tr></thead><tbody id="moneyTableBody"></tbody></table>';
+  const tbody=$('#moneyTableBody'); tbody.innerHTML=''; moneyTable.forEach(row=>{const tr=document.createElement('tr'); tr.innerHTML=`<td>${row.action}</td><td>${row.value}</td>`; tbody.appendChild(tr);});
+}
+
+/* ---------- TRACKER ---------- */
+const TRACKER_PASSWORD="BATATA"; let players=JSON.parse(localStorage.getItem('recall_players'))||[];
+function renderTracker(){
+  const area=$('#tracker'); area.innerHTML='<div class="group-title">Lista secreta — Controle de Personagens</div><div class="small">Protegido por senha.</div><div id="trackerArea" style="margin-top:12px"><div id="loginDiv"><p class="small">Digite a senha:</p><input type="password" id="trackerPass" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"><button class="btn" id="loginBtn">Entrar</button></div><div id="trackerContent" style="display:none;margin-top:12px"><div style="overflow:auto"><table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="addPlayerBtn">Adicionar Jogador</button><button class="btn" id="clearPlayersBtn">Limpar lista</button><button class="btn danger" id="exportBtn">Exportar (JSON)</button></div></div></div>';
+  buildPlayerHeader();
+  $('#loginBtn').addEventListener('click',checkPassword);
+  $('#addPlayerBtn').addEventListener('click',addPlayer);
+  $('#clearPlayersBtn').addEventListener('click',clearPlayers);
+  $('#exportBtn').addEventListener('click',exportPlayers);
+}
+function buildPlayerHeader(){ const header=$('#playerHeader'); header.innerHTML='<th>Jogador</th>'; ["Seraphina","Nyra","Gideon","Aether","Elara","Orion","Liora","Marin","Umbra","Darius","Echo","Requiem"].forEach(c=>{const th=document.createElement('th'); th.textContent=c; header.appendChild(th);}); }
+function checkPassword(){ const v=$('#trackerPass').value; if(v===TRACKER_PASSWORD){ $('#loginDiv').style.display='none'; $('#trackerContent').style.display='block'; renderTable(); } else alert('Senha incorreta!'); }
+function renderTable(){ const tbody=$('#playerBody'); tbody.innerHTML=''; players.forEach((p,idx)=>{const tr=document.createElement('tr');const tdName=document.createElement('td');tdName.textContent=p.name; tr.appendChild(tdName); ["Seraphina","Nyra","Gideon","Aether","Elara","Orion","Liora","Marin","Umbra","Darius","Echo","Requiem"].forEach(key=>{const td=document.createElement('td');const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!p.characters[key];cb.addEventListener('change',()=>{players[idx].characters[key]=cb.checked;localStorage.setItem('recall_players',JSON.stringify(players));}); td.appendChild(cb); tr.appendChild(td);}); tbody.appendChild(tr);}); }
+function addPlayer(){const name=prompt("Nome do jogador:"); if(!name) return; players.push({name,characters:{}}); localStorage.setItem('recall_players',JSON.stringify(players)); renderTable();}
+function clearPlayers(){if(confirm("Limpar toda a lista?")){players=[];localStorage.setItem('recall_players',JSON.stringify(players)); renderTable();}}
+function exportPlayers(){const data=JSON.stringify(players,null,2); const blob=new Blob([data],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download="players.json"; a.click(); URL.revokeObjectURL(url);}
+
+/* ---------- UPDATES ---------- */
+function renderUpdates(){
+  const area=$('#updates'); area.innerHTML='<div class="group-title">Atualizações</div>';
+  const list=[
+    {title:"V1.2 – Novos Personagens",desc:"Adicionado Liora e Marin (Sobreviventes Lendários) e Requiem (Assassino Lendário)."},
+    {title:"V1.1 – Tracker Melhorado",desc:"Lista de jogadores agora salva no localStorage, exportável e protegida por senha."},
+    {title:"V1.0 – Inicial",desc:"Versão inicial do Recall WI com Personagens, Loja, Economia e Tracker básico."}
+  ];
+  list.forEach(u=>{const block=document.createElement('div'); block.className='update-block'; block.innerHTML=`<div class="update-title">${u.title}</div><div class="update-section">${u.desc}</div>`; area.appendChild(block);});
+}
+
+/* ---------- INITIAL ---------- */
+showSection('characters');
+</script>
+</body>
+</html>
+
