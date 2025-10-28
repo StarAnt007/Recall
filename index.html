@@ -248,7 +248,7 @@
     <div class="group-title">Atualizações do Jogo</div>
 
     <div class="update-block" style="margin-top:10px">
-      <div class="update-title">UPDATE 1.0</div>
+      <div class="update-title">UPDATE 2 — Rise of the Shadows</div>
       <div class="small">Nova versão — coisas importantes que chegaram no jogo.</div>
 
       <div class="update-section"><strong>NOVAS HABILIDADES</strong>
@@ -278,7 +278,7 @@
 
 <script>
 /* ---------- DATA ---------- */
-const characters = [
+const characters=[
   { key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", price:0,
     ability:"Revive 1 jogador eliminado (1x). O jogador revive sem poder.",
     phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"
@@ -330,7 +330,7 @@ const characters = [
   }
 ];
 
-const moneyTable = [
+const moneyTable=[
   {action:"🧍 Sobrevive até o fim", value:"+50E"},
   {action:"💖 Revive alguém", value:"+25E"},
   {action:"✨ Usa habilidade com sucesso", value:"+20E"},
@@ -348,7 +348,6 @@ function $all(sel){return Array.from(document.querySelectorAll(sel))}
 
 /* ---------- THEME ---------- */
 const themeBtn = document.getElementById('themeBtn');
-const root = document.documentElement;
 function setTheme(t){
   document.body.setAttribute('data-theme', t==='light'?'light':'dark');
   localStorage.setItem('recall_theme', t);
@@ -378,7 +377,6 @@ function showSection(id){
   if(id==='shop') renderShop();
   if(id==='money') renderMoney();
   if(id==='tracker') renderTracker();
-  if(id==='updates') {} // static
 }
 
 /* ---------- CHARACTERS ---------- */
@@ -435,7 +433,6 @@ function renderShop(){
           <div style="font-weight:900;font-size:16px">${c.price}E</div>
           <div style="margin-top:6px"><span class="tag ${c.rarity}">${c.rarity.toUpperCase()}</span></div>
         </div>`;
-        // click show ability modal inline
         const info = document.createElement('div'); info.className='char-ability'; info.style.display='none';
         info.innerHTML = `<strong>Habilidade:</strong> ${c.ability}<br><strong>EN:</strong> ${c.phraseEN} &nbsp; <strong>PT:</strong> ${c.phrasePT}`;
         line.addEventListener('click', ()=> {
@@ -475,9 +472,11 @@ function buildPlayerHeader(){
   });
 }
 
-function populateTracker() {
-  // show login UI (handled by showSection)
+function renderTracker(){
   buildPlayerHeader();
+  // if already unlocked, show content, else show login
+  const logged = document.getElementById('trackerContent').style.display === 'block';
+  if(logged) renderTable();
 }
 
 function checkPassword(){
@@ -537,18 +536,16 @@ function exportPlayers(){
 
 /* ---------- INIT ---------- */
 (function init(){
-  // initial render characters
   renderCharacters();
-  // money
   renderMoney();
-  // set active nav
+  buildPlayerHeader();
+  // nav buttons already wired inline; also add active class behavior
   $all('.navbtn').forEach(b=>{
     b.addEventListener('click', ()=> {
       $all('.navbtn').forEach(x=>x.classList.remove('active'));
       b.classList.add('active');
     });
   });
-  // default section
   showSection('characters');
 })();
 </script>
