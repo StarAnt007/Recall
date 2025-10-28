@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recall WI</title>
+<style>
+    body { font-family: Arial, sans-serif; background-color: #121212; color: #fff; margin:0; padding:0;}
+    header { background-color: #1a1a1a; padding: 20px; text-align: center; font-size: 2em; }
+    nav { display: flex; justify-content: center; gap: 10px; padding: 10px; background-color: #222;}
+    button { padding: 10px 15px; cursor: pointer; background-color:#333; color:#fff; border:none; border-radius:5px; }
+    button:hover { background-color: #444;}
+    section { padding:20px; display:none; }
+    .active { display:block; }
+    .dark-mode { background-color:#121212; color:#fff; }
+    .light-mode { background-color:#f4f4f4; color:#000; }
+    h2 { margin-top:0; }
+    .character { margin-bottom:20px; padding:10px; border:1px solid #555; border-radius:5px;}
+    .secret-input { margin:10px 0; }
+</style>
+</head>
+<body class="dark-mode">
+
+<header>Recall WI</header>
+
+<nav>
+    <button onclick="showSection('characters')">Personagens</button>
+    <button onclick="showSection('shop')">Loja</button>
+    <button onclick="showSection('update')">Update</button>
+    <button onclick="showSecretPrompt()">Lista Secreta 🔒</button>
+    <button onclick="toggleMode()">Trocar Modo</button>
+</nav>
+
+<section id="characters">
+<h2>Personagens</h2>
+<div class="character">
+<strong>SERAPHINA – THE HEALER</strong> (A Curandeira)<br>
+✨ Habilidade: Revive 1 jogador eliminado (1x)<br>
+🗣 EN: “Rise again!”<br>
+🗣 PT: “Levante-se de novo!”
+</div>
+<div class="character">
+<strong>AETHER – THE WATCHER</strong> (O Observador)<br>
+👁 Habilidade: Pergunta ao assassino o próximo alvo (1x)<br>
+🗣 EN: “Who’s your next target?”<br>
+🗣 PT: “Qual é o seu próximo alvo?”
+</div>
+<div class="character">
+<strong>NYRA – THE SWIFT</strong> (A Veloz)<br>
+⚡ Habilidade: Escapa de 1 captura (1x)<br>
+🗣 EN: “Too fast for you!”<br>
+🗣 PT: “Rápida demais pra você!”
+</div>
+<div class="character">
+<strong>GIDEON – THE GUARDIAN</strong> (O Guardião)<br>
+🛡 Habilidade: Protege alguém de 1 ataque (1x)<br>
+🗣 EN: “Stay behind me!”<br>
+🗣 PT: “Fiquem atrás de mim!”
+</div>
+<div class="character">
+<strong>ELARA – THE STRATEGIST</strong> (A Estratégica)<br>
+♟ Habilidade: Pode correr duas vezes seguidas sem ser pega (1x)<br>
+🗣 EN: “Double move!”<br>
+🗣 PT: “Movimento duplo!”
+</div>
+<div class="character">
+<strong>ORION – THE ILLUSIONIST</strong> (O Ilusionista)<br>
+🌀 Habilidade: Quando for pego, diz “Illusion!” / “Ilusão!”. Assassino deve perseguir outro jogador por 10s (1x)<br>
+🗣 EN: “Can you catch a shadow of me?”<br>
+🗣 PT: “Consegue pegar só minha sombra?”
+</div>
+<div class="character">
+<strong>LIORA – THE WATCHER</strong> (A Observadora)<br>
+👁 Habilidade: Revela 2 jogadores mais próximos (1x)<br>
+🗣 EN: “I see you!”<br>
+🗣 PT: “Eu vejo vocês!”
+</div>
+<div class="character">
+<strong>MARIN – THE HUNTER</strong> (A Caçadora)<br>
+💥 Habilidade: Ataca o assassino: ele **não pode correr** por 10s (1x)<br>
+🗣 EN: “Freeze!”<br>
+🗣 PT: “Congele!” 
+</div>
+
+<div class="character">
+<h3>Assassinos</h3>
+<div class="character">
+<strong>UMBRA – THE SHADOW</strong> (A Sombra)<br>
+🌑 Habilidade: Elimina 1 pessoa sem encostar, **só se falhar tentar pegar** (1x)<br>
+🗣 EN: “Shadow strike!”<br>
+🗣 PT: “Golpe das sombras!”
+</div>
+<div class="character">
+<strong>DARIUS – THE HUNTER</strong> (O Caçador)<br>
+🎯 Habilidade: Obriga 1 sobrevivente a revelar se ainda tem poder (1x)<br>
+🗣 EN: “Reveal!”<br>
+🗣 PT: “Revele-se!”
+</div>
+<div class="character">
+<strong>ECHO – THE TRICKSTER</strong> (O Trapaceiro)<br>
+🎭 Habilidade: Anula 1 poder usado contra ele (1x)<br>
+🗣 EN: “Echo!”<br>
+🗣 PT: “Eco!”
+</div>
+<div class="character">
+<strong>REQUIEM – THE REAPER</strong> (O Ceifador)<br>
+💀 Habilidade: Local da morte de um jogador por 15s faz qualquer um que passar por perto morrer (1x)<br>
+🗣 EN: “Death follows!”<br>
+🗣 PT: “A morte segue!”
+</div>
+<div class="character">
+<strong>MARIN – THE TRICKSTER</strong> (A Trapaceira)<br>
+💥 Habilidade: Muda o alvo do assassino (1x)<br>
+🗣 EN: “Switch target!”<br>
+🗣 PT: “Troque de alvo!”
+</div>
+</section>
+
+<section id="shop">
+<h2>Loja e Ganho de Money</h2>
+<p>Raridade:</p>
+<ul>
+<li>Comum – Demonstração (início)</li>
+<li>Raro – 500E+</li>
+<li>Épico – 900E+</li>
+<li>Lendário – 1500E+</li>
+</ul>
+
+<p>Ganho de Essence:</p>
+<ul>
+<li>Sobrevive até o fim: +50E</li>
+<li>Revive alguém: +25E</li>
+<li>Usa habilidade com sucesso: +20E</li>
+<li>Morre antes de 2min: +10E</li>
+<li>Morre depois de 2min: +30E</li>
+<li>Assassino elimina alguém: +20E</li>
+<li>Assassino vence: +100E</li>
+<li>Respeita regras: +5E</li>
+<li>Melhor da rodada: +25E</li>
+</ul>
+</section>
+
+<section id="update">
+<h2>Update do Jogo</h2>
+<p><strong>Update 2:</strong></p>
+<ul>
+<li>Novos personagens: Liora, Marin</li>
+<li>Habilidades atualizadas: Umbra, Darius</li>
+<li>Ajustes de raridade e preço</li>
+<li>Correções de bugs nas habilidades</li>
+</ul>
+</section>
+
+<section id="secret" style="display:none">
+<h2>Lista Secreta 🔒</h2>
+<p>Somente você pode editar.</p>
+<div>
+<input type="text" placeholder="Digite senha" id="secretPass" class="secret-input">
+<button onclick="checkPassword()">Entrar</button>
+</div>
+<div id="secretContent" style="display:none">
+<h3>Marque quem já comprou quem:</h3>
+<textarea id="secretList" rows="10" style="width:100%"></textarea>
+</div>
+</section>
+
+<script>
+function showSection(id){
+    document.querySelectorAll('section').forEach(s => s.style.display='none');
+    document.getElementById(id).style.display='block';
+}
+function toggleMode(){
+    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('light-mode');
+}
+function showSecretPrompt(){
+    showSection('secret');
+}
+function checkPassword(){
+    const pass = document.getElementById('secretPass').value;
+    if(pass==='BATATA'){
+        document.getElementById('secretContent').style.display='block';
+    } else {
+        alert('Senha incorreta!');
+    }
+}
+</script>
+
+</body>
+</html>
