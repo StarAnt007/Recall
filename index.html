@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Recall WI — Edição Halloween 🎃</title>
+<style>
+  :root{
+    --bg:#0a0608; --panel:#150a0a; --muted:#9a7c7c; --accent:#ff7b00;
+    --gold:#ffcc00; --purple:#a44bff; --blue:#2196f3; --card:#1a0c0c;
+    --glass: rgba(255,255,255,0.04); --success:#4caf50; --danger:#ff6b6b; --text:#fff7f0;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--bg) url('https://i.imgur.com/vupQltC.png') no-repeat center top fixed;
+    background-size: cover;
+    color:var(--text);
+  }
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 22px;
+    background:rgba(0,0,0,0.6);
+    border-bottom:2px solid var(--accent);
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .logo{width:44px;height:44px;border-radius:8px;
+    background:linear-gradient(135deg,var(--accent),var(--purple));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;color:#021;box-shadow:0 6px 18px rgba(0,0,0,0.35);font-size:18px;}
+  nav{display:flex;flex-wrap:wrap;gap:8px;}
+  .navbtn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--text);padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600;}
+  .navbtn.active{background:var(--accent);color:#000;}
+  main{padding:22px;max-width:1100px;margin:0 auto;}
+  .panel{background:rgba(0,0,0,0.65);border-radius:12px;padding:18px;margin-bottom:20px;box-shadow:0 0 20px rgba(255,128,0,0.1);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;}
+  .card{background:rgba(255,255,255,0.05);padding:14px;border-radius:10px;position:relative;border:1px solid rgba(255,255,255,0.07);}
+  .char-name{font-weight:700;margin-bottom:6px;}
+  .rarity{font-size:13px;margin-bottom:8px;}
+  .price{font-size:14px;}
+  .old-price{text-decoration:line-through;color:#ffaaaa;font-size:13px;}
+  .new-price{color:var(--accent);font-weight:700;}
+  .halloween-border{border:2px solid orange;box-shadow:0 0 15px rgba(255,140,0,0.3);}
+  h2{color:var(--accent);margin-top:0;}
+  .update-block{background:rgba(0,0,0,0.4);padding:10px;border-radius:8px;margin:10px 0;}
+  .update-title{font-weight:700;color:var(--accent);}
+  table{width:100%;border-collapse:collapse;margin-top:10px;}
+  th,td{padding:8px;border:1px solid rgba(255,255,255,0.1);text-align:center;}
+  th{background:rgba(255,255,255,0.1);}
+  .hidden{display:none;}
+  footer{text-align:center;padding:10px;color:var(--muted);}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">🎃</div>
+    <div>
+      <h1>Recall WI</h1>
+      <small>Edição Especial de Halloween</small>
+    </div>
+  </div>
+  <nav>
+    <button class="navbtn active" data-section="characters">Personagens</button>
+    <button class="navbtn" data-section="shop">Loja</button>
+    <button class="navbtn" data-section="trios">Tríades</button>
+    <button class="navbtn" data-section="updates">Atualizações</button>
+  </nav>
+</header>
+
+<main>
+  <!-- PERSONAGENS -->
+  <section id="characters" class="panel">
+    <h2>🎭 Personagens</h2>
+    <div class="grid" id="charGrid"></div>
+  </section>
+
+  <!-- LOJA -->
+  <section id="shop" class="panel hidden">
+    <h2>🛒 Loja (Promoção de Halloween!)</h2>
+    <div id="shopGrid" class="grid"></div>
+  </section>
+
+  <!-- TRÍADES -->
+  <section id="trios" class="panel hidden">
+    <h2>🔮 Tríades</h2>
+    <div id="trioGrid" class="grid"></div>
+  </section>
+
+  <!-- UPDATES -->
+  <section id="updates" class="panel hidden">
+    <h2>📢 Atualizações</h2>
+    <div class="update-block">
+      <div class="update-title">🎃 Update 1.3 — Cael & Halloween</div>
+      <ul>
+        <li>Novo sobrevivente: <b>Cael — The Eclipse</b></li>
+        <li>Nova habilidade: "Solar Flare" — impede o assassino de correr por 8s e atacar por 2s.</li>
+        <li>Promoções de Halloween em todos os personagens!</li>
+        <li>Nova decoração temática de Halloween no site.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>Recall WI © 2025 — Edição de Halloween 🎃</footer>
+
+<script>
+const chars = [
+  {name:"Seraphina — The Healer", type:"Sobrevivente", rarity:"Comum", ability:"Revive 1 jogador eliminado (1x).", old:200, now:0},
+  {name:"Nyra — The Swift", type:"Sobrevivente", rarity:"Comum", ability:"Escapa de 1 captura (1x).", old:200, now:0},
+  {name:"Gideon — The Guardian", type:"Sobrevivente", rarity:"Raro", ability:"Protege alguém de 1 ataque (10s).", old:1000, now:500},
+  {name:"Aether — The Watcher", type:"Sobrevivente", rarity:"Raro", ability:"Sabe quem é o próximo alvo (1x).", old:1000, now:500},
+  {name:"Elara — The Strategist", type:"Sobrevivente", rarity:"Épico", ability:"Corre duas vezes seguidas sem ser pega (1x).", old:1800, now:900},
+  {name:"Orion — The Illusionist", type:"Sobrevivente", rarity:"Épico", ability:"Assassino persegue outro alvo por 10s (1x).", old:1900, now:950},
+  {name:"Liora — The Veiled", type:"Sobrevivente", rarity:"Lendário", ability:"Faz assassino contar 8s parado (1x).", old:2500, now:1500},
+  {name:"Marin — The Timebinder", type:"Sobrevivente", rarity:"Lendário", ability:"Assassino não pode correr por 5s (1x).", old:2600, now:1600},
+  {name:"Cael — The Eclipse", type:"Sobrevivente", rarity:"Lendário", ability:"Assassino não pode correr por 8s e atacar por 2s (1x).", old:2700, now:1700},
+  {name:"Umbra — The Shadow", type:"Assassino", rarity:"Comum", ability:"Golpe das sombras — ativa se falhar em atacar (1x).", old:400, now:200},
+  {name:"Darius — The Hunter", type:"Assassino", rarity:"Raro", ability:"Marca o alvo e bloqueia habilidades por 15s.", old:1200, now:600},
+  {name:"Echo — The Returned", type:"Assassino", rarity:"Épico", ability:"Anula um poder usado contra ele (1x).", old:1900, now:950},
+  {name:"Requiem — The Reaper", type:"Assassino", rarity:"Lendário", ability:"Local de morte se torna letal por 15s.", old:2500, now:1500},
+];
+
+const trios = [
+  {title:"Tríade da Vida", members:["Seraphina","Vídios","???"]},
+  {title:"Tríade do Tempo", members:["Marin","Cael","???"]},
+  {title:"Tríade das Sombras", members:["Umbra","Noctis","???"]},
+  {title:"Tríade da Ilusão", members:["Orion","Echo","???"]}
+];
+
+// gerar personagens
+const grid=document.getElementById("charGrid");
+chars.forEach(c=>{
+  const div=document.createElement("div");
+  div.className="card halloween-border";
+  div.innerHTML=`<div class="char-name">${c.name}</div>
+  <div class="rarity">${c.type} • ${c.rarity}</div>
+  <div class="small">${c.ability}</div>`;
+  grid.appendChild(div);
+});
+
+// gerar loja
+const shop=document.getElementById("shopGrid");
+chars.forEach(c=>{
+  const div=document.createElement("div");
+  div.className="card";
+  div.innerHTML=`<div class="char-name">${c.name}</div>
+  <div class="rarity">${c.rarity}</div>
+  <div class="price"><span class="old-price">${c.old}E</span> → <span class="new-price">${c.now}E</span></div>`;
+  shop.appendChild(div);
+});
+
+// gerar trios
+const tGrid=document.getElementById("trioGrid");
+trios.forEach(t=>{
+  const div=document.createElement("div");
+  div.className="card";
+  div.innerHTML=`<b>${t.title}</b><br>${t.members.join(" • ")}`;
+  tGrid.appendChild(div);
+});
+
+// trocar seções
+document.querySelectorAll(".navbtn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".navbtn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    const id=btn.dataset.section;
+    document.querySelectorAll("section").forEach(sec=>sec.classList.add("hidden"));
+    document.getElementById(id).classList.remove("hidden");
+  }
+});
+</script>
+</body>
+</html>
