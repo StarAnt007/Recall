@@ -3,173 +3,422 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Recall WI — Edição Halloween 🎃</title>
+<title>Recall WI — Halloween</title>
 <style>
   :root{
-    --bg:#0a0608; --panel:#150a0a; --muted:#9a7c7c; --accent:#ff7b00;
-    --gold:#ffcc00; --purple:#a44bff; --blue:#2196f3; --card:#1a0c0c;
-    --glass: rgba(255,255,255,0.04); --success:#4caf50; --danger:#ff6b6b; --text:#fff7f0;
+    --bg-1:#0a0608; --bg-2:#12060a;
+    --panel:#1b1216; --muted:#bca8a8; --accent:#ff7b00;
+    --accent-2:#a44bff; --gold:#ffd700; --card:#24161a;
+    --glass: rgba(255,255,255,0.03); --success:#4caf50; --danger:#ff6b6b; --text:#fff4ec;
   }
   *{box-sizing:border-box}
   body{
     margin:0;
-    font-family: "Inter", system-ui, sans-serif;
-    background: var(--bg) url('https://i.imgur.com/vupQltC.png') no-repeat center top fixed;
-    background-size: cover;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
     color:var(--text);
+    background:
+      radial-gradient(circle at 10% 20%, rgba(255,123,0,0.06), transparent 10%),
+      radial-gradient(circle at 90% 80%, rgba(164,75,255,0.04), transparent 12%),
+      linear-gradient(180deg,var(--bg-1),var(--bg-2));
+    min-height:100vh;
   }
+
+  /* little halloween icons layer using inline SVG backgrounds (no external image) */
+  body::before{
+    content:"";
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><g opacity="0.06" fill="%23ff7b00"><path d="M50 300c40-120 160-120 200 0 10 30-40 60-100 60s-110-30-100-60z"/></g></svg>'),
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><g opacity="0.04" fill="%23a44bff"><circle cx="50" cy="50" r="40"/></g></svg>');
+    background-repeat:no-repeat;
+    background-position: left bottom, right top;
+    filter: blur(6px) saturate(120%);
+  }
+
   header{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:18px 22px;
-    background:rgba(0,0,0,0.6);
-    border-bottom:2px solid var(--accent);
+    position:sticky; top:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; padding:16px 20px;
+    background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));
+    border-bottom:2px solid rgba(255,123,0,0.12);
+    backdrop-filter: blur(4px);
   }
-  .brand{display:flex;align-items:center;gap:12px;}
-  .logo{width:44px;height:44px;border-radius:8px;
-    background:linear-gradient(135deg,var(--accent),var(--purple));
-    display:flex;align-items:center;justify-content:center;
-    font-weight:700;color:#021;box-shadow:0 6px 18px rgba(0,0,0,0.35);font-size:18px;}
-  nav{display:flex;flex-wrap:wrap;gap:8px;}
-  .navbtn{background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--text);padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600;}
-  .navbtn.active{background:var(--accent);color:#000;}
-  main{padding:22px;max-width:1100px;margin:0 auto;}
-  .panel{background:rgba(0,0,0,0.65);border-radius:12px;padding:18px;margin-bottom:20px;box-shadow:0 0 20px rgba(255,128,0,0.1);}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;}
-  .card{background:rgba(255,255,255,0.05);padding:14px;border-radius:10px;position:relative;border:1px solid rgba(255,255,255,0.07);}
-  .char-name{font-weight:700;margin-bottom:6px;}
-  .rarity{font-size:13px;margin-bottom:8px;}
-  .price{font-size:14px;}
-  .old-price{text-decoration:line-through;color:#ffaaaa;font-size:13px;}
-  .new-price{color:var(--accent);font-weight:700;}
-  .halloween-border{border:2px solid orange;box-shadow:0 0 15px rgba(255,140,0,0.3);}
-  h2{color:var(--accent);margin-top:0;}
-  .update-block{background:rgba(0,0,0,0.4);padding:10px;border-radius:8px;margin:10px 0;}
-  .update-title{font-weight:700;color:var(--accent);}
-  table{width:100%;border-collapse:collapse;margin-top:10px;}
-  th,td{padding:8px;border:1px solid rgba(255,255,255,0.1);text-align:center;}
-  th{background:rgba(255,255,255,0.1);}
-  .hidden{display:none;}
-  footer{text-align:center;padding:10px;color:var(--muted);}
+
+  .brand{display:flex; gap:12px; align-items:center;}
+  .logo{
+    width:48px;height:48px;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;font-weight:900;color:#020;
+    box-shadow:0 8px 30px rgba(0,0,0,0.6); font-size:20px;
+  }
+  .title h1{margin:0;font-size:18px}
+  .title p{margin:0;font-size:12px;color:var(--muted)}
+
+  nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .navbtn{
+    padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
+    background:transparent;color:var(--text);cursor:pointer;font-weight:700
+  }
+  .navbtn.active{background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#061}
+
+  .controls{display:flex;gap:8px;align-items:center}
+
+  main{padding:20px; max-width:1100px; margin:18px auto; position:relative; z-index:10}
+
+  .panel{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25));
+    border-radius:12px; padding:16px; margin-bottom:18px;
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  }
+
+  .group-title{font-size:18px;color:var(--accent);margin-bottom:10px;font-weight:800}
+  .small{font-size:13px;color:var(--muted)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+
+  .card{background:var(--card); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.03)}
+  .card.halo{box-shadow:0 10px 30px rgba(255,123,0,0.08)}
+  .char-name{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;cursor:pointer}
+  .char-name:hover{background:var(--glass)}
+  .char-ability{display:none;margin-top:8px;padding:8px;background:rgba(0,0,0,0.06);border-radius:8px}
+
+  .tag{padding:5px 8px;border-radius:8px;font-weight:800;font-size:12px}
+  .comum{background:rgba(255,255,255,0.04); color:#ddd}
+  .raro{background:rgba(0,123,255,0.06); color:var(--blue)}
+  .epico{background:rgba(164,75,255,0.06); color:var(--accent-2)}
+  .lendario{background:linear-gradient(90deg,#ffd70020,#ff9a0020); color:var(--gold)}
+
+  .shop-line{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px}
+  .old-price{text-decoration:line-through;color:#ffb3a3;font-size:13px; margin-right:8px}
+  .new-price{color:var(--accent);font-weight:900;font-size:15px}
+
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{padding:10px;border:1px solid rgba(255,255,255,0.04);text-align:left}
+  th{background:rgba(255,255,255,0.02);font-weight:800}
+
+  #trackerArea{margin-top:8px}
+  #playerTable{width:100%;border-collapse:collapse;font-size:13px}
+  #playerTable th,#playerTable td{padding:8px;border:1px solid rgba(255,255,255,0.04);text-align:center}
+  .btn{padding:8px 10px;border-radius:8px;border:none;background:var(--accent);color:#051;font-weight:800;cursor:pointer}
+  .danger{background:var(--danger); color:#111}
+
+  .update-block{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); padding:12px;border-radius:10px}
+  .update-title{font-weight:900;color:var(--gold);margin-bottom:8px}
+  .hidden{display:none}
+
+  /* responsive */
+  @media (max-width:720px){
+    header{flex-direction:column;align-items:flex-start;gap:10px}
+  }
 </style>
 </head>
-<body>
+<body data-theme="dark">
 <header>
   <div class="brand">
-    <div class="logo">🎃</div>
-    <div>
+    <div class="logo">RW</div>
+    <div class="title">
       <h1>Recall WI</h1>
-      <small>Edição Especial de Halloween</small>
+      <p class="small">Edição Halloween — Recall</p>
     </div>
   </div>
+
   <nav>
     <button class="navbtn active" data-section="characters">Personagens</button>
     <button class="navbtn" data-section="shop">Loja</button>
+    <button class="navbtn" data-section="money">Economia</button>
+    <button class="navbtn" data-section="tracker">Lista secreta</button>
     <button class="navbtn" data-section="trios">Tríades</button>
     <button class="navbtn" data-section="updates">Atualizações</button>
   </nav>
+
+  <div class="controls">
+    <button class="themeToggle navbtn" id="themeBtn">Mudar tema</button>
+  </div>
 </header>
 
 <main>
-  <!-- PERSONAGENS -->
+  <!-- CHARACTERS -->
   <section id="characters" class="panel">
-    <h2>🎭 Personagens</h2>
-    <div class="grid" id="charGrid"></div>
+    <div class="group-title">Personagens</div>
+    <div class="small">Clique no cartão para ver habilidade e falas (EN / PT)</div>
+    <div class="grid" id="charactersGrid" style="margin-top:12px"></div>
   </section>
 
-  <!-- LOJA -->
+  <!-- SHOP -->
   <section id="shop" class="panel hidden">
-    <h2>🛒 Loja (Promoção de Halloween!)</h2>
-    <div id="shopGrid" class="grid"></div>
+    <div class="group-title">Loja — Promo Halloween</div>
+    <div class="small">Mostramos preço antigo (risco) e preço promocional atual.</div>
+    <div id="shopArea" style="margin-top:12px"></div>
   </section>
 
-  <!-- TRÍADES -->
+  <!-- MONEY -->
+  <section id="money" class="panel hidden">
+    <div class="group-title">Economia — Como ganhar Essence</div>
+    <div class="small">Ajuste de recompensa por ações durante as partidas.</div>
+    <div style="margin-top:10px">
+      <table>
+        <thead><tr><th>Ação</th><th>Essence</th></tr></thead>
+        <tbody id="moneyTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- TRACKER -->
+  <section id="tracker" class="panel hidden">
+    <div class="group-title">Lista secreta — Controle de Personagens</div>
+    <div class="small">Protegido por senha (somente você altera)</div>
+    <div id="trackerArea" style="margin-top:12px"></div>
+  </section>
+
+  <!-- TRIOS -->
   <section id="trios" class="panel hidden">
-    <h2>🔮 Tríades</h2>
-    <div id="trioGrid" class="grid"></div>
+    <div class="group-title">Tríades</div>
+    <div class="small">Cada personagem faz parte de uma tríade — ??? indica vaga futura.</div>
+    <div id="trioGrid" class="grid" style="margin-top:12px"></div>
   </section>
 
   <!-- UPDATES -->
   <section id="updates" class="panel hidden">
-    <h2>📢 Atualizações</h2>
-    <div class="update-block">
-      <div class="update-title">🎃 Update 1.3 — Cael & Halloween</div>
-      <ul>
-        <li>Novo sobrevivente: <b>Cael — The Eclipse</b></li>
-        <li>Nova habilidade: "Solar Flare" — impede o assassino de correr por 8s e atacar por 2s.</li>
-        <li>Promoções de Halloween em todos os personagens!</li>
-        <li>Nova decoração temática de Halloween no site.</li>
-      </ul>
+    <div class="group-title">Atualizações</div>
+    <div class="update-block" style="margin-top:10px">
+      <div class="update-title">V1.3 — Halloween & Cael</div>
+      <div class="update-section">Novo personagem: <b>Cael — The Defier (ÉPICO)</b>: ao ser alvo, ativa Defiance — o assassino não pode atacar por 2s e não pode correr por 8s (1x).</div>
+      <div class="update-section">Promoção de Halloween: preços antigos exibidos riscado + preço promocional.</div>
+      <div class="update-section">Tríades: agora todos os personagens pertencem a uma tríade.</div>
     </div>
   </section>
+
 </main>
 
-<footer>Recall WI © 2025 — Edição de Halloween 🎃</footer>
-
 <script>
-const chars = [
-  {name:"Seraphina — The Healer", type:"Sobrevivente", rarity:"Comum", ability:"Revive 1 jogador eliminado (1x).", old:200, now:0},
-  {name:"Nyra — The Swift", type:"Sobrevivente", rarity:"Comum", ability:"Escapa de 1 captura (1x).", old:200, now:0},
-  {name:"Gideon — The Guardian", type:"Sobrevivente", rarity:"Raro", ability:"Protege alguém de 1 ataque (10s).", old:1000, now:500},
-  {name:"Aether — The Watcher", type:"Sobrevivente", rarity:"Raro", ability:"Sabe quem é o próximo alvo (1x).", old:1000, now:500},
-  {name:"Elara — The Strategist", type:"Sobrevivente", rarity:"Épico", ability:"Corre duas vezes seguidas sem ser pega (1x).", old:1800, now:900},
-  {name:"Orion — The Illusionist", type:"Sobrevivente", rarity:"Épico", ability:"Assassino persegue outro alvo por 10s (1x).", old:1900, now:950},
-  {name:"Liora — The Veiled", type:"Sobrevivente", rarity:"Lendário", ability:"Faz assassino contar 8s parado (1x).", old:2500, now:1500},
-  {name:"Marin — The Timebinder", type:"Sobrevivente", rarity:"Lendário", ability:"Assassino não pode correr por 5s (1x).", old:2600, now:1600},
-  {name:"Cael — The Eclipse", type:"Sobrevivente", rarity:"Lendário", ability:"Assassino não pode correr por 8s e atacar por 2s (1x).", old:2700, now:1700},
-  {name:"Umbra — The Shadow", type:"Assassino", rarity:"Comum", ability:"Golpe das sombras — ativa se falhar em atacar (1x).", old:400, now:200},
-  {name:"Darius — The Hunter", type:"Assassino", rarity:"Raro", ability:"Marca o alvo e bloqueia habilidades por 15s.", old:1200, now:600},
-  {name:"Echo — The Returned", type:"Assassino", rarity:"Épico", ability:"Anula um poder usado contra ele (1x).", old:1900, now:950},
-  {name:"Requiem — The Reaper", type:"Assassino", rarity:"Lendário", ability:"Local de morte se torna letal por 15s.", old:2500, now:1500},
+/* ---------- DATA ---------- */
+/* characters: display, tipo, raridade, price (promo), oldPrice, ability, phrases */
+const characters = [
+  {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
+  {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
+  {key:"Gideon", display:"Gideon — The Guardian", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:500, ability:"Protege alguém de 1 ataque (escudo 10s).", phraseEN:"Stay behind me!", phrasePT:"Fiquem atrás de mim!"},
+  {key:"Aether", display:"Aether — The Watcher", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:500, ability:"Pergunta ao assassino o próximo alvo (1x).", phraseEN:"Who’s your next target?", phrasePT:"Qual é o seu próximo alvo?"},
+  {key:"Elara", display:"Elara — The Strategist", type:"Sobrevivente", rarity:"epico", oldPrice:1600, price:900, ability:"Pode correr duas vezes seguidas sem ser pega (1x).", phraseEN:"Double move!", phrasePT:"Movimento duplo!"},
+  {key:"Orion", display:"Orion — The Illusionist", type:"Sobrevivente", rarity:"epico", oldPrice:1700, price:950, ability:"Diz 'Illusion!' → assassino deve perseguir outro alvo por 10s (1x).", phraseEN:"Can you catch a shadow of me?", phrasePT:"Consegue pegar só minha sombra?"},
+  {key:"Liora", display:"Liora — The Veiled", type:"Sobrevivente", rarity:"lendario", oldPrice:2600, price:1500, ability:"Faz assassino contar 8s parado (1x).", phraseEN:"Now you forget me…", phrasePT:"Agora você me esquece…"},
+  {key:"Marin", display:"Marin — The Timebinder", type:"Sobrevivente", rarity:"lendario", oldPrice:2700, price:1600, ability:"Ativa 'Time Snare': assassino NÃO PODE CORRER 5s (1x).", phraseEN:"Slow down, time obeys me!", phrasePT:"Diminua, o tempo me obedece!"},
+  {key:"Cael", display:"Cael — The Defier", type:"Sobrevivente", rarity:"epico", oldPrice:2200, price:1200, ability:"Ao ser alvo: assassino NÃO PODE ATACAR por 2s e NÃO PODE CORRER por 8s (1x).", phraseEN:"Your turn to run.", phrasePT:"Agora é você quem corre."},
+  {key:"Umbra", display:"Umbra — The Shadow", type:"Assassino", rarity:"comum", oldPrice:400, price:200, ability:"Habilidade ativa somente se tentar pegar e falhar (1x).", phraseEN:"Shadow strike!", phrasePT:"Golpe das sombras!"},
+  {key:"Darius", display:"Darius — The Hunter", type:"Assassino", rarity:"raro", oldPrice:800, price:500, ability:"Marked: bloqueia habilidades do alvo por 15s (1x).", phraseEN:"Marked!", phrasePT:"Marcado!"},
+  {key:"Echo", display:"Echo — The Returned", type:"Assassino", rarity:"epico", oldPrice:1800, price:950, ability:"Anula 1 poder usado contra ele (1x).", phraseEN:"Echo!", phrasePT:"Eco!"},
+  {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", oldPrice:3000, price:1600, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."}
 ];
 
+/* money table */
+const moneyTable = [
+  {action:"Sobrevive até o fim", value:"+50E"},
+  {action:"Revive alguém", value:"+25E"},
+  {action:"Usa habilidade com sucesso", value:"+20E"},
+  {action:"Morre antes de 2min", value:"+10E"},
+  {action:"Morre depois de 2min", value:"+30E"},
+  {action:"Assassino elimina alguém", value:"+20E"},
+  {action:"Assassino vence partida", value:"+100E"},
+  {action:"Respeita as regras", value:"+5E"},
+  {action:"Melhor da rodada", value:"+25E"}
+];
+
+/* tríades — todos os personagens listados em uma tríade (usar ??? para vagas futuras) */
 const trios = [
-  {title:"Tríade da Vida", members:["Seraphina","Vídios","???"]},
-  {title:"Tríade do Tempo", members:["Marin","Cael","???"]},
-  {title:"Tríade das Sombras", members:["Umbra","Noctis","???"]},
-  {title:"Tríade da Ilusão", members:["Orion","Echo","???"]}
+  {title:"Tríade da Vida", desc:"Cura, proteção e resiliência", members:["Seraphina","Gideon","Requiem"]},
+  {title:"Tríade da Mente", desc:"Observação, estratégia e previsão", members:["Aether","Elara","Orion"]},
+  {title:"Tríade da Velocidade", desc:"Movimento, reflexo e precisão", members:["Nyra","Echo","Darius"]},
+  {title:"Tríade das Sombras", desc:"Engano, resistência e retribuição", members:["Umbra","Liora","Cael"]},
+  {title:"Tríade do Tempo", desc:"Controle temporal e manipulação", members:["Marin","Orion","???"]} // Orion appears twice purposely for thematic overlap; last slot reserved
 ];
 
-// gerar personagens
-const grid=document.getElementById("charGrid");
-chars.forEach(c=>{
-  const div=document.createElement("div");
-  div.className="card halloween-border";
-  div.innerHTML=`<div class="char-name">${c.name}</div>
-  <div class="rarity">${c.type} • ${c.rarity}</div>
-  <div class="small">${c.ability}</div>`;
-  grid.appendChild(div);
-});
+/* ---------- HELPERS ---------- */
+function $(sel){return document.querySelector(sel)}
+function $all(sel){return Array.from(document.querySelectorAll(sel))}
 
-// gerar loja
-const shop=document.getElementById("shopGrid");
-chars.forEach(c=>{
-  const div=document.createElement("div");
-  div.className="card";
-  div.innerHTML=`<div class="char-name">${c.name}</div>
-  <div class="rarity">${c.rarity}</div>
-  <div class="price"><span class="old-price">${c.old}E</span> → <span class="new-price">${c.now}E</span></div>`;
-  shop.appendChild(div);
-});
+/* THEME */
+function setTheme(t){ document.body.setAttribute('data-theme', t==='light'?'light':'dark'); localStorage.setItem('recall_theme', t); }
+function toggleTheme(){ const cur = localStorage.getItem('recall_theme') || 'dark'; setTheme(cur==='dark'?'light':'dark'); }
+setTheme(localStorage.getItem('recall_theme') || 'dark');
+$('#themeBtn').addEventListener('click', toggleTheme);
 
-// gerar trios
-const tGrid=document.getElementById("trioGrid");
-trios.forEach(t=>{
-  const div=document.createElement("div");
-  div.className="card";
-  div.innerHTML=`<b>${t.title}</b><br>${t.members.join(" • ")}`;
-  tGrid.appendChild(div);
+/* NAV */
+$all('.navbtn').forEach(btn=>{
+  btn.addEventListener('click', (e)=>{
+    $all('.navbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    showSection(btn.dataset.section || btn.getAttribute('data-section'));
+  });
 });
+function showSection(id){
+  const sections = ['characters','shop','money','tracker','trios','updates'];
+  sections.forEach(s=>{
+    const el = document.getElementById(s);
+    if(!el) return;
+    el.classList.toggle('hidden', s !== id);
+  });
+  if(id === 'characters') renderCharacters();
+  if(id === 'shop') renderShop();
+  if(id === 'money') renderMoney();
+  if(id === 'tracker') renderTracker();
+  if(id === 'trios') renderTrios();
+  if(id === 'updates') renderUpdates();
+}
 
-// trocar seções
-document.querySelectorAll(".navbtn").forEach(btn=>{
-  btn.onclick=()=>{
-    document.querySelectorAll(".navbtn").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    const id=btn.dataset.section;
-    document.querySelectorAll("section").forEach(sec=>sec.classList.add("hidden"));
-    document.getElementById(id).classList.remove("hidden");
+/* CHARACTERS */
+function renderCharacters(){
+  const container = $('#characters'); 
+  container.innerHTML = '<div class="group-title">Personagens</div><div class="small">Clique no card para abrir habilidade e falas (EN / PT)</div><div class="grid" id="charactersGrid" style="margin-top:12px"></div>';
+  const grid = $('#charactersGrid');
+  characters.forEach(ch=>{
+    const card = document.createElement('div'); card.className = 'card halo';
+    const header = document.createElement('div'); header.className = 'char-name';
+    header.innerHTML = `<div style="font-weight:800">${ch.display}</div><div class="small">${ch.type} • <span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>`;
+    const body = document.createElement('div'); body.className = 'char-ability hidden';
+    body.innerHTML = `<strong>Habilidade:</strong> ${ch.ability}<br><strong>EN:</strong> ${ch.phraseEN} &nbsp; <strong>PT:</strong> ${ch.phrasePT}`;
+    header.addEventListener('click', ()=> body.classList.toggle('hidden'));
+    card.appendChild(header); card.appendChild(body); grid.appendChild(card);
+  });
+}
+
+/* SHOP */
+function renderShop(){
+  const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Preços: antigo (riscado) → promoção de Halloween (atual)</div>';
+  const grid = document.createElement('div'); grid.className = 'grid';
+  characters.forEach(ch=>{
+    const c = document.createElement('div'); c.className = 'card';
+    c.innerHTML = `
+      <div style="font-weight:800">${ch.display}</div>
+      <div class="small">${ch.type} • ${ch.rarity.toUpperCase()}</div>
+      <div style="margin-top:8px">${ch.ability}</div>
+      <div style="margin-top:10px" class="shop-line">
+        <div><span class="old-price">${ch.oldPrice}E</span><span class="new-price">${ch.price}E</span></div>
+        <div><span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>
+      </div>
+    `;
+    grid.appendChild(c);
+  });
+  area.appendChild(grid);
+}
+
+/* MONEY */
+function renderMoney(){
+  const tbody = $('#moneyTableBody'); tbody.innerHTML = '';
+  moneyTable.forEach(row=>{
+    const tr = document.createElement('tr'); tr.innerHTML = `<td>${row.action}</td><td>${row.value}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+/* TRACKER (protected) */
+const TRACKER_PASSWORD = "BATATA"; // not shown to users anywhere in UI
+let players = JSON.parse(localStorage.getItem('recall_players')) || [];
+
+function renderTracker(){
+  const area = $('#tracker');
+  area.innerHTML = '<div class="group-title">Lista secreta — Controle de Personagens</div><div class="small">Protegido por senha.</div><div id="trackerAreaInner" style="margin-top:12px"><div id="loginDiv"><p class="small">Digite a senha:</p><input id="trackerPass" type="password" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"><button class="btn" id="loginBtn">Entrar</button></div><div id="trackerContent" class="hidden" style="margin-top:12px"><div style="overflow:auto"><table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="addPlayerBtn">Adicionar Jogador</button><button class="btn" id="clearPlayersBtn">Limpar lista</button><button class="btn danger" id="exportBtn">Exportar (JSON)</button></div></div></div>';
+  buildPlayerHeader();
+  document.getElementById('loginBtn').addEventListener('click', checkPassword);
+  document.getElementById('addPlayerBtn').addEventListener('click', addPlayer);
+  document.getElementById('clearPlayersBtn').addEventListener('click', clearPlayers);
+  document.getElementById('exportBtn').addEventListener('click', exportPlayers);
+}
+
+function buildPlayerHeader(){
+  const header = document.getElementById('playerHeader');
+  header.innerHTML = '<th>Jogador</th>';
+  characters.forEach(c=>{
+    const th = document.createElement('th'); th.textContent = c.key; header.appendChild(th);
+  });
+}
+
+function checkPassword(){
+  const v = document.getElementById('trackerPass').value;
+  if(v === TRACKER_PASSWORD){
+    document.getElementById('loginDiv').style.display = 'none';
+    document.getElementById('trackerContent').classList.remove('hidden');
+    renderTable();
+  } else {
+    alert('Senha incorreta!');
   }
-});
+}
+
+function renderTable(){
+  const tbody = document.getElementById('playerBody'); tbody.innerHTML = '';
+  players.forEach((p, idx)=>{
+    const tr = document.createElement('tr');
+    const tdName = document.createElement('td'); tdName.textContent = p.name; tr.appendChild(tdName);
+    characters.forEach(k=>{
+      const td = document.createElement('td');
+      const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = !!p.characters[k.key];
+      cb.addEventListener('change', ()=>{ players[idx].characters[k.key] = cb.checked; localStorage.setItem('recall_players', JSON.stringify(players)); });
+      td.appendChild(cb); tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+function addPlayer(){
+  const name = prompt('Digite o nome do jogador:');
+  if(!name) return;
+  players.push({name, characters:{}});
+  localStorage.setItem('recall_players', JSON.stringify(players));
+  renderTable();
+}
+
+function clearPlayers(){
+  if(!confirm('Limpar toda a lista local?')) return;
+  players = []; localStorage.setItem('recall_players', JSON.stringify(players)); renderTable();
+}
+
+function exportPlayers(){
+  const data = JSON.stringify(players, null, 2);
+  const blob = new Blob([data], {type:'application/json'}); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'recall_players.json'; a.click(); URL.revokeObjectURL(url);
+}
+
+/* TRIOS */
+function renderTrios(){
+  const grid = $('#trioGrid'); grid.innerHTML = '';
+  trios.forEach(t=>{
+    const card = document.createElement('div'); card.className = 'card';
+    const membersHTML = t.members.map(m=> `<li>${m}</li>`).join('');
+    card.innerHTML = `<div style="font-weight:800">${t.title}</div><div class="small">${t.desc}</div><div style="margin-top:8px"><ul>${membersHTML}</ul></div>`;
+    grid.appendChild(card);
+  });
+}
+
+/* UPDATES */
+function renderUpdates(){
+  const area = $('#updates'); area.innerHTML = '<div class="group-title">Atualizações</div>';
+  const list = [
+    {title:"V1.3 — Halloween", desc:"Adicionado Cael (Épico). Preços em promoção; Tríades atualizadas."},
+    {title:"V1.2", desc:"Adicionado Liora, Marin e Requiem. Melhorias no tracker."},
+    {title:"V1.0", desc:"Lançamento inicial do Recall WI."}
+  ];
+  list.forEach(u=>{
+    const block = document.createElement('div'); block.className = 'update-block';
+    block.innerHTML = `<div class="update-title">${u.title}</div><div class="update-section">${u.desc}</div>`;
+    area.appendChild(block);
+  });
+}
+
+/* INIT */
+function init(){
+  renderCharacters(); renderMoney(); buildPlayerHeader();
+  // default show characters
+  showSection('characters');
+
+  // wire nav buttons (for older navbtns without data-section attribute)
+  document.querySelectorAll('.navbtn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const sec = b.getAttribute('data-section') || b.dataset.section;
+      if(sec) showSection(sec);
+    });
+  });
+}
+init();
+
 </script>
 </body>
 </html>
