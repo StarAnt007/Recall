@@ -3,123 +3,63 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Recall WI — Halloween</title>
+<title>Recall WI — Oficial</title>
 <style>
   :root{
-    --bg-1:#0a0608; --bg-2:#12060a;
-    --panel:#1b1216; --muted:#bca8a8; --accent:#ff7b00;
-    --accent-2:#a44bff; --gold:#ffd700; --card:#24161a;
-    --glass: rgba(255,255,255,0.03); --success:#4caf50; --danger:#ff6b6b; --text:#fff4ec;
+    --bg:#0f1114; --panel:#15181b; --muted:#9aa4ad; --accent:#00d1ff;
+    --gold:#ffd700; --purple:#a44bff; --orange:#ff7b00;
+    --card:#1b1f23; --glass: rgba(255,255,255,0.03); --text:#e9eef2;
   }
   *{box-sizing:border-box}
   body{
-    margin:0;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-    color:var(--text);
-    background:
-      radial-gradient(circle at 10% 20%, rgba(255,123,0,0.06), transparent 10%),
-      radial-gradient(circle at 90% 80%, rgba(164,75,255,0.04), transparent 12%),
-      linear-gradient(180deg,var(--bg-1),var(--bg-2));
-    min-height:100vh;
+    margin:0;font-family:Inter,system-ui, -apple-system,"Segoe UI",Roboto,Arial;
+    color:var(--text); background:linear-gradient(180deg,#0b0d10,#111217);
+    min-height:100vh; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   }
-
-  /* little halloween icons layer using inline SVG backgrounds (no external image) */
-  body::before{
-    content:"";
-    position:fixed; inset:0; pointer-events:none; z-index:0;
-    background-image:
-      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><g opacity="0.06" fill="%23ff7b00"><path d="M50 300c40-120 160-120 200 0 10 30-40 60-100 60s-110-30-100-60z"/></g></svg>'),
-      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><g opacity="0.04" fill="%23a44bff"><circle cx="50" cy="50" r="40"/></g></svg>');
-    background-repeat:no-repeat;
-    background-position: left bottom, right top;
-    filter: blur(6px) saturate(120%);
-  }
-
-  header{
-    position:sticky; top:0; z-index:40;
-    display:flex; align-items:center; justify-content:space-between;
-    gap:12px; padding:16px 20px;
-    background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));
-    border-bottom:2px solid rgba(255,123,0,0.12);
-    backdrop-filter: blur(4px);
-  }
-
-  .brand{display:flex; gap:12px; align-items:center;}
-  .logo{
-    width:48px;height:48px;border-radius:10px;
-    background:linear-gradient(135deg,var(--accent),var(--accent-2));
-    display:flex;align-items:center;justify-content:center;font-weight:900;color:#020;
-    box-shadow:0 8px 30px rgba(0,0,0,0.6); font-size:20px;
-  }
-  .title h1{margin:0;font-size:18px}
-  .title p{margin:0;font-size:12px;color:var(--muted)}
-
+  header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.15));border-bottom:1px solid rgba(255,255,255,0.03);position:sticky;top:0;z-index:40}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;color:#021}
   nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .navbtn{
-    padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
-    background:transparent;color:var(--text);cursor:pointer;font-weight:700
-  }
-  .navbtn.active{background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#061}
-
+  .navbtn{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);cursor:pointer;font-weight:700}
+  .navbtn.active{outline:2px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,0.35)}
   .controls{display:flex;gap:8px;align-items:center}
-
-  main{padding:20px; max-width:1100px; margin:18px auto; position:relative; z-index:10}
-
-  .panel{
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25));
-    border-radius:12px; padding:16px; margin-bottom:18px;
-    border:1px solid rgba(255,255,255,0.03);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-  }
-
+  main{padding:20px;max-width:1100px;margin:18px auto}
+  .panel{background:var(--panel);border-radius:12px;padding:16px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
   .group-title{font-size:18px;color:var(--accent);margin-bottom:10px;font-weight:800}
   .small{font-size:13px;color:var(--muted)}
-
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-
-  .card{background:var(--card); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.03)}
-  .card.halo{box-shadow:0 10px 30px rgba(255,123,0,0.08)}
-  .char-name{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;cursor:pointer}
-  .char-name:hover{background:var(--glass)}
-  .char-ability{display:none;margin-top:8px;padding:8px;background:rgba(0,0,0,0.06);border-radius:8px}
-
-  .tag{padding:5px 8px;border-radius:8px;font-weight:800;font-size:12px}
-  .comum{background:rgba(255,255,255,0.04); color:#ddd}
-  .raro{background:rgba(0,123,255,0.06); color:var(--blue)}
-  .epico{background:rgba(164,75,255,0.06); color:var(--accent-2)}
-  .lendario{background:linear-gradient(90deg,#ffd70020,#ff9a0020); color:var(--gold)}
-
-  .shop-line{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px}
-  .old-price{text-decoration:line-through;color:#ffb3a3;font-size:13px; margin-right:8px}
-  .new-price{color:var(--accent);font-weight:900;font-size:15px}
-
-  table{width:100%;border-collapse:collapse;margin-top:8px}
-  th,td{padding:10px;border:1px solid rgba(255,255,255,0.04);text-align:left}
-  th{background:rgba(255,255,255,0.02);font-weight:800}
-
-  #trackerArea{margin-top:8px}
-  #playerTable{width:100%;border-collapse:collapse;font-size:13px}
-  #playerTable th,#playerTable td{padding:8px;border:1px solid rgba(255,255,255,0.04);text-align:center}
-  .btn{padding:8px 10px;border-radius:8px;border:none;background:var(--accent);color:#051;font-weight:800;cursor:pointer}
-  .danger{background:var(--danger); color:#111}
-
-  .update-block{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); padding:12px;border-radius:10px}
-  .update-title{font-weight:900;color:var(--gold);margin-bottom:8px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+  .char-name{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer}
+  .char-ability{display:none;margin-top:8px;padding:10px;background:rgba(0,0,0,0.06);border-radius:8px}
+  .tag{padding:6px 8px;border-radius:8px;font-weight:800;font-size:12px}
+  .comum{background:rgba(255,255,255,0.03);color:#ddd}
+  .raro{background:rgba(0,123,255,0.06);color:var(--accent)}
+  .epico{background:rgba(164,75,255,0.06);color:var(--purple)}
+  .lendario{background:linear-gradient(90deg,#ffd70020,#ff9a0020);color:var(--gold)}
+  .shop-line{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px}
+  .old-price{text-decoration:line-through;color:#ffb3a3;margin-right:8px;font-size:13px}
+  .new-price{color:var(--accent);font-weight:900}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:10px;border:1px solid rgba(255,255,255,0.03);text-align:left}
+  th{background:rgba(255,255,255,0.02)}
   .hidden{display:none}
-
-  /* responsive */
-  @media (max-width:720px){
-    header{flex-direction:column;align-items:flex-start;gap:10px}
-  }
+  /* secret button bottom-right */
+  #secretBtn{position:fixed;right:18px;bottom:18px;width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;color:#021;cursor:pointer;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+  /* secret panel */
+  #secretPanel{position:fixed;right:18px;bottom:80px;width:360px;max-width:95vw;background:var(--panel);border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.03);z-index:61;display:none}
+  .event-btn{padding:8px 10px;margin:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);cursor:pointer;background:transparent;color:var(--text);font-weight:800}
+  .section-title{font-weight:800;margin-top:8px;color:var(--gold)}
+  footer{text-align:center;padding:12px;color:var(--muted);font-size:13px}
+  @media (max-width:720px){main{padding:12px}}
 </style>
 </head>
-<body data-theme="dark">
+<body>
 <header>
   <div class="brand">
     <div class="logo">RW</div>
-    <div class="title">
-      <h1>Recall WI</h1>
-      <p class="small">Edição Halloween — Recall</p>
+    <div>
+      <h1 style="margin:0">Recall WI</h1>
+      <div class="small">Tudo que você precisa saber do Recall</div>
     </div>
   </div>
 
@@ -133,67 +73,101 @@
   </nav>
 
   <div class="controls">
-    <button class="themeToggle navbtn" id="themeBtn">Mudar tema</button>
+    <button id="themeBtn" class="navbtn">Mudar tema</button>
   </div>
 </header>
 
 <main>
-  <!-- CHARACTERS -->
-  <section id="characters" class="panel">
-    <div class="group-title">Personagens</div>
-    <div class="small">Clique no cartão para ver habilidade e falas (EN / PT)</div>
-    <div class="grid" id="charactersGrid" style="margin-top:12px"></div>
-  </section>
+  <!-- Characters -->
+  <section id="characters" class="panel"></section>
 
-  <!-- SHOP -->
-  <section id="shop" class="panel hidden">
-    <div class="group-title">Loja — Promo Halloween</div>
-    <div class="small">Mostramos preço antigo (risco) e preço promocional atual.</div>
-    <div id="shopArea" style="margin-top:12px"></div>
-  </section>
+  <!-- Shop -->
+  <section id="shop" class="panel hidden"></section>
 
-  <!-- MONEY -->
+  <!-- Money -->
   <section id="money" class="panel hidden">
-    <div class="group-title">Economia — Como ganhar Essence</div>
-    <div class="small">Ajuste de recompensa por ações durante as partidas.</div>
-    <div style="margin-top:10px">
-      <table>
-        <thead><tr><th>Ação</th><th>Essence</th></tr></thead>
-        <tbody id="moneyTableBody"></tbody>
-      </table>
-    </div>
+    <div class="group-title">Como ganhar Essence</div>
+    <div class="small">Ações e recompensas</div>
+    <table style="margin-top:10px">
+      <thead><tr><th>Ação</th><th>Essence</th></tr></thead>
+      <tbody id="moneyTableBody"></tbody>
+    </table>
   </section>
 
-  <!-- TRACKER -->
-  <section id="tracker" class="panel hidden">
-    <div class="group-title">Lista secreta — Controle de Personagens</div>
-    <div class="small">Protegido por senha (somente você altera)</div>
-    <div id="trackerArea" style="margin-top:12px"></div>
-  </section>
+  <!-- Tracker -->
+  <section id="tracker" class="panel hidden"></section>
 
-  <!-- TRIOS -->
+  <!-- Trios -->
   <section id="trios" class="panel hidden">
     <div class="group-title">Tríades</div>
-    <div class="small">Cada personagem faz parte de uma tríade — ??? indica vaga futura.</div>
+    <div class="small">Cada personagem pertence a uma tríade — ??? indica vaga.</div>
     <div id="trioGrid" class="grid" style="margin-top:12px"></div>
   </section>
 
-  <!-- UPDATES -->
-  <section id="updates" class="panel hidden">
-    <div class="group-title">Atualizações</div>
-    <div class="update-block" style="margin-top:10px">
-      <div class="update-title">V1.3 — Halloween & Cael</div>
-      <div class="update-section">Novo personagem: <b>Cael — The Defier (ÉPICO)</b>: ao ser alvo, ativa Defiance — o assassino não pode atacar por 2s e não pode correr por 8s (1x).</div>
-      <div class="update-section">Promoção de Halloween: preços antigos exibidos riscado + preço promocional.</div>
-      <div class="update-section">Tríades: agora todos os personagens pertencem a uma tríade.</div>
-    </div>
-  </section>
-
+  <!-- Updates -->
+  <section id="updates" class="panel hidden"></section>
 </main>
+
+<!-- secret button bottom-right -->
+<div id="secretBtn" title="Painel secreto">🔐</div>
+
+<!-- secret panel -->
+<div id="secretPanel" role="dialog" aria-hidden="true">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-weight:900">Painel Secreto</div>
+    <button id="closeSecret" class="event-btn">Fechar</button>
+  </div>
+
+  <div style="margin-top:8px">
+    <div class="small">Digite a senha para abrir controles:</div>
+    <input id="secretPass" type="password" placeholder="Senha" style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);margin-top:6px">
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="unlockBtn" class="event-btn">Desbloquear</button>
+      <button id="resetEventBtn" class="event-btn">Resetar evento</button>
+    </div>
+  </div>
+
+  <div id="eventControls" style="margin-top:12px;display:none">
+    <div class="section-title">COMEMORAÇÕES (50% OFF na loja de personagens)</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+      <button class="event-btn" data-event="halloween">🎃 Halloween</button>
+      <button class="event-btn" data-event="natal">🎄 Natal</button>
+      <button class="event-btn" data-event="ano-novo">🎆 Ano Novo</button>
+      <button class="event-btn" data-event="aniversario">🎂 Aniversário Recall</button>
+    </div>
+
+    <div class="section-title">ESTAÇÕES (apenas visual)</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+      <button class="event-btn" data-event="verao">☀️ Verão</button>
+      <button class="event-btn" data-event="outono">🍂 Outono</button>
+      <button class="event-btn" data-event="inverno">❄️ Inverno</button>
+      <button class="event-btn" data-event="primavera">🌸 Primavera</button>
+    </div>
+
+    <div class="section-title">EVENTOS DO LORE</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+      <button class="event-btn" data-event="abyssal">🖤 Abyssal Shadows</button>
+      <button class="event-btn" data-event="ruptura">🔥 Ruptura Temporal</button>
+      <button class="event-btn" data-event="eclipse">🌑 Eclipse Total</button>
+    </div>
+
+    <div class="section-title">MODOS EXTRAS</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+      <button class="event-btn" data-event="caos">🌀 Modo Caos</button>
+      <button class="event-btn" data-event="doce">🍬 Modo Doce</button>
+      <button class="event-btn" data-event="teste">🧪 Modo Teste</button>
+    </div>
+
+    <div style="margin-top:10px" class="small">Recomendações de data serão mostradas ao passar o mouse sobre cada botão.</div>
+  </div>
+</div>
+
+<footer>Recall WI — painéis de evento: comemorações dão 50% OFF (somente personagens) • senha admin: BATATA</footer>
 
 <script>
 /* ---------- DATA ---------- */
-/* characters: display, tipo, raridade, price (promo), oldPrice, ability, phrases */
+const TRACKER_PASSWORD = "BATATA"; // senha secreta para painel
+
 const characters = [
   {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
   {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
@@ -210,7 +184,6 @@ const characters = [
   {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", oldPrice:3000, price:1600, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."}
 ];
 
-/* money table */
 const moneyTable = [
   {action:"Sobrevive até o fim", value:"+50E"},
   {action:"Revive alguém", value:"+25E"},
@@ -223,36 +196,59 @@ const moneyTable = [
   {action:"Melhor da rodada", value:"+25E"}
 ];
 
-/* tríades — todos os personagens listados em uma tríade (usar ??? para vagas futuras) */
+/* tríades */
 const trios = [
   {title:"Tríade da Vida", desc:"Cura, proteção e resiliência", members:["Seraphina","Gideon","Requiem"]},
   {title:"Tríade da Mente", desc:"Observação, estratégia e previsão", members:["Aether","Elara","Orion"]},
   {title:"Tríade da Velocidade", desc:"Movimento, reflexo e precisão", members:["Nyra","Echo","Darius"]},
-  {title:"Tríade das Sombras", desc:"Engano, resistência e retribuição", members:["Umbra","Liora","Cael"]},
-  {title:"Tríade do Tempo", desc:"Controle temporal e manipulação", members:["Marin","Orion","???"]} // Orion appears twice purposely for thematic overlap; last slot reserved
+  {title:"Tríade das Sombras", desc:"Engano, resistência e retribuição (Mestre do Umbra chegando)", members:["Umbra","Liora","???"]},
+  {title:"Tríade do Tempo", desc:"Controle temporal e manipulação", members:["Marin","Cael","Orion"]}
 ];
+
+/* evento definitions with recommended dates (ISO local dates) */
+const eventDefinitions = {
+  "halloween": {type:"comemoracao", label:"Halloween", discount:0.5, rec:"01-10 → 05-11"},
+  "natal": {type:"comemoracao", label:"Natal", discount:0.5, rec:"15-12 → 26-12"},
+  "ano-novo": {type:"comemoracao", label:"Ano Novo", discount:0.5, rec:"27-12 → 02-01"},
+  "aniversario": {type:"comemoracao", label:"Aniversário Recall (21/09)", discount:0.5, rec:"20-09 → 22-09"},
+  "verao": {type:"estacao", label:"Verão", rec:"21-12 → 20-03"},
+  "outono": {type:"estacao", label:"Outono", rec:"20-03 → 21-06"},
+  "inverno": {type:"estacao", label:"Inverno", rec:"21-06 → 22-09"},
+  "primavera": {type:"estacao", label:"Primavera", rec:"22-09 → 21-12"},
+  "abyssal": {type:"evento", label:"Abyssal Shadows", rec:"Livre (lore)"},
+  "ruptura": {type:"evento", label:"Ruptura Temporal", rec:"Livre (lore)"},
+  "eclipse": {type:"evento", label:"Eclipse Total", rec:"Livre (lore)"},
+  "caos": {type:"modo", label:"Modo Caos", rec:"Livre"},
+  "doce": {type:"modo", label:"Modo Doce", rec:"Livre"},
+  "teste": {type:"modo", label:"Modo Teste", rec:"Livre"}
+};
+
+/* ---------- STATE ---------- */
+let activeEvent = localStorage.getItem('recall_active_event') || null; // e.g. "halloween"
+let activeTheme = localStorage.getItem('recall_theme_mode') || null; // for visual only
 
 /* ---------- HELPERS ---------- */
 function $(sel){return document.querySelector(sel)}
 function $all(sel){return Array.from(document.querySelectorAll(sel))}
 
-/* THEME */
-function setTheme(t){ document.body.setAttribute('data-theme', t==='light'?'light':'dark'); localStorage.setItem('recall_theme', t); }
-function toggleTheme(){ const cur = localStorage.getItem('recall_theme') || 'dark'; setTheme(cur==='dark'?'light':'dark'); }
-setTheme(localStorage.getItem('recall_theme') || 'dark');
-$('#themeBtn').addEventListener('click', toggleTheme);
+/* THEME toggle (light/dark) */
+$('#themeBtn').addEventListener('click', ()=>{
+  const cur = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  document.body.setAttribute('data-theme', cur);
+  localStorage.setItem('recall_theme', cur);
+});
 
-/* NAV */
+/* NAV buttons */
 $all('.navbtn').forEach(btn=>{
-  btn.addEventListener('click', (e)=>{
+  btn.addEventListener('click', ()=> {
     $all('.navbtn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    showSection(btn.dataset.section || btn.getAttribute('data-section'));
+    const sec = btn.getAttribute('data-section');
+    showSection(sec);
   });
 });
 function showSection(id){
-  const sections = ['characters','shop','money','tracker','trios','updates'];
-  sections.forEach(s=>{
+  ['characters','shop','money','tracker','trios','updates'].forEach(s=>{
     const el = document.getElementById(s);
     if(!el) return;
     el.classList.toggle('hidden', s !== id);
@@ -265,37 +261,59 @@ function showSection(id){
   if(id === 'updates') renderUpdates();
 }
 
-/* CHARACTERS */
+/* ---------- RENDER ---------- */
 function renderCharacters(){
-  const container = $('#characters'); 
-  container.innerHTML = '<div class="group-title">Personagens</div><div class="small">Clique no card para abrir habilidade e falas (EN / PT)</div><div class="grid" id="charactersGrid" style="margin-top:12px"></div>';
+  const container = $('#characters');
+  container.innerHTML = '<div class="group-title">Personagens</div><div class="small">Clique no cartão para ver habilidade e falas (EN / PT)</div><div class="grid" id="charactersGrid" style="margin-top:12px"></div>';
   const grid = $('#charactersGrid');
-  characters.forEach(ch=>{
-    const card = document.createElement('div'); card.className = 'card halo';
-    const header = document.createElement('div'); header.className = 'char-name';
-    header.innerHTML = `<div style="font-weight:800">${ch.display}</div><div class="small">${ch.type} • <span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>`;
-    const body = document.createElement('div'); body.className = 'char-ability hidden';
-    body.innerHTML = `<strong>Habilidade:</strong> ${ch.ability}<br><strong>EN:</strong> ${ch.phraseEN} &nbsp; <strong>PT:</strong> ${ch.phrasePT}`;
-    header.addEventListener('click', ()=> body.classList.toggle('hidden'));
-    card.appendChild(header); card.appendChild(body); grid.appendChild(card);
-  });
+  grid.innerHTML = '';
+  // separate survivors and killers visually
+  const survivors = characters.filter(c=>c.type === "Sobrevivente");
+  const killers = characters.filter(c=>c.type === "Assassino");
+
+  // survivors
+  if(survivors.length){
+    const block = document.createElement('div'); block.className='card'; block.style.gridColumn = '1 / -1';
+    block.innerHTML = `<div style="font-weight:900">Sobreviventes</div><div class="small" style="margin-top:6px">Personagens que defendem e ajudam.</div>`;
+    grid.appendChild(block);
+    survivors.forEach(ch=> grid.appendChild(createCharCard(ch)));
+  }
+  // killers
+  if(killers.length){
+    const block = document.createElement('div'); block.className='card'; block.style.gridColumn = '1 / -1';
+    block.innerHTML = `<div style="font-weight:900">Assassinos</div><div class="small" style="margin-top:6px">Personagens cujo objetivo é caçar.</div>`;
+    grid.appendChild(block);
+    killers.forEach(ch=> grid.appendChild(createCharCard(ch)));
+  }
+}
+function createCharCard(ch){
+  const card = document.createElement('div'); card.className = 'card';
+  const header = document.createElement('div'); header.className = 'char-name';
+  header.innerHTML = `<div style="font-weight:800">${ch.display}</div><div class="small"><span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span> • ${ch.type}</div>`;
+  const ability = document.createElement('div'); ability.className = 'char-ability';
+  ability.innerHTML = `<strong>Habilidade:</strong> ${ch.ability}<br><strong>EN:</strong> ${ch.phraseEN} &nbsp; <strong>PT:</strong> ${ch.phrasePT}`;
+  header.addEventListener('click', ()=> ability.classList.toggle('hidden'));
+  card.appendChild(header); card.appendChild(ability);
+  return card;
 }
 
-/* SHOP */
+/* SHOP rendering with price adjustments when a 'comemoracao' active (50% off) */
 function renderShop(){
-  const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Preços: antigo (riscado) → promoção de Halloween (atual)</div>';
+  const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Preços antigos riscados → preço atual (promoções aplicadas)</div>';
   const grid = document.createElement('div'); grid.className = 'grid';
   characters.forEach(ch=>{
     const c = document.createElement('div'); c.className = 'card';
-    c.innerHTML = `
-      <div style="font-weight:800">${ch.display}</div>
-      <div class="small">${ch.type} • ${ch.rarity.toUpperCase()}</div>
+    // apply discount only if activeEvent is a 'comemoracao'
+    let displayPrice = ch.price;
+    let old = ch.oldPrice;
+    if(activeEvent && eventDefinitions[activeEvent] && eventDefinitions[activeEvent].type === 'comemoracao'){
+      displayPrice = Math.round(ch.price * (1 - eventDefinitions[activeEvent].discount)); // ch.price already promo base, apply extra? spec: celebrations 50% — we apply on current price
+      // to make sense, we'll show old price as original oldPrice, and new as displayPrice
+    }
+    c.innerHTML = `<div style="font-weight:900">${ch.display}</div>
+      <div class="small">${ch.type} • <span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>
       <div style="margin-top:8px">${ch.ability}</div>
-      <div style="margin-top:10px" class="shop-line">
-        <div><span class="old-price">${ch.oldPrice}E</span><span class="new-price">${ch.price}E</span></div>
-        <div><span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>
-      </div>
-    `;
+      <div style="margin-top:10px" class="shop-line"><div><span class="old-price">${old}E</span><span class="new-price">${displayPrice}E</span></div><div style="text-align:right">${(activeEvent? ('Evento: '+ (eventDefinitions[activeEvent]?.label||activeEvent)) : '')}</div></div>`;
     grid.appendChild(c);
   });
   area.appendChild(grid);
@@ -310,71 +328,47 @@ function renderMoney(){
   });
 }
 
-/* TRACKER (protected) */
-const TRACKER_PASSWORD = "BATATA"; // not shown to users anywhere in UI
-let players = JSON.parse(localStorage.getItem('recall_players')) || [];
-
+/* TRACKER */
+let players = JSON.parse(localStorage.getItem('recall_players') || '[]');
 function renderTracker(){
   const area = $('#tracker');
-  area.innerHTML = '<div class="group-title">Lista secreta — Controle de Personagens</div><div class="small">Protegido por senha.</div><div id="trackerAreaInner" style="margin-top:12px"><div id="loginDiv"><p class="small">Digite a senha:</p><input id="trackerPass" type="password" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"><button class="btn" id="loginBtn">Entrar</button></div><div id="trackerContent" class="hidden" style="margin-top:12px"><div style="overflow:auto"><table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="addPlayerBtn">Adicionar Jogador</button><button class="btn" id="clearPlayersBtn">Limpar lista</button><button class="btn danger" id="exportBtn">Exportar (JSON)</button></div></div></div>';
+  area.innerHTML = '<div class="group-title">Lista secreta — Controle de Personagens</div><div class="small">Protegido por senha.</div><div id="trackerArea" style="margin-top:12px"><div id="loginDiv"><p class="small">Digite a senha:</p><input id="trackerPass" type="password" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"><button id="trackerLogin" class="event-btn">Entrar</button></div><div id="trackerContent" class="hidden" style="margin-top:12px"><div style="overflow:auto"><table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button id="addPlayer" class="btn">Adicionar Jogador</button><button id="clearPlayers" class="btn">Limpar lista</button><button id="exportPlayers" class="btn danger">Exportar (JSON)</button></div></div></div>';
   buildPlayerHeader();
-  document.getElementById('loginBtn').addEventListener('click', checkPassword);
-  document.getElementById('addPlayerBtn').addEventListener('click', addPlayer);
-  document.getElementById('clearPlayersBtn').addEventListener('click', clearPlayers);
-  document.getElementById('exportBtn').addEventListener('click', exportPlayers);
-}
-
-function buildPlayerHeader(){
-  const header = document.getElementById('playerHeader');
-  header.innerHTML = '<th>Jogador</th>';
-  characters.forEach(c=>{
-    const th = document.createElement('th'); th.textContent = c.key; header.appendChild(th);
+  document.getElementById('trackerLogin').addEventListener('click', ()=> {
+    const v = document.getElementById('trackerPass').value;
+    if(v === TRACKER_PASSWORD){
+      document.getElementById('loginDiv').style.display = 'none';
+      document.getElementById('trackerContent').classList.remove('hidden');
+      renderTable();
+    } else alert('Senha incorreta!');
+  });
+  document.getElementById('addPlayer').addEventListener('click', ()=> {
+    const name = prompt('Nome do jogador:'); if(!name) return;
+    players.push({name, characters:{}}); localStorage.setItem('recall_players', JSON.stringify(players)); renderTable();
+  });
+  document.getElementById('clearPlayers').addEventListener('click', ()=> {
+    if(confirm('Limpar toda a lista local?')){ players=[]; localStorage.setItem('recall_players', JSON.stringify(players)); renderTable(); }
+  });
+  document.querySelector('.btn.danger')?.addEventListener('click', ()=> {
+    const data = JSON.stringify(players,null,2); const blob = new Blob([data],{type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'recall_players.json'; a.click(); URL.revokeObjectURL(url);
   });
 }
-
-function checkPassword(){
-  const v = document.getElementById('trackerPass').value;
-  if(v === TRACKER_PASSWORD){
-    document.getElementById('loginDiv').style.display = 'none';
-    document.getElementById('trackerContent').classList.remove('hidden');
-    renderTable();
-  } else {
-    alert('Senha incorreta!');
-  }
+function buildPlayerHeader(){
+  const header = document.getElementById('playerHeader'); header.innerHTML = '<th>Jogador</th>';
+  characters.forEach(c=> { const th = document.createElement('th'); th.textContent = c.key; header.appendChild(th); });
 }
-
 function renderTable(){
   const tbody = document.getElementById('playerBody'); tbody.innerHTML = '';
   players.forEach((p, idx)=>{
     const tr = document.createElement('tr');
     const tdName = document.createElement('td'); tdName.textContent = p.name; tr.appendChild(tdName);
-    characters.forEach(k=>{
-      const td = document.createElement('td');
-      const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = !!p.characters[k.key];
-      cb.addEventListener('change', ()=>{ players[idx].characters[k.key] = cb.checked; localStorage.setItem('recall_players', JSON.stringify(players)); });
+    characters.forEach(ch=>{
+      const td = document.createElement('td'); const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = !!p.characters[ch.key];
+      cb.addEventListener('change', ()=> { players[idx].characters[ch.key] = cb.checked; localStorage.setItem('recall_players', JSON.stringify(players));});
       td.appendChild(cb); tr.appendChild(td);
     });
     tbody.appendChild(tr);
   });
-}
-
-function addPlayer(){
-  const name = prompt('Digite o nome do jogador:');
-  if(!name) return;
-  players.push({name, characters:{}});
-  localStorage.setItem('recall_players', JSON.stringify(players));
-  renderTable();
-}
-
-function clearPlayers(){
-  if(!confirm('Limpar toda a lista local?')) return;
-  players = []; localStorage.setItem('recall_players', JSON.stringify(players)); renderTable();
-}
-
-function exportPlayers(){
-  const data = JSON.stringify(players, null, 2);
-  const blob = new Blob([data], {type:'application/json'}); const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'recall_players.json'; a.click(); URL.revokeObjectURL(url);
 }
 
 /* TRIOS */
@@ -382,8 +376,8 @@ function renderTrios(){
   const grid = $('#trioGrid'); grid.innerHTML = '';
   trios.forEach(t=>{
     const card = document.createElement('div'); card.className = 'card';
-    const membersHTML = t.members.map(m=> `<li>${m}</li>`).join('');
-    card.innerHTML = `<div style="font-weight:800">${t.title}</div><div class="small">${t.desc}</div><div style="margin-top:8px"><ul>${membersHTML}</ul></div>`;
+    const list = t.members.map(m=> `<li>${m}</li>`).join('');
+    card.innerHTML = `<div style="font-weight:900">${t.title}</div><div class="small">${t.desc}</div><div style="margin-top:8px"><ul>${list}</ul></div>`;
     grid.appendChild(card);
   });
 }
@@ -392,30 +386,95 @@ function renderTrios(){
 function renderUpdates(){
   const area = $('#updates'); area.innerHTML = '<div class="group-title">Atualizações</div>';
   const list = [
-    {title:"V1.3 — Halloween", desc:"Adicionado Cael (Épico). Preços em promoção; Tríades atualizadas."},
-    {title:"V1.2", desc:"Adicionado Liora, Marin e Requiem. Melhorias no tracker."},
-    {title:"V1.0", desc:"Lançamento inicial do Recall WI."}
+    {title:"V1.3 — Halloween & Cael", desc:"Cael (ÉPICO) adicionado; promo Halloween pronta; tríades completas; painel secreto."},
+    {title:"V1.2", desc:"Adicionado Liora, Marin e Requiem; melhorias no tracker."},
+    {title:"V1.0", desc:"Versão inicial do Recall WI."}
   ];
-  list.forEach(u=>{
-    const block = document.createElement('div'); block.className = 'update-block';
-    block.innerHTML = `<div class="update-title">${u.title}</div><div class="update-section">${u.desc}</div>`;
-    area.appendChild(block);
-  });
+  list.forEach(u=>{ const block = document.createElement('div'); block.className='card'; block.innerHTML = `<div style="font-weight:900">${u.title}</div><div class="small" style="margin-top:8px">${u.desc}</div>`; area.appendChild(block); });
 }
 
-/* INIT */
-function init(){
-  renderCharacters(); renderMoney(); buildPlayerHeader();
-  // default show characters
-  showSection('characters');
+/* ---------- EVENTS PANEL (secret) ---------- */
+const secretBtn = document.getElementById('secretBtn');
+const secretPanel = document.getElementById('secretPanel');
+const unlockBtn = document.getElementById('unlockBtn');
+const closeSecret = document.getElementById('closeSecret');
 
-  // wire nav buttons (for older navbtns without data-section attribute)
-  document.querySelectorAll('.navbtn').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      const sec = b.getAttribute('data-section') || b.dataset.section;
-      if(sec) showSection(sec);
+secretBtn.addEventListener('click', ()=> { secretPanel.style.display = secretPanel.style.display === 'block' ? 'none' : 'block'; });
+closeSecret.addEventListener('click', ()=> secretPanel.style.display='none');
+
+unlockBtn.addEventListener('click', ()=> {
+  const v = document.getElementById('secretPass').value;
+  if(v === TRACKER_PASSWORD){
+    document.getElementById('secretPass').value = '';
+    document.getElementById('eventControls').style.display = 'block';
+    alert('Painel secreto desbloqueado. Use com cuidado.');
+    // show tooltips: add recommended date tooltips to buttons
+    document.querySelectorAll('#secretPanel .event-btn').forEach(b=>{
+      const ev = b.getAttribute('data-event');
+      if(ev && eventDefinitions[ev]) b.title = 'Período recomendado: ' + eventDefinitions[ev].rec;
     });
-  });
+  } else alert('Senha incorreta!');
+});
+
+document.getElementById('resetEventBtn').addEventListener('click', ()=> {
+  activeEvent = null; localStorage.removeItem('recall_active_event'); localStorage.removeItem('recall_theme_mode'); applyEvent(); alert('Evento resetado');
+});
+
+/* wiring event buttons */
+secretPanel.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.event-btn');
+  if(!btn) return;
+  const ev = btn.getAttribute('data-event');
+  if(!ev) return;
+  activeEvent = ev;
+  localStorage.setItem('recall_active_event', ev);
+  // set theme mode for visuals
+  localStorage.setItem('recall_theme_mode', ev);
+  applyEvent();
+  renderShop();
+  alert('Evento ativado: ' + (eventDefinitions[ev]?.label || ev));
+});
+
+/* apply event visuals / discount logic */
+function applyEvent(){
+  // visuals: add simple class via body attribute
+  const theme = localStorage.getItem('recall_theme_mode');
+  activeTheme = theme;
+  document.body.style.setProperty('--accent', theme === 'halloween' || theme === 'halloween' ? 'var(--orange)' : '');
+  // implement Halloween automatic activation flag is handled elsewhere
+  // actual discount applied on renderShop() when eventDefinitions[type] === 'comemoracao'
+}
+
+/* ---------- TIMER: auto-activate Halloween at 09/11 12:30 local ---------- */
+function checkAutoActivate(){
+  try{
+    // date in local timezone: year guessed as current year or 2025 if passed? We'll find next occurrence of Nov 9 at 12:30
+    const now = new Date();
+    // determine target year: if current date before Nov 9 this year -> use this year; else next year
+    const year = (now.getMonth() < 10 || (now.getMonth() === 10 && now.getDate() <= 9)) ? now.getFullYear() : now.getFullYear() + 1;
+    const target = new Date(year, 10, 9, 12, 30, 0); // month 10 = November
+    if(now >= target){
+      // activate halloween automatically
+      activeEvent = 'halloween';
+      localStorage.setItem('recall_active_event', 'halloween');
+      localStorage.setItem('recall_theme_mode', 'halloween');
+      applyEvent();
+    }
+  }catch(e){ console.error(e) }
+}
+// run on load
+checkAutoActivate();
+
+/* ---------- INIT ---------- */
+function init(){
+  renderCharacters(); renderShop(); renderMoney(); renderTrios(); renderUpdates();
+  renderMoney();
+  // money table
+  const tbody = $('#moneyTableBody'); tbody.innerHTML='';
+  moneyTable.forEach(r=>{ const tr = document.createElement('tr'); tr.innerHTML = `<td>${r.action}</td><td>${r.value}</td>`; tbody.appendChild(tr); });
+
+  // wire nav default
+  showSection('characters');
 }
 init();
 
