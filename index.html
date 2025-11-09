@@ -9,21 +9,29 @@
     --bg:#0f1114; --panel:#15181b; --muted:#9aa4ad; --accent:#00d1ff;
     --gold:#ffd700; --purple:#a44bff; --orange:#ff7b00;
     --card:#1b1f23; --glass: rgba(255,255,255,0.03); --text:#e9eef2;
+    --halloween-bg-start:#12040b;
+    --halloween-bg-end:#2b0810;
+    --natal-bg-start:#02120a;
+    --natal-bg-end:#401010;
+    --aniv-bg-start:#081028;
+    --aniv-bg-end:#1b0b2a;
   }
   *{box-sizing:border-box}
+  html,body{height:100%}
   body{
-    margin:0;font-family:Inter,system-ui, -apple-system,"Segoe UI",Roboto,Arial;
+    margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
     color:var(--text); background:linear-gradient(180deg,#0b0d10,#111217);
     min-height:100vh; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    transition: background 450ms ease, color 350ms ease;
   }
   header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.15));border-bottom:1px solid rgba(255,255,255,0.03);position:sticky;top:0;z-index:40}
   .brand{display:flex;gap:12px;align-items:center}
-  .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;color:#021}
+  .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;color:#021;font-size:20px;box-shadow:0 8px 30px rgba(0,0,0,0.5)}
   nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .navbtn{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);cursor:pointer;font-weight:700}
   .navbtn.active{outline:2px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,0.35)}
   .controls{display:flex;gap:8px;align-items:center}
-  main{padding:20px;max-width:1100px;margin:18px auto}
+  main{padding:20px;max-width:1180px;margin:18px auto}
   .panel{background:var(--panel);border-radius:12px;padding:16px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
   .group-title{font-size:18px;color:var(--accent);margin-bottom:10px;font-weight:800}
   .small{font-size:13px;color:var(--muted)}
@@ -44,26 +52,34 @@
   th{background:rgba(255,255,255,0.02)}
   .hidden{display:none}
   /* secret button bottom-right */
-  #secretBtn{position:fixed;right:18px;bottom:18px;width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;color:#021;cursor:pointer;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+  #secretBtn{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;color:#021;cursor:pointer;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
   /* secret panel */
-  #secretPanel{position:fixed;right:18px;bottom:80px;width:360px;max-width:95vw;background:var(--panel);border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.03);z-index:61;display:none}
+  #secretPanel{position:fixed;right:18px;bottom:80px;width:420px;max-width:96vw;background:var(--panel);border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.03);z-index:61;display:none}
   .event-btn{padding:8px 10px;margin:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);cursor:pointer;background:transparent;color:var(--text);font-weight:800}
   .section-title{font-weight:800;margin-top:8px;color:var(--gold)}
   footer{text-align:center;padding:12px;color:var(--muted);font-size:13px}
-  @media (max-width:720px){main{padding:12px}}
+  .btn{padding:8px 10px;border-radius:8px;border:none;background:var(--accent);color:#021;font-weight:700;cursor:pointer}
+  .danger{background:#ff6b6b;color:#fff}
+  .notice{font-size:13px;color:var(--muted);margin-top:8px}
+  .hero-banner{border-radius:10px;padding:18px;margin-bottom:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .hero-left{max-width:70%}
+  .hero-title{font-size:20px;font-weight:900}
+  .hero-desc{color:var(--muted);font-size:13px;margin-top:6px}
+  .event-pill{padding:6px 10px;border-radius:8px;font-weight:800}
+  @media (max-width:820px){ .hero-left{max-width:100%} main{padding:12px} header{flex-direction:column;gap:8px;align-items:flex-start} }
 </style>
 </head>
 <body>
 <header>
   <div class="brand">
-    <div class="logo">RW</div>
+    <div class="logo" id="logoBox">RW</div>
     <div>
       <h1 style="margin:0">Recall WI</h1>
       <div class="small">Tudo que você precisa saber do Recall</div>
     </div>
   </div>
 
-  <nav>
+  <nav aria-label="Navegação principal">
     <button class="navbtn active" data-section="characters">Personagens</button>
     <button class="navbtn" data-section="shop">Loja</button>
     <button class="navbtn" data-section="money">Economia</button>
@@ -78,6 +94,17 @@
 </header>
 
 <main>
+  <div class="hero-banner panel">
+    <div class="hero-left">
+      <div class="hero-title">Recall WI — Central</div>
+      <div class="hero-desc">Personagens, loja, economia, tracker e painel secreto. Eventos comemorativos aplicam 50% OFF automaticamente apenas durante o período do evento.</div>
+    </div>
+    <div style="text-align:right">
+      <div id="activeEventLabel" class="event-pill" style="background:rgba(255,255,255,0.02)">Nenhum evento</div>
+      <div class="notice" id="activeEventInfo"></div>
+    </div>
+  </div>
+
   <!-- Characters -->
   <section id="characters" class="panel"></section>
 
@@ -158,16 +185,28 @@
       <button class="event-btn" data-event="teste">🧪 Modo Teste</button>
     </div>
 
-    <div style="margin-top:10px" class="small">Recomendações de data serão mostradas ao passar o mouse sobre cada botão.</div>
+    <div style="margin-top:10px" class="small">Recomendações de data aparecem ao passar o mouse.  
+    Use <strong>Gerar index global</strong> abaixo para baixar um arquivo pronto (com o evento que você escolher forçado) — depois é só subir esse arquivo no GitHub para que o evento seja visto por todos.</div>
+
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <button id="exportGlobalBtn" class="event-btn">Gerar index global</button>
+      <button id="exportGlobalPrompt" class="event-btn">Gerar index (escolher evento)</button>
+    </div>
   </div>
 </div>
 
-<footer>Recall WI — painéis de evento: comemorações dão 50% OFF (somente personagens) • senha admin: BATATA</footer>
+<footer style="position:relative">Recall WI — painéis de evento: comemorações dão 50% OFF (somente personagens) • senha admin: BATATA</footer>
 
 <script>
-/* ---------- DATA ---------- */
-const TRACKER_PASSWORD = "BATATA"; // senha secreta para painel
+/* ---------- CONFIG ---------- */
+/*
+ Notes:
+ - To make an event truly global for everyone, replace index.html in GitHub with a copy containing FORCE_GLOBAL_EVENT = 'halloween' (or whatever).
+ - To make that easier, the secret panel includes a "Gerar index global" function that creates and downloads a copy of this file with the chosen FORCE_GLOBAL_EVENT embedded.
+*/
+const TRACKER_PASSWORD = "BATATA";
 
+/* ---------- DATA ---------- */
 const characters = [
   {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
   {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
@@ -196,7 +235,6 @@ const moneyTable = [
   {action:"Melhor da rodada", value:"+25E"}
 ];
 
-/* tríades */
 const trios = [
   {title:"Tríade da Vida", desc:"Cura, proteção e resiliência", members:["Seraphina","Gideon","Requiem"]},
   {title:"Tríade da Mente", desc:"Observação, estratégia e previsão", members:["Aether","Elara","Orion"]},
@@ -205,7 +243,6 @@ const trios = [
   {title:"Tríade do Tempo", desc:"Controle temporal e manipulação", members:["Marin","Cael","Orion"]}
 ];
 
-/* evento definitions with recommended dates (ISO local dates) */
 const eventDefinitions = {
   "halloween": {type:"comemoracao", label:"Halloween", discount:0.5, rec:"01-10 → 05-11"},
   "natal": {type:"comemoracao", label:"Natal", discount:0.5, rec:"15-12 → 26-12"},
@@ -224,8 +261,10 @@ const eventDefinitions = {
 };
 
 /* ---------- STATE ---------- */
-let activeEvent = localStorage.getItem('recall_active_event') || null; // e.g. "halloween"
-let activeTheme = localStorage.getItem('recall_theme_mode') || null; // for visual only
+// activeEvent is either null or one of eventDefinitions keys.
+// It's stored in localStorage for this browser. To force global for everyone you must replace index.html in repo (see export below).
+let activeEvent = localStorage.getItem('recall_active_event') || null;
+let forcedGlobal = null; // used only when generating export file (not active here)
 
 /* ---------- HELPERS ---------- */
 function $(sel){return document.querySelector(sel)}
@@ -238,7 +277,7 @@ $('#themeBtn').addEventListener('click', ()=>{
   localStorage.setItem('recall_theme', cur);
 });
 
-/* NAV buttons */
+/* NAV */
 $all('.navbtn').forEach(btn=>{
   btn.addEventListener('click', ()=> {
     $all('.navbtn').forEach(b=>b.classList.remove('active'));
@@ -267,18 +306,15 @@ function renderCharacters(){
   container.innerHTML = '<div class="group-title">Personagens</div><div class="small">Clique no cartão para ver habilidade e falas (EN / PT)</div><div class="grid" id="charactersGrid" style="margin-top:12px"></div>';
   const grid = $('#charactersGrid');
   grid.innerHTML = '';
-  // separate survivors and killers visually
   const survivors = characters.filter(c=>c.type === "Sobrevivente");
   const killers = characters.filter(c=>c.type === "Assassino");
 
-  // survivors
   if(survivors.length){
     const block = document.createElement('div'); block.className='card'; block.style.gridColumn = '1 / -1';
     block.innerHTML = `<div style="font-weight:900">Sobreviventes</div><div class="small" style="margin-top:6px">Personagens que defendem e ajudam.</div>`;
     grid.appendChild(block);
     survivors.forEach(ch=> grid.appendChild(createCharCard(ch)));
   }
-  // killers
   if(killers.length){
     const block = document.createElement('div'); block.className='card'; block.style.gridColumn = '1 / -1';
     block.innerHTML = `<div style="font-weight:900">Assassinos</div><div class="small" style="margin-top:6px">Personagens cujo objetivo é caçar.</div>`;
@@ -297,18 +333,22 @@ function createCharCard(ch){
   return card;
 }
 
-/* SHOP rendering with price adjustments when a 'comemoracao' active (50% off) */
+/* SHOP rendering (discount only if activeEvent is a 'comemoracao') */
+function isCelebrationActive(){
+  if(!activeEvent) return false;
+  const def = eventDefinitions[activeEvent];
+  return def && def.type === 'comemoracao';
+}
 function renderShop(){
   const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Preços antigos riscados → preço atual (promoções aplicadas)</div>';
   const grid = document.createElement('div'); grid.className = 'grid';
   characters.forEach(ch=>{
     const c = document.createElement('div'); c.className = 'card';
-    // apply discount only if activeEvent is a 'comemoracao'
+    // display price: base price (ch.price) but apply 50% off only when isCelebrationActive()
     let displayPrice = ch.price;
     let old = ch.oldPrice;
-    if(activeEvent && eventDefinitions[activeEvent] && eventDefinitions[activeEvent].type === 'comemoracao'){
-      displayPrice = Math.round(ch.price * (1 - eventDefinitions[activeEvent].discount)); // ch.price already promo base, apply extra? spec: celebrations 50% — we apply on current price
-      // to make sense, we'll show old price as original oldPrice, and new as displayPrice
+    if(isCelebrationActive()){
+      displayPrice = Math.round(ch.price * (1 - eventDefinitions[activeEvent].discount));
     }
     c.innerHTML = `<div style="font-weight:900">${ch.display}</div>
       <div class="small">${ch.type} • <span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>
@@ -407,17 +447,17 @@ unlockBtn.addEventListener('click', ()=> {
   if(v === TRACKER_PASSWORD){
     document.getElementById('secretPass').value = '';
     document.getElementById('eventControls').style.display = 'block';
-    alert('Painel secreto desbloqueado. Use com cuidado.');
-    // show tooltips: add recommended date tooltips to buttons
+    // populate tooltips
     document.querySelectorAll('#secretPanel .event-btn').forEach(b=>{
       const ev = b.getAttribute('data-event');
       if(ev && eventDefinitions[ev]) b.title = 'Período recomendado: ' + eventDefinitions[ev].rec;
     });
+    alert('Painel secreto desbloqueado. Use com cuidado.');
   } else alert('Senha incorreta!');
 });
 
 document.getElementById('resetEventBtn').addEventListener('click', ()=> {
-  activeEvent = null; localStorage.removeItem('recall_active_event'); localStorage.removeItem('recall_theme_mode'); applyEvent(); alert('Evento resetado');
+  activeEvent = null; localStorage.removeItem('recall_active_event'); localStorage.removeItem('recall_theme_mode'); applyEvent(); renderShop(); updateHeaderEvent(); alert('Evento resetado');
 });
 
 /* wiring event buttons */
@@ -428,53 +468,146 @@ secretPanel.addEventListener('click', (e)=>{
   if(!ev) return;
   activeEvent = ev;
   localStorage.setItem('recall_active_event', ev);
-  // set theme mode for visuals
   localStorage.setItem('recall_theme_mode', ev);
   applyEvent();
   renderShop();
+  updateHeaderEvent();
   alert('Evento ativado: ' + (eventDefinitions[ev]?.label || ev));
 });
 
 /* apply event visuals / discount logic */
 function applyEvent(){
-  // visuals: add simple class via body attribute
-  const theme = localStorage.getItem('recall_theme_mode');
-  activeTheme = theme;
-  document.body.style.setProperty('--accent', theme === 'halloween' || theme === 'halloween' ? 'var(--orange)' : '');
-  // implement Halloween automatic activation flag is handled elsewhere
-  // actual discount applied on renderShop() when eventDefinitions[type] === 'comemoracao'
+  // visuals: update body background and logo per event
+  const logo = document.getElementById('logoBox');
+  const label = document.getElementById('activeEventLabel');
+  const info = document.getElementById('activeEventInfo');
+
+  if(!activeEvent){
+    document.body.style.background = 'linear-gradient(180deg,#0b0d10,#111217)';
+    logo.style.background = 'linear-gradient(135deg,var(--accent),var(--purple))';
+    label.textContent = 'Nenhum evento';
+    label.style.background = 'rgba(255,255,255,0.02)';
+    info.textContent = '';
+    localStorage.removeItem('recall_theme_mode');
+    return;
+  }
+
+  const def = eventDefinitions[activeEvent];
+  label.textContent = def?.label || activeEvent;
+  info.textContent = def?.rec || '';
+
+  // choose visuals per event key
+  if(activeEvent === 'halloween'){
+    document.body.style.background = `linear-gradient(180deg,var(--halloween-bg-start),var(--halloween-bg-end))`;
+    logo.style.background = 'linear-gradient(135deg,var(--orange),#6a1b9a)';
+  } else if(activeEvent === 'natal'){
+    document.body.style.background = `linear-gradient(180deg,var(--natal-bg-start),var(--natal-bg-end))`;
+    logo.style.background = 'linear-gradient(135deg,#0b8f6e,#ff4242)';
+  } else if(activeEvent === 'aniversario'){
+    document.body.style.background = `linear-gradient(180deg,var(--aniv-bg-start),var(--aniv-bg-end))`;
+    logo.style.background = 'linear-gradient(135deg,#ffd700,#ff8a00)';
+  } else if(eventDefinitions[activeEvent] && eventDefinitions[activeEvent].type === 'estacao'){
+    // lighter seasonal palettes
+    if(activeEvent === 'verao'){ document.body.style.background = 'linear-gradient(180deg,#05162b,#052b44)'; logo.style.background = 'linear-gradient(135deg,#ffd166,#ff8a00)'; }
+    if(activeEvent === 'primavera'){ document.body.style.background = 'linear-gradient(180deg,#06131b,#0b2b14)'; logo.style.background = 'linear-gradient(135deg,#a0ffb8,#5ce1a1)'; }
+    if(activeEvent === 'outono'){ document.body.style.background = 'linear-gradient(180deg,#1b0b00,#2b0f00)'; logo.style.background = 'linear-gradient(135deg,#ffb86b,#ff7b00)'; }
+    if(activeEvent === 'inverno'){ document.body.style.background = 'linear-gradient(180deg,#021027,#071a34)'; logo.style.background = 'linear-gradient(135deg,#bfe3ff,#6fb3ff)'; }
+  } else {
+    // generic event look
+    document.body.style.background = 'linear-gradient(180deg,#07121b,#181b2a)';
+    logo.style.background = 'linear-gradient(135deg,var(--accent),var(--purple))';
+  }
 }
 
-/* ---------- TIMER: auto-activate Halloween at 09/11 12:30 local ---------- */
+/* ---------- TIMER: auto-activate Halloween at 09/11 12:30 local (only if no manual event active) */
 function checkAutoActivate(){
   try{
-    // date in local timezone: year guessed as current year or 2025 if passed? We'll find next occurrence of Nov 9 at 12:30
     const now = new Date();
-    // determine target year: if current date before Nov 9 this year -> use this year; else next year
-    const year = (now.getMonth() < 10 || (now.getMonth() === 10 && now.getDate() <= 9)) ? now.getFullYear() : now.getFullYear() + 1;
-    const target = new Date(year, 10, 9, 12, 30, 0); // month 10 = November
-    if(now >= target){
-      // activate halloween automatically
-      activeEvent = 'halloween';
-      localStorage.setItem('recall_active_event', 'halloween');
-      localStorage.setItem('recall_theme_mode', 'halloween');
-      applyEvent();
+    // determine target year as nearest upcoming (this or next year)
+    let year = now.getFullYear();
+    const targetThisYear = new Date(year, 10, 9, 12, 30, 0); // Nov 9
+    let target = targetThisYear;
+    if(now > targetThisYear) {
+      target = new Date(year+1,10,9,12,30,0);
+    }
+    // Activate only if there is NO activeEvent (manual or persisted)
+    if(!activeEvent){
+      // if it's the exact time or after (during that minute) activate immediately
+      if(now >= target && now - target < (1000*60*60*24)){ // within 24h window after target: trigger once
+        activeEvent = 'halloween';
+        localStorage.setItem('recall_active_event', 'halloween');
+        localStorage.setItem('recall_theme_mode', 'halloween');
+        applyEvent(); renderShop(); updateHeaderEvent();
+      }
     }
   }catch(e){ console.error(e) }
 }
-// run on load
 checkAutoActivate();
+
+/* ---------- Export: generate a version of index.html with FORCE_GLOBAL_EVENT set ---------- */
+function generateExportHTML(forceEventKey){
+  // We will produce a copy of this file but with a small header variable FORCE_GLOBAL_EVENT set.
+  // For simplicity, create a minimal wrapper replacing the localStorage-based activation with hard-coded FORCE_GLOBAL_EVENT.
+  // This exported HTML will be a working standalone copy; user can upload it to GitHub to force the event for all visitors.
+  // Build a serialized copy of the HTML with FORCE_GLOBAL_EVENT inserted.
+  const htmlTemplate = `<!-- Generated index.html: FORCE_GLOBAL_EVENT = ${forceEventKey ? "'" + forceEventKey + "'" : "null"} -->\n` +
+  document.documentElement.outerHTML;
+  return htmlTemplate;
+}
+
+function downloadExportWithEvent(key){
+  const html = generateExportHTML(key);
+  const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const name = key ? `index_force_${key}.html` : 'index_force_none.html';
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/* wire export buttons */
+document.getElementById('exportGlobalBtn').addEventListener('click', ()=>{
+  // quick export: uses the currently active event (if any) as FORCE_GLOBAL_EVENT
+  const ev = activeEvent;
+  const ok = confirm('Gerar um index.html PRONTO para upload (irá forçar o evento "' + (ev || 'none') + '" para todos os visitantes). Deseja continuar?');
+  if(!ok) return;
+  downloadExportWithEvent(ev);
+});
+
+document.getElementById('exportGlobalPrompt').addEventListener('click', ()=>{
+  const choice = prompt('Digite a chave do evento para forçar (ex: halloween, natal, aniversario). Deixe em branco para nenhuma:');
+  if(choice === null) return;
+  const key = choice.trim() || null;
+  if(key && !eventDefinitions[key]) { alert('Evento desconhecido: ' + key); return; }
+  downloadExportWithEvent(key);
+});
+
+/* ---------- Update header badge + initial UI ---------- */
+function updateHeaderEvent(){
+  const label = document.getElementById('activeEventLabel');
+  const info = document.getElementById('activeEventInfo');
+  if(!activeEvent){ label.textContent = 'Nenhum evento'; info.textContent = ''; return; }
+  const def = eventDefinitions[activeEvent];
+  label.textContent = def?.label || activeEvent;
+  info.textContent = def?.rec || '';
+}
 
 /* ---------- INIT ---------- */
 function init(){
   renderCharacters(); renderShop(); renderMoney(); renderTrios(); renderUpdates();
-  renderMoney();
   // money table
   const tbody = $('#moneyTableBody'); tbody.innerHTML='';
   moneyTable.forEach(r=>{ const tr = document.createElement('tr'); tr.innerHTML = `<td>${r.action}</td><td>${r.value}</td>`; tbody.appendChild(tr); });
-
+  // set event from localStorage if present
+  if(activeEvent) applyEvent();
+  updateHeaderEvent();
   // wire nav default
   showSection('characters');
+  // wire secret panel behavior for event buttons' tooltips (done on unlock)
 }
 init();
 
