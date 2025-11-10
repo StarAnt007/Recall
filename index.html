@@ -42,7 +42,7 @@
   .epico{background:rgba(164,75,255,0.06);color:var(--purple)}
   .lendario{background:linear-gradient(90deg,#ffd70020,#ff9a0020);color:var(--gold)}
   .shop-line{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px}
-  .old-price{text-decoration:line-through;color:#ffb3a3;margin-right:8px;font-size:13px}
+  .old-price{text-decoration:line-through;color:#ffb3a3;margin-right:8px;font-size:13px;opacity:0.6}
   .new-price{color:var(--gold);font-weight:900}
   table{width:100%;border-collapse:collapse}
   th,td{padding:10px;border:1px solid rgba(255,255,255,0.03);text-align:left}
@@ -88,7 +88,7 @@
   <div class="hero-banner panel" id="hero">
     <div class="hero-left">
       <div class="hero-title">Recall WI — Tema: Cael</div>
-      <div class="hero-desc">Este index está focado no tema do Cael (efeitos visuais e badge). Não há painel de eventos público — controle manual removido.</div>
+      <div class="hero-desc">Este index está focado no tema do Cael (efeitos visuais e badge). Painel público de eventos removido — versão estática com senha para o tracker.</div>
     </div>
     <div style="text-align:right">
       <div id="activeEventLabel" class="event-pill">Cael Active</div>
@@ -126,34 +126,40 @@
   <section id="updates" class="panel hidden"></section>
 </main>
 
-<footer style="position:relative">Recall WI — Tema Cael aplicado. Painel de eventos removido para esta versão pública.</footer>
+<footer style="position:relative">Recall WI — Tema Cael aplicado. Versão: sem promoções • tracker protegido por senha.</footer>
 
 <script>
 /* -------------------------------------------------------
-   Versão limpa: removido painel público de eventos.
-   - Cael tema aplicado no load.
-   - Cael convertido para LENDÁRIO.
-   - JavaScript roda somente após DOMContentLoaded.
-   - Botões de navegação e conteúdo funcionais.
+   Atualizações aplicadas:
+   - Tracker protegido por senha (TRACKER_PASSWORD = "BATATA")
+   - Promoções/remunerações globais removidas da UI da loja
+   - Adicionada Salya (Raro) como sobrevivente
+   - Cael mantido como lendário
+   - Script executa após DOMContentLoaded
    ------------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  const TRACKER_PASSWORD = "BATATA";
+
   /* ---------- DATA (ajustes finais) ---------- */
   const characters = [
-    {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
-    {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
-    {key:"Gideon", display:"Gideon — The Guardian", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:500, ability:"Protege alguém de 1 ataque (escudo 10s).", phraseEN:"Stay behind me!", phrasePT:"Fiquem atrás de mim!"},
-    {key:"Aether", display:"Aether — The Watcher", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:500, ability:"Pergunta ao assassino o próximo alvo (1x).", phraseEN:"Who’s your next target?", phrasePT:"Qual é o seu próximo alvo?"},
-    {key:"Elara", display:"Elara — The Strategist", type:"Sobrevivente", rarity:"epico", oldPrice:1600, price:900, ability:"Pode correr duas vezes seguidas sem ser pega (1x).", phraseEN:"Double move!", phrasePT:"Movimento duplo!"},
-    {key:"Orion", display:"Orion — The Illusionist", type:"Sobrevivente", rarity:"epico", oldPrice:1700, price:950, ability:"Diz 'Illusion!' → assassino deve perseguir outro alvo por 10s (1x).", phraseEN:"Can you catch a shadow of me?", phrasePT:"Consegue pegar só minha sombra?"},
-    {key:"Liora", display:"Liora — The Veiled", type:"Sobrevivente", rarity:"lendario", oldPrice:2600, price:1500, ability:"Faz assassino contar 8s parado (1x).", phraseEN:"Now you forget me…", phrasePT:"Agora você me esquece…"},
-    {key:"Marin", display:"Marin — The Timebinder", type:"Sobrevivente", rarity:"lendario", oldPrice:2700, price:1600, ability:"Ativa 'Time Snare': assassino NÃO PODE CORRER 5s (1x).", phraseEN:"Slow down, time obeys me!", phrasePT:"Diminua, o tempo me obedece!"},
-    // Cael agora LENDÁRIO (ajustado)
-    {key:"Cael", display:"Cael — The Defier", type:"Sobrevivente", rarity:"lendario", oldPrice:2200, price:1500, ability:"Ao ser alvo: assassino NÃO PODE ATACAR por 2s e NÃO PODE CORRER por 8s (1x).", phraseEN:"Your turn to run.", phrasePT:"Agora é você quem corre."},
-    {key:"Umbra", display:"Umbra — The Shadow", type:"Assassino", rarity:"comum", oldPrice:400, price:200, ability:"Habilidade ativa somente se tentar pegar e falhar (1x).", phraseEN:"Shadow strike!", phrasePT:"Golpe das sombras!"},
-    {key:"Darius", display:"Darius — The Hunter", type:"Assassino", rarity:"raro", oldPrice:800, price:500, ability:"Marked: bloqueia habilidades do alvo por 15s (1x).", phraseEN:"Marked!", phrasePT:"Marcado!"},
-    {key:"Echo", display:"Echo — The Returned", type:"Assassino", rarity:"epico", oldPrice:1800, price:950, ability:"Anula 1 poder usado contra ele (1x).", phraseEN:"Echo!", phrasePT:"Eco!"},
-    {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", oldPrice:3000, price:1600, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."}
+    {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
+    {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
+    {key:"Gideon", display:"Gideon — The Guardian", type:"Sobrevivente", rarity:"raro", price:500, ability:"Protege alguém de 1 ataque (escudo 10s).", phraseEN:"Stay behind me!", phrasePT:"Fiquem atrás de mim!"},
+    {key:"Aether", display:"Aether — The Watcher", type:"Sobrevivente", rarity:"raro", price:500, ability:"Pergunta ao assassino o próximo alvo (1x).", phraseEN:"Who’s your next target?", phrasePT:"Qual é o seu próximo alvo?"},
+    {key:"Elara", display:"Elara — The Strategist", type:"Sobrevivente", rarity:"epico", price:900, ability:"Pode correr duas vezes seguidas sem ser pega (1x).", phraseEN:"Double move!", phrasePT:"Movimento duplo!"},
+    {key:"Orion", display:"Orion — The Illusionist", type:"Sobrevivente", rarity:"epico", price:950, ability:"Diz 'Illusion!' → assassino deve perseguir outro alvo por 10s (1x).", phraseEN:"Can you catch a shadow of me?", phrasePT:"Consegue pegar só minha sombra?"},
+    {key:"Liora", display:"Liora — The Veiled", type:"Sobrevivente", rarity:"lendario", price:1500, ability:"Faz assassino contar 8s parado (1x).", phraseEN:"Now you forget me…", phrasePT:"Agora você me esquece…"},
+    {key:"Marin", display:"Marin — The Timebinder", type:"Sobrevivente", rarity:"lendario", price:1600, ability:"Ativa 'Time Snare': assassino NÃO PODE CORRER 5s (1x).", phraseEN:"Slow down, time obeys me!", phrasePT:"Diminua, o tempo me obedece!"},
+    // Cael LENDÁRIO (mantido)
+    {key:"Cael", display:"Cael — The Defier", type:"Sobrevivente", rarity:"lendario", price:1500, ability:"Ao ser alvo: assassino NÃO PODE ATACAR por 2s e NÃO PODE CORRER por 8s (1x).", phraseEN:"Your turn to run.", phrasePT:"Agora é você quem corre."},
+    // NOVA - Salya (Raro)
+    {key:"Salya", display:"Salya — A Calmaria", type:"Sobrevivente", rarity:"raro", price:700, ability:"Trégua — o assassino não pode levantar a arma por 3s (ainda pode andar). (1x).", phraseEN:"Peace… even if brief.", phrasePT:"Paz… mesmo que curta."},
+    {key:"Umbra", display:"Umbra — The Shadow", type:"Assassino", rarity:"comum", price:200, ability:"Habilidade ativa somente se tentar pegar e falhar (1x).", phraseEN:"Shadow strike!", phrasePT:"Golpe das sombras!"},
+    {key:"Darius", display:"Darius — The Hunter", type:"Assassino", rarity:"raro", price:500, ability:"Marked: bloqueia habilidades do alvo por 15s (1x).", phraseEN:"Marked!", phrasePT:"Marcado!"},
+    {key:"Echo", display:"Echo — The Returned", type:"Assassino", rarity:"epico", price:950, ability:"Anula 1 poder usado contra ele (1x).", phraseEN:"Echo!", phrasePT:"Eco!"},
+    {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", price:1600, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."}
   ];
 
   const moneyTable = [
@@ -238,17 +244,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderShop(){
-    const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Preços antigos riscados → preço atual (promoções aplicadas quando houver)</div>';
+    const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Sem promoções — apenas preços base.</div>';
     const grid = document.createElement('div'); grid.className = 'grid';
     characters.forEach(ch=>{
       const c = document.createElement('div'); c.className = 'card';
-      // no global discounts here; just show oldPrice and current price
-      const displayPrice = ch.price;
-      const old = ch.oldPrice || '';
+      const displayPrice = ch.price !== undefined ? ch.price + 'E' : '—';
       c.innerHTML = `<div style="font-weight:900">${ch.display}</div>
         <div class="small">${ch.type} • <span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>
         <div style="margin-top:8px">${ch.ability}</div>
-        <div style="margin-top:12px" class="shop-line"><div><span class="old-price">${old ? old + 'E' : ''}</span><span class="new-price">${displayPrice}E</span></div></div>`;
+        <div style="margin-top:12px" class="shop-line"><div><span class="new-price">${displayPrice}</span></div></div>`;
       grid.appendChild(c);
     });
     area.appendChild(grid);
@@ -262,17 +266,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* TRACKER (protected locally) */
+  /* TRACKER (proteção por senha local) */
   let players = JSON.parse(localStorage.getItem('recall_players') || '[]');
   function renderTracker(){
     const area = $('#tracker');
-    area.innerHTML = '<div class="group-title">Lista secreta — Controle de Personagens</div><div class="small">Protegido localmente (apenas aqui). Clique em "Entrar" para mostrar a lista.</div><div id="trackerArea" style="margin-top:12px"><div id="loginDiv"><p class="small">Clique em Entrar para acessar (sem senha nesta build)</p><button id="trackerLogin" class="btn">Entrar</button></div><div id="trackerContent" class="hidden" style="margin-top:12px"><div style="overflow:auto"><table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button id="addPlayer" class="btn">Adicionar Jogador</button><button id="clearPlayers" class="btn">Limpar lista</button><button id="exportPlayers" class="btn danger">Exportar (JSON)</button></div></div></div>';
+    area.innerHTML = `
+      <div class="group-title">Lista secreta — Controle de Personagens</div>
+      <div class="small">Protegido por senha local. Use a senha para mostrar/editar a lista.</div>
+      <div id="trackerArea" style="margin-top:12px">
+        <div id="loginDiv">
+          <p class="small">Digite a senha para acessar:</p>
+          <input id="trackerPass" type="password" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)">
+          <button id="trackerLogin" class="btn" style="margin-left:8px">Entrar</button>
+        </div>
+        <div id="trackerContent" class="hidden" style="margin-top:12px">
+          <div style="overflow:auto">
+            <table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+            <button id="addPlayer" class="btn">Adicionar Jogador</button>
+            <button id="clearPlayers" class="btn">Limpar lista</button>
+            <button id="exportPlayers" class="btn danger">Exportar (JSON)</button>
+          </div>
+        </div>
+      </div>
+    `;
     buildPlayerHeader();
+
     document.getElementById('trackerLogin').addEventListener('click', ()=> {
-      document.getElementById('loginDiv').style.display = 'none';
-      document.getElementById('trackerContent').classList.remove('hidden');
-      renderTable();
+      const v = document.getElementById('trackerPass').value;
+      if(v === TRACKER_PASSWORD){
+        document.getElementById('trackerPass').value = '';
+        document.getElementById('loginDiv').style.display = 'none';
+        document.getElementById('trackerContent').classList.remove('hidden');
+        renderTable();
+      } else {
+        alert('Senha incorreta!');
+      }
     });
+
     document.getElementById('addPlayer').addEventListener('click', ()=> {
       const name = prompt('Nome do jogador:'); if(!name) return;
       players.push({name, characters:{}}); localStorage.setItem('recall_players', JSON.stringify(players)); renderTable();
@@ -285,11 +317,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   function buildPlayerHeader(){
-    const header = document.getElementById('playerHeader'); header.innerHTML = '<th>Jogador</th>';
+    const header = document.getElementById('playerHeader'); if(!header) return;
+    header.innerHTML = '<th>Jogador</th>';
     characters.forEach(c=> { const th = document.createElement('th'); th.textContent = c.key; header.appendChild(th); });
   }
   function renderTable(){
-    const tbody = document.getElementById('playerBody'); tbody.innerHTML = '';
+    const tbody = document.getElementById('playerBody'); if(!tbody) return; tbody.innerHTML = '';
     players.forEach((p, idx)=>{
       const tr = document.createElement('tr');
       const tdName = document.createElement('td'); tdName.textContent = p.name; tr.appendChild(tdName);
@@ -317,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderUpdates(){
     const area = $('#updates'); area.innerHTML = '<div class="group-title">Atualizações</div>';
     const list = [
-      {title:"V1.3 — Cael Theme", desc:"Cael promovido a LENDÁRIO; tema Cael aplicado; painel de eventos removido desta build pública."},
+      {title:"V1.3 — Cael Theme", desc:"Cael promovido a LENDÁRIO; Salya (Raro) adicionada; promoções removidas; tracker com senha."},
       {title:"V1.2", desc:"Adicionado Liora, Marin e Requiem; melhorias no tracker."},
       {title:"V1.0", desc:"Versão inicial do Recall WI."}
     ];
@@ -328,7 +361,6 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#themeBtn').addEventListener('click', ()=>{
     const cur = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     document.body.setAttribute('data-theme', cur);
-    // simple palette swap for demo: invert hero background and logo colors
     if(cur === 'light'){
       document.body.style.background = 'linear-gradient(180deg,#f6f7fb,#e8eefc)';
       $('#logoBox').style.background = 'linear-gradient(135deg,#d1b000,#6b3a99)';
@@ -344,19 +376,17 @@ document.addEventListener('DOMContentLoaded', () => {
   function init(){
     renderCharacters(); renderShop(); renderMoney(); renderTrios(); renderUpdates();
     // money table
-    const tbody = document.getElementById('moneyTableBody'); tbody.innerHTML='';
+    const tbody = document.getElementById('moneyTableBody'); if(tbody) tbody.innerHTML='';
     moneyTable.forEach(r=>{ const tr = document.createElement('tr'); tr.innerHTML = `<td>${r.action}</td><td>${r.value}</td>`; tbody.appendChild(tr); });
-    // set active "Cael" visuals already applied via CSS root; keep header badge
+    // header badge text
     document.getElementById('activeEventLabel').textContent = 'Cael Theme';
     document.getElementById('activeEventInfo').textContent = 'Cael visuals applied: golden logo, temporal background.';
-    // nav default
+    // default section
     showSection('characters');
   }
   init();
+
 });
 </script>
 </body>
 </html>
-
-</html>
-
