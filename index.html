@@ -55,8 +55,9 @@
   .hero-title{font-size:22px;font-weight:900;color:var(--gold)}
   .hero-desc{color:var(--muted);font-size:13px;margin-top:6px}
   .event-pill{padding:6px 10px;border-radius:8px;font-weight:800;background:rgba(255,255,255,0.03)}
-  .trio-list{list-style:none;padding-left:0;margin:0}
-  .trio-list li{padding:6px 0}
+  .rarity-block{margin-top:12px;border-radius:10px;padding:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
+  .rarity-title{font-weight:900;margin-bottom:8px}
+  .subtype-title{font-weight:800;margin-top:6px;margin-bottom:6px}
   @media (max-width:820px){ .hero-left{max-width:100%} main{padding:12px} header{flex-direction:column;gap:8px;align-items:flex-start} }
 </style>
 </head>
@@ -132,10 +133,12 @@
 /* -------------------------------------------------------
    Atualizado conforme pedido:
    - senha TRACKER = "BATATA"
-   - preços sem desconto (oldPrice mostrado apenas se for maior que price)
+   - preços sem desconto (oldPrice só aparece se > price)
    - Salya (raro) adicionada nos raros
    - Updates reordenadas para v1.6 → v1.0
-   - JS roda após DOMContentLoaded
+   - Loja separada por raridade e por tipo (Sobrevivente/Assassino)
+   - Loja NÃO mostra falas/habilidades
+   - Personagem: clicar nome revela habilidade + falas (EN/PT)
    ------------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -146,20 +149,22 @@ document.addEventListener('DOMContentLoaded', () => {
      NOTE: price == oldPrice (preços sem desconto)
   */
   const characters = [
-    {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", oldPrice:00, price:00, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
-    {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", oldPrice:00, price:00, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
-    // RAReS block (Salya colocada aqui para aparecer junto aos raros)
+    // free always: Seraphina, Nyra, Umbra
+    {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", oldPrice:0, price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
+    {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", oldPrice:0, price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
+    // Raros
     {key:"Gideon", display:"Gideon — The Guardian", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:1000, ability:"Protege alguém de 1 ataque (escudo 10s).", phraseEN:"Stay behind me!", phrasePT:"Fiquem atrás de mim!"},
     {key:"Aether", display:"Aether — The Watcher", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:1000, ability:"Pergunta ao assassino o próximo alvo (1x).", phraseEN:"Who’s your next target?", phrasePT:"Qual é o seu próximo alvo?"},
-    // Nova personagem pedida:
     {key:"Salya", display:"Salya — A Calmaria", type:"Sobrevivente", rarity:"raro", oldPrice:1200, price:1200, ability:"Trégua — O assassino não pode levantar a arma por 3 segundos, mas ainda pode andar.", phraseEN:"Peace… even if brief.", phrasePT:"Paz… mesmo que curta."},
+    // Epicos
     {key:"Elara", display:"Elara — The Strategist", type:"Sobrevivente", rarity:"epico", oldPrice:1600, price:1600, ability:"Pode correr duas vezes seguidas sem ser pega (1x).", phraseEN:"Double move!", phrasePT:"Movimento duplo!"},
     {key:"Orion", display:"Orion — The Illusionist", type:"Sobrevivente", rarity:"epico", oldPrice:1700, price:1700, ability:"Diz 'Illusion!' → assassino deve perseguir outro alvo por 10s (1x).", phraseEN:"Can you catch a shadow of me?", phrasePT:"Consegue pegar só minha sombra?"},
+    // Lendarios (preços sem desconto)
     {key:"Liora", display:"Liora — The Veiled", type:"Sobrevivente", rarity:"lendario", oldPrice:2600, price:2600, ability:"Faz assassino contar 8s parado (1x).", phraseEN:"Now you forget me…", phrasePT:"Agora você me esquece…"},
     {key:"Marin", display:"Marin — The Timebinder", type:"Sobrevivente", rarity:"lendario", oldPrice:2700, price:2700, ability:"Ativa 'Time Snare': assassino NÃO PODE CORRER 5s (1x).", phraseEN:"Slow down, time obeys me!", phrasePT:"Diminua, o tempo me obedece!"},
-    // Cael lendário
     {key:"Cael", display:"Cael — The Defier", type:"Sobrevivente", rarity:"lendario", oldPrice:2200, price:2200, ability:"Ao ser alvo: assassino NÃO PODE ATACAR por 2s e NÃO PODE CORRER por 8s (1x).", phraseEN:"Your turn to run.", phrasePT:"Agora é você quem corre."},
-    {key:"Umbra", display:"Umbra — The Shadow", type:"Assassino", rarity:"comum", oldPrice:400, price:400, ability:"Habilidade ativa somente se tentar pegar e falhar (1x).", phraseEN:"Shadow strike!", phrasePT:"Golpe das sombras!"},
+    // Assassinos (inclui Umbra grátis)
+    {key:"Umbra", display:"Umbra — The Shadow", type:"Assassino", rarity:"comum", oldPrice:0, price:0, ability:"Habilidade ativa somente se tentar pegar e falhar (1x).", phraseEN:"Shadow strike!", phrasePT:"Golpe das sombras!"},
     {key:"Darius", display:"Darius — The Hunter", type:"Assassino", rarity:"raro", oldPrice:800, price:800, ability:"Marked: bloqueia habilidades do alvo por 15s (1x).", phraseEN:"Marked!", phrasePT:"Marcado!"},
     {key:"Echo", display:"Echo — The Returned", type:"Assassino", rarity:"epico", oldPrice:1800, price:1800, ability:"Anula 1 poder usado contra ele (1x).", phraseEN:"Echo!", phrasePT:"Eco!"},
     {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", oldPrice:3000, price:3000, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."}
@@ -215,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- RENDER FUNCTIONS ---------- */
   function renderCharacters(){
     const container = $('#characters');
-    container.innerHTML = '<div class="group-title">Personagens</div><div class="small">Clique no cartão para ver habilidade e falas (EN / PT)</div><div class="grid" id="charactersGrid" style="margin-top:12px"></div>';
+    container.innerHTML = '<div class="group-title">Personagens</div><div class="small">Clique no cartão (nome) para ver habilidade e falas (EN / PT)</div><div class="grid" id="charactersGrid" style="margin-top:12px"></div>';
     const grid = $('#charactersGrid');
     grid.innerHTML = '';
     const survivors = characters.filter(c=>c.type === "Sobrevivente");
@@ -246,22 +251,54 @@ document.addEventListener('DOMContentLoaded', () => {
     return card;
   }
 
+  /* SHOP rendering: grouped by rarity, then by type (Sobrevivente / Assassino).
+     NOTE: Shop shows only name + price (no habilidades/falas).
+  */
   function renderShop(){
-    const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Preços base (sem promoções)</div>';
-    const grid = document.createElement('div'); grid.className = 'grid';
-    characters.forEach(ch=>{
-      const c = document.createElement('div'); c.className = 'card';
-      // show oldPrice strike only if there's a real discount (oldPrice > price)
-      const displayPrice = ch.price != null ? ch.price : '';
-      const old = ch.oldPrice != null ? ch.oldPrice : '';
-      const oldHtml = (old && old > displayPrice) ? `<span class="old-price">${old}E</span>` : '';
-      c.innerHTML = `<div style="font-weight:900">${ch.display}</div>
-        <div class="small">${ch.type} • <span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>
-        <div style="margin-top:8px">${ch.ability}</div>
-        <div style="margin-top:12px" class="shop-line"><div>${oldHtml}<span class="new-price">${displayPrice}E</span></div></div>`;
-      grid.appendChild(c);
+    const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Preços base (sem promoções). A loja mostra apenas nome e preço — personagens gratuitos aparecem como GRÁTIS.</div>';
+    const rarities = ['comum','raro','epico','lendario'];
+    rarities.forEach(rarity => {
+      const block = document.createElement('div'); block.className = 'rarity-block';
+      const titleText = rarity === 'comum' ? 'Comum' : (rarity === 'raro' ? 'Raro' : (rarity === 'epico' ? 'Épico' : 'Lendário'));
+      block.innerHTML = `<div class="rarity-title">${titleText}</div>`;
+      // Survivors
+      const survList = characters.filter(c=>c.rarity === rarity && c.type === 'Sobrevivente');
+      if(survList.length){
+        const st = document.createElement('div'); st.className='subtype-title'; st.textContent = '— Sobreviventes';
+        block.appendChild(st);
+        const grid = document.createElement('div'); grid.className = 'grid';
+        survList.forEach(ch=>{
+          const c = document.createElement('div'); c.className = 'card';
+          const displayPrice = (ch.price === 0) ? 'GRÁTIS' : (ch.price + 'E');
+          const old = ch.oldPrice || '';
+          const oldHtml = (old && old > ch.price) ? `<span class="old-price">${old}E</span>` : '';
+          c.innerHTML = `<div style="font-weight:900">${ch.display}</div>
+            <div class="small">${ch.type} • <span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>
+            <div style="margin-top:12px" class="shop-line"><div>${oldHtml}<span class="new-price">${displayPrice}</span></div></div>`;
+          grid.appendChild(c);
+        });
+        block.appendChild(grid);
+      }
+      // Killers
+      const killerList = characters.filter(c=>c.rarity === rarity && c.type === 'Assassino');
+      if(killerList.length){
+        const st = document.createElement('div'); st.className='subtype-title'; st.textContent = '— Assassinos';
+        block.appendChild(st);
+        const grid = document.createElement('div'); grid.className = 'grid';
+        killerList.forEach(ch=>{
+          const c = document.createElement('div'); c.className = 'card';
+          const displayPrice = (ch.price === 0) ? 'GRÁTIS' : (ch.price + 'E');
+          const old = ch.oldPrice || '';
+          const oldHtml = (old && old > ch.price) ? `<span class="old-price">${old}E</span>` : '';
+          c.innerHTML = `<div style="font-weight:900">${ch.display}</div>
+            <div class="small">${ch.type} • <span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>
+            <div style="margin-top:12px" class="shop-line"><div>${oldHtml}<span class="new-price">${displayPrice}</span></div></div>`;
+          grid.appendChild(c);
+        });
+        block.appendChild(grid);
+      }
+      area.appendChild(block);
     });
-    area.appendChild(grid);
   }
 
   function renderMoney(){
@@ -378,5 +415,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
-
