@@ -3,42 +3,39 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Recall WI — Oficial</title>
+<title>Recall WI — Oficial (Cael Theme)</title>
 <style>
   :root{
     --bg:#0f1114; --panel:#15181b; --muted:#9aa4ad; --accent:#00d1ff;
     --gold:#ffd700; --purple:#a44bff; --orange:#ff7b00;
     --card:#1b1f23; --glass: rgba(255,255,255,0.03); --text:#e9eef2;
-    --halloween-bg-start:#12040b;
-    --halloween-bg-end:#2b0810;
-    --natal-bg-start:#02120a;
-    --natal-bg-end:#401010;
-    --aniv-bg-start:#081028;
-    --aniv-bg-end:#1b0b2a;
+    --cael-bg-start:#0b0710;
+    --cael-bg-end:#1b0830;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
     margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-    color:var(--text); background:linear-gradient(180deg,#0b0d10,#111217);
+    color:var(--text); background:linear-gradient(180deg,var(--cael-bg-start),var(--cael-bg-end));
     min-height:100vh; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     transition: background 450ms ease, color 350ms ease;
   }
-  header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.15));border-bottom:1px solid rgba(255,255,255,0.03);position:sticky;top:0;z-index:40}
+  header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.12));border-bottom:1px solid rgba(255,255,255,0.03);position:sticky;top:0;z-index:40}
   .brand{display:flex;gap:12px;align-items:center}
-  .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;color:#021;font-size:20px;box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+  .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#ffd700,#ff8a00);display:flex;align-items:center;justify-content:center;font-weight:900;color:#021;font-size:22px;box-shadow:0 10px 40px rgba(0,0,0,0.5)}
   nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .navbtn{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);cursor:pointer;font-weight:700}
-  .navbtn.active{outline:2px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+  .navbtn{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);cursor:pointer;font-weight:700}
+  .navbtn.active{outline:2px solid var(--gold); box-shadow:0 6px 18px rgba(0,0,0,0.35)}
   .controls{display:flex;gap:8px;align-items:center}
   main{padding:20px;max-width:1180px;margin:18px auto}
-  .panel{background:var(--panel);border-radius:12px;padding:16px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
-  .group-title{font-size:18px;color:var(--accent);margin-bottom:10px;font-weight:800}
+  .panel{background:var(--panel);border-radius:14px;padding:18px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+  .group-title{font-size:18px;color:var(--gold);margin-bottom:10px;font-weight:900}
   .small{font-size:13px;color:var(--muted)}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-  .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
-  .char-name{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer}
-  .char-ability{display:none;margin-top:8px;padding:10px;background:rgba(0,0,0,0.06);border-radius:8px}
+  .card{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+  .char-name{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer;padding:8px;border-radius:8px}
+  .char-name:hover{background:rgba(255,255,255,0.02)}
+  .char-ability{display:none;margin-top:10px;padding:12px;background:rgba(0,0,0,0.06);border-radius:8px}
   .tag{padding:6px 8px;border-radius:8px;font-weight:800;font-size:12px}
   .comum{background:rgba(255,255,255,0.03);color:#ddd}
   .raro{background:rgba(0,123,255,0.06);color:var(--accent)}
@@ -46,36 +43,30 @@
   .lendario{background:linear-gradient(90deg,#ffd70020,#ff9a0020);color:var(--gold)}
   .shop-line{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px}
   .old-price{text-decoration:line-through;color:#ffb3a3;margin-right:8px;font-size:13px}
-  .new-price{color:var(--accent);font-weight:900}
+  .new-price{color:var(--gold);font-weight:900}
   table{width:100%;border-collapse:collapse}
   th,td{padding:10px;border:1px solid rgba(255,255,255,0.03);text-align:left}
   th{background:rgba(255,255,255,0.02)}
   .hidden{display:none}
-  /* secret button bottom-right */
-  #secretBtn{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--orange),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;color:#021;cursor:pointer;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
-  /* secret panel */
-  #secretPanel{position:fixed;right:18px;bottom:80px;width:420px;max-width:96vw;background:var(--panel);border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.03);z-index:61;display:none}
-  .event-btn{padding:8px 10px;margin:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);cursor:pointer;background:transparent;color:var(--text);font-weight:800}
-  .section-title{font-weight:800;margin-top:8px;color:var(--gold)}
-  footer{text-align:center;padding:12px;color:var(--muted);font-size:13px}
-  .btn{padding:8px 10px;border-radius:8px;border:none;background:var(--accent);color:#021;font-weight:700;cursor:pointer}
+  .btn{padding:8px 12px;border-radius:10px;border:none;background:var(--gold);color:#021;font-weight:800;cursor:pointer}
   .danger{background:#ff6b6b;color:#fff}
-  .notice{font-size:13px;color:var(--muted);margin-top:8px}
-  .hero-banner{border-radius:10px;padding:18px;margin-bottom:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .hero-banner{border-radius:12px;padding:18px;margin-bottom:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); display:flex;align-items:center;justify-content:space-between;gap:12px}
   .hero-left{max-width:70%}
-  .hero-title{font-size:20px;font-weight:900}
+  .hero-title{font-size:22px;font-weight:900;color:var(--gold)}
   .hero-desc{color:var(--muted);font-size:13px;margin-top:6px}
-  .event-pill{padding:6px 10px;border-radius:8px;font-weight:800}
+  .event-pill{padding:6px 10px;border-radius:8px;font-weight:800;background:rgba(255,255,255,0.03)}
+  .trio-list{list-style:none;padding-left:0;margin:0}
+  .trio-list li{padding:6px 0}
   @media (max-width:820px){ .hero-left{max-width:100%} main{padding:12px} header{flex-direction:column;gap:8px;align-items:flex-start} }
 </style>
 </head>
-<body>
+<body data-theme="dark">
 <header>
   <div class="brand">
-    <div class="logo" id="logoBox">RW</div>
+    <div class="logo" id="logoBox">CAEL</div>
     <div>
       <h1 style="margin:0">Recall WI</h1>
-      <div class="small">Tudo que você precisa saber do Recall</div>
+      <div class="small">Tudo que você precisa saber do Recall — Tema: Cael</div>
     </div>
   </div>
 
@@ -94,14 +85,14 @@
 </header>
 
 <main>
-  <div class="hero-banner panel">
+  <div class="hero-banner panel" id="hero">
     <div class="hero-left">
-      <div class="hero-title">Recall WI — Central</div>
-      <div class="hero-desc">Personagens, loja, economia, tracker e painel secreto. Eventos comemorativos aplicam 50% OFF automaticamente apenas durante o período do evento.</div>
+      <div class="hero-title">Recall WI — Tema: Cael</div>
+      <div class="hero-desc">Este index está focado no tema do Cael (efeitos visuais e badge). Não há painel de eventos público — controle manual removido.</div>
     </div>
     <div style="text-align:right">
-      <div id="activeEventLabel" class="event-pill" style="background:rgba(255,255,255,0.02)">Nenhum evento</div>
-      <div class="notice" id="activeEventInfo"></div>
+      <div id="activeEventLabel" class="event-pill">Cael Active</div>
+      <div class="notice" id="activeEventInfo">Visuais aplicados: logo dourada, fundo temporal.</div>
     </div>
   </div>
 
@@ -135,482 +126,237 @@
   <section id="updates" class="panel hidden"></section>
 </main>
 
-<!-- secret button bottom-right -->
-<div id="secretBtn" title="Painel secreto">🔐</div>
-
-<!-- secret panel -->
-<div id="secretPanel" role="dialog" aria-hidden="true">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-    <div style="font-weight:900">Painel Secreto</div>
-    <button id="closeSecret" class="event-btn">Fechar</button>
-  </div>
-
-  <div style="margin-top:8px">
-    <div class="small">Digite a senha para abrir controles:</div>
-    <input id="secretPass" type="password" placeholder="Senha" style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);margin-top:6px">
-    <div style="display:flex;gap:8px;margin-top:8px">
-      <button id="unlockBtn" class="event-btn">Desbloquear</button>
-      <button id="resetEventBtn" class="event-btn">Resetar evento</button>
-    </div>
-  </div>
-
-  <div id="eventControls" style="margin-top:12px;display:none">
-    <div class="section-title">COMEMORAÇÕES (50% OFF na loja de personagens)</div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
-      <button class="event-btn" data-event="halloween">🎃 Halloween</button>
-      <button class="event-btn" data-event="natal">🎄 Natal</button>
-      <button class="event-btn" data-event="ano-novo">🎆 Ano Novo</button>
-      <button class="event-btn" data-event="aniversario">🎂 Aniversário Recall</button>
-    </div>
-
-    <div class="section-title">ESTAÇÕES (apenas visual)</div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
-      <button class="event-btn" data-event="verao">☀️ Verão</button>
-      <button class="event-btn" data-event="outono">🍂 Outono</button>
-      <button class="event-btn" data-event="inverno">❄️ Inverno</button>
-      <button class="event-btn" data-event="primavera">🌸 Primavera</button>
-    </div>
-
-    <div class="section-title">EVENTOS DO LORE</div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
-      <button class="event-btn" data-event="abyssal">🖤 Abyssal Shadows</button>
-      <button class="event-btn" data-event="ruptura">🔥 Ruptura Temporal</button>
-      <button class="event-btn" data-event="eclipse">🌑 Eclipse Total</button>
-    </div>
-
-    <div class="section-title">MODOS EXTRAS</div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
-      <button class="event-btn" data-event="caos">🌀 Modo Caos</button>
-      <button class="event-btn" data-event="doce">🍬 Modo Doce</button>
-      <button class="event-btn" data-event="teste">🧪 Modo Teste</button>
-    </div>
-
-    <div style="margin-top:10px" class="small">Recomendações de data aparecem ao passar o mouse.  
-    Use <strong>Gerar index global</strong> abaixo para baixar um arquivo pronto (com o evento que você escolher forçado) — depois é só subir esse arquivo no GitHub para que o evento seja visto por todos.</div>
-
-    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-      <button id="exportGlobalBtn" class="event-btn">Gerar index global</button>
-      <button id="exportGlobalPrompt" class="event-btn">Gerar index (escolher evento)</button>
-    </div>
-  </div>
-</div>
-
-<footer style="position:relative">Recall WI — painéis de evento: comemorações dão 50% OFF (somente personagens) • senha admin: BATATA</footer>
+<footer style="position:relative">Recall WI — Tema Cael aplicado. Painel de eventos removido para esta versão pública.</footer>
 
 <script>
-/* ---------- CONFIG ---------- */
-/*
- Notes:
- - To make an event truly global for everyone, replace index.html in GitHub with a copy containing FORCE_GLOBAL_EVENT = 'halloween' (or whatever).
- - To make that easier, the secret panel includes a "Gerar index global" function that creates and downloads a copy of this file with the chosen FORCE_GLOBAL_EVENT embedded.
-*/
-const TRACKER_PASSWORD = "BATATA";
+/* -------------------------------------------------------
+   Versão limpa: removido painel público de eventos.
+   - Cael tema aplicado no load.
+   - Cael convertido para LENDÁRIO.
+   - JavaScript roda somente após DOMContentLoaded.
+   - Botões de navegação e conteúdo funcionais.
+   ------------------------------------------------------- */
 
-/* ---------- DATA ---------- */
-const characters = [
-  {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
-  {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
-  {key:"Gideon", display:"Gideon — The Guardian", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:500, ability:"Protege alguém de 1 ataque (escudo 10s).", phraseEN:"Stay behind me!", phrasePT:"Fiquem atrás de mim!"},
-  {key:"Aether", display:"Aether — The Watcher", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:500, ability:"Pergunta ao assassino o próximo alvo (1x).", phraseEN:"Who’s your next target?", phrasePT:"Qual é o seu próximo alvo?"},
-  {key:"Elara", display:"Elara — The Strategist", type:"Sobrevivente", rarity:"epico", oldPrice:1600, price:900, ability:"Pode correr duas vezes seguidas sem ser pega (1x).", phraseEN:"Double move!", phrasePT:"Movimento duplo!"},
-  {key:"Orion", display:"Orion — The Illusionist", type:"Sobrevivente", rarity:"epico", oldPrice:1700, price:950, ability:"Diz 'Illusion!' → assassino deve perseguir outro alvo por 10s (1x).", phraseEN:"Can you catch a shadow of me?", phrasePT:"Consegue pegar só minha sombra?"},
-  {key:"Liora", display:"Liora — The Veiled", type:"Sobrevivente", rarity:"lendario", oldPrice:2600, price:1500, ability:"Faz assassino contar 8s parado (1x).", phraseEN:"Now you forget me…", phrasePT:"Agora você me esquece…"},
-  {key:"Marin", display:"Marin — The Timebinder", type:"Sobrevivente", rarity:"lendario", oldPrice:2700, price:1600, ability:"Ativa 'Time Snare': assassino NÃO PODE CORRER 5s (1x).", phraseEN:"Slow down, time obeys me!", phrasePT:"Diminua, o tempo me obedece!"},
-  {key:"Cael", display:"Cael — The Defier", type:"Sobrevivente", rarity:"epico", oldPrice:2200, price:1200, ability:"Ao ser alvo: assassino NÃO PODE ATACAR por 2s e NÃO PODE CORRER por 8s (1x).", phraseEN:"Your turn to run.", phrasePT:"Agora é você quem corre."},
-  {key:"Umbra", display:"Umbra — The Shadow", type:"Assassino", rarity:"comum", oldPrice:400, price:200, ability:"Habilidade ativa somente se tentar pegar e falhar (1x).", phraseEN:"Shadow strike!", phrasePT:"Golpe das sombras!"},
-  {key:"Darius", display:"Darius — The Hunter", type:"Assassino", rarity:"raro", oldPrice:800, price:500, ability:"Marked: bloqueia habilidades do alvo por 15s (1x).", phraseEN:"Marked!", phrasePT:"Marcado!"},
-  {key:"Echo", display:"Echo — The Returned", type:"Assassino", rarity:"epico", oldPrice:1800, price:950, ability:"Anula 1 poder usado contra ele (1x).", phraseEN:"Echo!", phrasePT:"Eco!"},
-  {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", oldPrice:3000, price:1600, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."}
-];
+document.addEventListener('DOMContentLoaded', () => {
+  /* ---------- DATA (ajustes finais) ---------- */
+  const characters = [
+    {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
+    {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", oldPrice:200, price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
+    {key:"Gideon", display:"Gideon — The Guardian", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:500, ability:"Protege alguém de 1 ataque (escudo 10s).", phraseEN:"Stay behind me!", phrasePT:"Fiquem atrás de mim!"},
+    {key:"Aether", display:"Aether — The Watcher", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:500, ability:"Pergunta ao assassino o próximo alvo (1x).", phraseEN:"Who’s your next target?", phrasePT:"Qual é o seu próximo alvo?"},
+    {key:"Elara", display:"Elara — The Strategist", type:"Sobrevivente", rarity:"epico", oldPrice:1600, price:900, ability:"Pode correr duas vezes seguidas sem ser pega (1x).", phraseEN:"Double move!", phrasePT:"Movimento duplo!"},
+    {key:"Orion", display:"Orion — The Illusionist", type:"Sobrevivente", rarity:"epico", oldPrice:1700, price:950, ability:"Diz 'Illusion!' → assassino deve perseguir outro alvo por 10s (1x).", phraseEN:"Can you catch a shadow of me?", phrasePT:"Consegue pegar só minha sombra?"},
+    {key:"Liora", display:"Liora — The Veiled", type:"Sobrevivente", rarity:"lendario", oldPrice:2600, price:1500, ability:"Faz assassino contar 8s parado (1x).", phraseEN:"Now you forget me…", phrasePT:"Agora você me esquece…"},
+    {key:"Marin", display:"Marin — The Timebinder", type:"Sobrevivente", rarity:"lendario", oldPrice:2700, price:1600, ability:"Ativa 'Time Snare': assassino NÃO PODE CORRER 5s (1x).", phraseEN:"Slow down, time obeys me!", phrasePT:"Diminua, o tempo me obedece!"},
+    // Cael agora LENDÁRIO (ajustado)
+    {key:"Cael", display:"Cael — The Defier", type:"Sobrevivente", rarity:"lendario", oldPrice:2200, price:1500, ability:"Ao ser alvo: assassino NÃO PODE ATACAR por 2s e NÃO PODE CORRER por 8s (1x).", phraseEN:"Your turn to run.", phrasePT:"Agora é você quem corre."},
+    {key:"Umbra", display:"Umbra — The Shadow", type:"Assassino", rarity:"comum", oldPrice:400, price:200, ability:"Habilidade ativa somente se tentar pegar e falhar (1x).", phraseEN:"Shadow strike!", phrasePT:"Golpe das sombras!"},
+    {key:"Darius", display:"Darius — The Hunter", type:"Assassino", rarity:"raro", oldPrice:800, price:500, ability:"Marked: bloqueia habilidades do alvo por 15s (1x).", phraseEN:"Marked!", phrasePT:"Marcado!"},
+    {key:"Echo", display:"Echo — The Returned", type:"Assassino", rarity:"epico", oldPrice:1800, price:950, ability:"Anula 1 poder usado contra ele (1x).", phraseEN:"Echo!", phrasePT:"Eco!"},
+    {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", oldPrice:3000, price:1600, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."}
+  ];
 
-const moneyTable = [
-  {action:"Sobrevive até o fim", value:"+50E"},
-  {action:"Revive alguém", value:"+25E"},
-  {action:"Usa habilidade com sucesso", value:"+20E"},
-  {action:"Morre antes de 2min", value:"+10E"},
-  {action:"Morre depois de 2min", value:"+30E"},
-  {action:"Assassino elimina alguém", value:"+20E"},
-  {action:"Assassino vence partida", value:"+100E"},
-  {action:"Respeita as regras", value:"+5E"},
-  {action:"Melhor da rodada", value:"+25E"}
-];
+  const moneyTable = [
+    {action:"Sobrevive até o fim", value:"+50E"},
+    {action:"Revive alguém", value:"+25E"},
+    {action:"Usa habilidade com sucesso", value:"+20E"},
+    {action:"Morre antes de 2min", value:"+10E"},
+    {action:"Morre depois de 2min", value:"+30E"},
+    {action:"Assassino elimina alguém", value:"+20E"},
+    {action:"Assassino vence partida", value:"+100E"},
+    {action:"Respeita as regras", value:"+5E"},
+    {action:"Melhor da rodada", value:"+25E"}
+  ];
 
-const trios = [
-  {title:"Tríade da Vida", desc:"Cura, proteção e resiliência", members:["Seraphina","Gideon","Requiem"]},
-  {title:"Tríade da Mente", desc:"Observação, estratégia e previsão", members:["Aether","Elara","Orion"]},
-  {title:"Tríade da Velocidade", desc:"Movimento, reflexo e precisão", members:["Nyra","Echo","Darius"]},
-  {title:"Tríade das Sombras", desc:"Engano, resistência e retribuição (Mestre do Umbra chegando)", members:["Umbra","Liora","???"]},
-  {title:"Tríade do Tempo", desc:"Controle temporal e manipulação", members:["Marin","Cael","Orion"]}
-];
+  const trios = [
+    {title:"Tríade da Vida", desc:"Cura, proteção e resiliência", members:["Seraphina","Gideon","Requiem"]},
+    {title:"Tríade da Mente", desc:"Observação, estratégia e previsão", members:["Aether","Elara","Orion"]},
+    {title:"Tríade da Velocidade", desc:"Movimento, reflexo e precisão", members:["Nyra","Echo","Darius"]},
+    {title:"Tríade das Sombras", desc:"Engano, resistência e retribuição (Mestre do Umbra chegando)", members:["Umbra","Liora","???"]},
+    {title:"Tríade do Tempo", desc:"Controle temporal e manipulação", members:["Marin","Cael","Orion"]}
+  ];
 
-const eventDefinitions = {
-  "halloween": {type:"comemoracao", label:"Halloween", discount:0.5, rec:"01-10 → 05-11"},
-  "natal": {type:"comemoracao", label:"Natal", discount:0.5, rec:"15-12 → 26-12"},
-  "ano-novo": {type:"comemoracao", label:"Ano Novo", discount:0.5, rec:"27-12 → 02-01"},
-  "aniversario": {type:"comemoracao", label:"Aniversário Recall (21/09)", discount:0.5, rec:"20-09 → 22-09"},
-  "verao": {type:"estacao", label:"Verão", rec:"21-12 → 20-03"},
-  "outono": {type:"estacao", label:"Outono", rec:"20-03 → 21-06"},
-  "inverno": {type:"estacao", label:"Inverno", rec:"21-06 → 22-09"},
-  "primavera": {type:"estacao", label:"Primavera", rec:"22-09 → 21-12"},
-  "abyssal": {type:"evento", label:"Abyssal Shadows", rec:"Livre (lore)"},
-  "ruptura": {type:"evento", label:"Ruptura Temporal", rec:"Livre (lore)"},
-  "eclipse": {type:"evento", label:"Eclipse Total", rec:"Livre (lore)"},
-  "caos": {type:"modo", label:"Modo Caos", rec:"Livre"},
-  "doce": {type:"modo", label:"Modo Doce", rec:"Livre"},
-  "teste": {type:"modo", label:"Modo Teste", rec:"Livre"}
-};
+  /* ---------- HELPERS ---------- */
+  function $(sel){return document.querySelector(sel)}
+  function $all(sel){return Array.from(document.querySelectorAll(sel))}
 
-/* ---------- STATE ---------- */
-// activeEvent is either null or one of eventDefinitions keys.
-// It's stored in localStorage for this browser. To force global for everyone you must replace index.html in repo (see export below).
-let activeEvent = localStorage.getItem('recall_active_event') || null;
-let forcedGlobal = null; // used only when generating export file (not active here)
-
-/* ---------- HELPERS ---------- */
-function $(sel){return document.querySelector(sel)}
-function $all(sel){return Array.from(document.querySelectorAll(sel))}
-
-/* THEME toggle (light/dark) */
-$('#themeBtn').addEventListener('click', ()=>{
-  const cur = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-  document.body.setAttribute('data-theme', cur);
-  localStorage.setItem('recall_theme', cur);
-});
-
-/* NAV */
-$all('.navbtn').forEach(btn=>{
-  btn.addEventListener('click', ()=> {
-    $all('.navbtn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const sec = btn.getAttribute('data-section');
-    showSection(sec);
+  /* NAV wiring */
+  $all('.navbtn').forEach(btn=>{
+    btn.addEventListener('click', ()=> {
+      $all('.navbtn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const sec = btn.getAttribute('data-section');
+      showSection(sec);
+    });
   });
-});
-function showSection(id){
-  ['characters','shop','money','tracker','trios','updates'].forEach(s=>{
-    const el = document.getElementById(s);
-    if(!el) return;
-    el.classList.toggle('hidden', s !== id);
-  });
-  if(id === 'characters') renderCharacters();
-  if(id === 'shop') renderShop();
-  if(id === 'money') renderMoney();
-  if(id === 'tracker') renderTracker();
-  if(id === 'trios') renderTrios();
-  if(id === 'updates') renderUpdates();
-}
-
-/* ---------- RENDER ---------- */
-function renderCharacters(){
-  const container = $('#characters');
-  container.innerHTML = '<div class="group-title">Personagens</div><div class="small">Clique no cartão para ver habilidade e falas (EN / PT)</div><div class="grid" id="charactersGrid" style="margin-top:12px"></div>';
-  const grid = $('#charactersGrid');
-  grid.innerHTML = '';
-  const survivors = characters.filter(c=>c.type === "Sobrevivente");
-  const killers = characters.filter(c=>c.type === "Assassino");
-
-  if(survivors.length){
-    const block = document.createElement('div'); block.className='card'; block.style.gridColumn = '1 / -1';
-    block.innerHTML = `<div style="font-weight:900">Sobreviventes</div><div class="small" style="margin-top:6px">Personagens que defendem e ajudam.</div>`;
-    grid.appendChild(block);
-    survivors.forEach(ch=> grid.appendChild(createCharCard(ch)));
+  function showSection(id){
+    ['characters','shop','money','tracker','trios','updates'].forEach(s=>{
+      const el = document.getElementById(s);
+      if(!el) return;
+      el.classList.toggle('hidden', s !== id);
+    });
+    if(id === 'characters') renderCharacters();
+    if(id === 'shop') renderShop();
+    if(id === 'money') renderMoney();
+    if(id === 'tracker') renderTracker();
+    if(id === 'trios') renderTrios();
+    if(id === 'updates') renderUpdates();
   }
-  if(killers.length){
-    const block = document.createElement('div'); block.className='card'; block.style.gridColumn = '1 / -1';
-    block.innerHTML = `<div style="font-weight:900">Assassinos</div><div class="small" style="margin-top:6px">Personagens cujo objetivo é caçar.</div>`;
-    grid.appendChild(block);
-    killers.forEach(ch=> grid.appendChild(createCharCard(ch)));
-  }
-}
-function createCharCard(ch){
-  const card = document.createElement('div'); card.className = 'card';
-  const header = document.createElement('div'); header.className = 'char-name';
-  header.innerHTML = `<div style="font-weight:800">${ch.display}</div><div class="small"><span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span> • ${ch.type}</div>`;
-  const ability = document.createElement('div'); ability.className = 'char-ability';
-  ability.innerHTML = `<strong>Habilidade:</strong> ${ch.ability}<br><strong>EN:</strong> ${ch.phraseEN} &nbsp; <strong>PT:</strong> ${ch.phrasePT}`;
-  header.addEventListener('click', ()=> ability.classList.toggle('hidden'));
-  card.appendChild(header); card.appendChild(ability);
-  return card;
-}
 
-/* SHOP rendering (discount only if activeEvent is a 'comemoracao') */
-function isCelebrationActive(){
-  if(!activeEvent) return false;
-  const def = eventDefinitions[activeEvent];
-  return def && def.type === 'comemoracao';
-}
-function renderShop(){
-  const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Preços antigos riscados → preço atual (promoções aplicadas)</div>';
-  const grid = document.createElement('div'); grid.className = 'grid';
-  characters.forEach(ch=>{
-    const c = document.createElement('div'); c.className = 'card';
-    // display price: base price (ch.price) but apply 50% off only when isCelebrationActive()
-    let displayPrice = ch.price;
-    let old = ch.oldPrice;
-    if(isCelebrationActive()){
-      displayPrice = Math.round(ch.price * (1 - eventDefinitions[activeEvent].discount));
+  /* ---------- RENDER FUNCTIONS ---------- */
+  function renderCharacters(){
+    const container = $('#characters');
+    container.innerHTML = '<div class="group-title">Personagens</div><div class="small">Clique no cartão para ver habilidade e falas (EN / PT)</div><div class="grid" id="charactersGrid" style="margin-top:12px"></div>';
+    const grid = $('#charactersGrid');
+    grid.innerHTML = '';
+    const survivors = characters.filter(c=>c.type === "Sobrevivente");
+    const killers = characters.filter(c=>c.type === "Assassino");
+
+    if(survivors.length){
+      const block = document.createElement('div'); block.className='card'; block.style.gridColumn = '1 / -1';
+      block.innerHTML = `<div style="font-weight:900">Sobreviventes</div><div class="small" style="margin-top:6px">Personagens que defendem e ajudam.</div>`;
+      grid.appendChild(block);
+      survivors.forEach(ch=> grid.appendChild(createCharCard(ch)));
     }
-    c.innerHTML = `<div style="font-weight:900">${ch.display}</div>
-      <div class="small">${ch.type} • <span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>
-      <div style="margin-top:8px">${ch.ability}</div>
-      <div style="margin-top:10px" class="shop-line"><div><span class="old-price">${old}E</span><span class="new-price">${displayPrice}E</span></div><div style="text-align:right">${(activeEvent? ('Evento: '+ (eventDefinitions[activeEvent]?.label||activeEvent)) : '')}</div></div>`;
-    grid.appendChild(c);
-  });
-  area.appendChild(grid);
-}
+    if(killers.length){
+      const block = document.createElement('div'); block.className='card'; block.style.gridColumn = '1 / -1';
+      block.innerHTML = `<div style="font-weight:900">Assassinos</div><div class="small" style="margin-top:6px">Personagens cujo objetivo é caçar.</div>`;
+      grid.appendChild(block);
+      killers.forEach(ch=> grid.appendChild(createCharCard(ch)));
+    }
+  }
 
-/* MONEY */
-function renderMoney(){
-  const tbody = $('#moneyTableBody'); tbody.innerHTML = '';
-  moneyTable.forEach(row=>{
-    const tr = document.createElement('tr'); tr.innerHTML = `<td>${row.action}</td><td>${row.value}</td>`;
-    tbody.appendChild(tr);
-  });
-}
+  function createCharCard(ch){
+    const card = document.createElement('div'); card.className = 'card';
+    const header = document.createElement('div'); header.className = 'char-name';
+    header.innerHTML = `<div style="font-weight:800">${ch.display}</div><div class="small"><span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span> • ${ch.type}</div>`;
+    const ability = document.createElement('div'); ability.className = 'char-ability';
+    ability.innerHTML = `<strong>Habilidade:</strong> ${ch.ability}<br><strong>EN:</strong> ${ch.phraseEN} &nbsp; <strong>PT:</strong> ${ch.phrasePT}`;
+    header.addEventListener('click', ()=> ability.classList.toggle('hidden'));
+    card.appendChild(header); card.appendChild(ability);
+    return card;
+  }
 
-/* TRACKER */
-let players = JSON.parse(localStorage.getItem('recall_players') || '[]');
-function renderTracker(){
-  const area = $('#tracker');
-  area.innerHTML = '<div class="group-title">Lista secreta — Controle de Personagens</div><div class="small">Protegido por senha.</div><div id="trackerArea" style="margin-top:12px"><div id="loginDiv"><p class="small">Digite a senha:</p><input id="trackerPass" type="password" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"><button id="trackerLogin" class="event-btn">Entrar</button></div><div id="trackerContent" class="hidden" style="margin-top:12px"><div style="overflow:auto"><table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button id="addPlayer" class="btn">Adicionar Jogador</button><button id="clearPlayers" class="btn">Limpar lista</button><button id="exportPlayers" class="btn danger">Exportar (JSON)</button></div></div></div>';
-  buildPlayerHeader();
-  document.getElementById('trackerLogin').addEventListener('click', ()=> {
-    const v = document.getElementById('trackerPass').value;
-    if(v === TRACKER_PASSWORD){
+  function renderShop(){
+    const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Preços antigos riscados → preço atual (promoções aplicadas quando houver)</div>';
+    const grid = document.createElement('div'); grid.className = 'grid';
+    characters.forEach(ch=>{
+      const c = document.createElement('div'); c.className = 'card';
+      // no global discounts here; just show oldPrice and current price
+      const displayPrice = ch.price;
+      const old = ch.oldPrice || '';
+      c.innerHTML = `<div style="font-weight:900">${ch.display}</div>
+        <div class="small">${ch.type} • <span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span></div>
+        <div style="margin-top:8px">${ch.ability}</div>
+        <div style="margin-top:12px" class="shop-line"><div><span class="old-price">${old ? old + 'E' : ''}</span><span class="new-price">${displayPrice}E</span></div></div>`;
+      grid.appendChild(c);
+    });
+    area.appendChild(grid);
+  }
+
+  function renderMoney(){
+    const tbody = $('#moneyTableBody'); tbody.innerHTML = '';
+    moneyTable.forEach(row=>{
+      const tr = document.createElement('tr'); tr.innerHTML = `<td>${row.action}</td><td>${row.value}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* TRACKER (protected locally) */
+  let players = JSON.parse(localStorage.getItem('recall_players') || '[]');
+  function renderTracker(){
+    const area = $('#tracker');
+    area.innerHTML = '<div class="group-title">Lista secreta — Controle de Personagens</div><div class="small">Protegido localmente (apenas aqui). Clique em "Entrar" para mostrar a lista.</div><div id="trackerArea" style="margin-top:12px"><div id="loginDiv"><p class="small">Clique em Entrar para acessar (sem senha nesta build)</p><button id="trackerLogin" class="btn">Entrar</button></div><div id="trackerContent" class="hidden" style="margin-top:12px"><div style="overflow:auto"><table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button id="addPlayer" class="btn">Adicionar Jogador</button><button id="clearPlayers" class="btn">Limpar lista</button><button id="exportPlayers" class="btn danger">Exportar (JSON)</button></div></div></div>';
+    buildPlayerHeader();
+    document.getElementById('trackerLogin').addEventListener('click', ()=> {
       document.getElementById('loginDiv').style.display = 'none';
       document.getElementById('trackerContent').classList.remove('hidden');
       renderTable();
-    } else alert('Senha incorreta!');
-  });
-  document.getElementById('addPlayer').addEventListener('click', ()=> {
-    const name = prompt('Nome do jogador:'); if(!name) return;
-    players.push({name, characters:{}}); localStorage.setItem('recall_players', JSON.stringify(players)); renderTable();
-  });
-  document.getElementById('clearPlayers').addEventListener('click', ()=> {
-    if(confirm('Limpar toda a lista local?')){ players=[]; localStorage.setItem('recall_players', JSON.stringify(players)); renderTable(); }
-  });
-  document.querySelector('.btn.danger')?.addEventListener('click', ()=> {
-    const data = JSON.stringify(players,null,2); const blob = new Blob([data],{type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'recall_players.json'; a.click(); URL.revokeObjectURL(url);
-  });
-}
-function buildPlayerHeader(){
-  const header = document.getElementById('playerHeader'); header.innerHTML = '<th>Jogador</th>';
-  characters.forEach(c=> { const th = document.createElement('th'); th.textContent = c.key; header.appendChild(th); });
-}
-function renderTable(){
-  const tbody = document.getElementById('playerBody'); tbody.innerHTML = '';
-  players.forEach((p, idx)=>{
-    const tr = document.createElement('tr');
-    const tdName = document.createElement('td'); tdName.textContent = p.name; tr.appendChild(tdName);
-    characters.forEach(ch=>{
-      const td = document.createElement('td'); const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = !!p.characters[ch.key];
-      cb.addEventListener('change', ()=> { players[idx].characters[ch.key] = cb.checked; localStorage.setItem('recall_players', JSON.stringify(players));});
-      td.appendChild(cb); tr.appendChild(td);
     });
-    tbody.appendChild(tr);
-  });
-}
-
-/* TRIOS */
-function renderTrios(){
-  const grid = $('#trioGrid'); grid.innerHTML = '';
-  trios.forEach(t=>{
-    const card = document.createElement('div'); card.className = 'card';
-    const list = t.members.map(m=> `<li>${m}</li>`).join('');
-    card.innerHTML = `<div style="font-weight:900">${t.title}</div><div class="small">${t.desc}</div><div style="margin-top:8px"><ul>${list}</ul></div>`;
-    grid.appendChild(card);
-  });
-}
-
-/* UPDATES */
-function renderUpdates(){
-  const area = $('#updates'); area.innerHTML = '<div class="group-title">Atualizações</div>';
-  const list = [
-    {title:"V1.3 — Halloween & Cael", desc:"Cael (ÉPICO) adicionado; promo Halloween pronta; tríades completas; painel secreto."},
-    {title:"V1.2", desc:"Adicionado Liora, Marin e Requiem; melhorias no tracker."},
-    {title:"V1.0", desc:"Versão inicial do Recall WI."}
-  ];
-  list.forEach(u=>{ const block = document.createElement('div'); block.className='card'; block.innerHTML = `<div style="font-weight:900">${u.title}</div><div class="small" style="margin-top:8px">${u.desc}</div>`; area.appendChild(block); });
-}
-
-/* ---------- EVENTS PANEL (secret) ---------- */
-const secretBtn = document.getElementById('secretBtn');
-const secretPanel = document.getElementById('secretPanel');
-const unlockBtn = document.getElementById('unlockBtn');
-const closeSecret = document.getElementById('closeSecret');
-
-secretBtn.addEventListener('click', ()=> { secretPanel.style.display = secretPanel.style.display === 'block' ? 'none' : 'block'; });
-closeSecret.addEventListener('click', ()=> secretPanel.style.display='none');
-
-unlockBtn.addEventListener('click', ()=> {
-  const v = document.getElementById('secretPass').value;
-  if(v === TRACKER_PASSWORD){
-    document.getElementById('secretPass').value = '';
-    document.getElementById('eventControls').style.display = 'block';
-    // populate tooltips
-    document.querySelectorAll('#secretPanel .event-btn').forEach(b=>{
-      const ev = b.getAttribute('data-event');
-      if(ev && eventDefinitions[ev]) b.title = 'Período recomendado: ' + eventDefinitions[ev].rec;
+    document.getElementById('addPlayer').addEventListener('click', ()=> {
+      const name = prompt('Nome do jogador:'); if(!name) return;
+      players.push({name, characters:{}}); localStorage.setItem('recall_players', JSON.stringify(players)); renderTable();
     });
-    alert('Painel secreto desbloqueado. Use com cuidado.');
-  } else alert('Senha incorreta!');
-});
-
-document.getElementById('resetEventBtn').addEventListener('click', ()=> {
-  activeEvent = null; localStorage.removeItem('recall_active_event'); localStorage.removeItem('recall_theme_mode'); applyEvent(); renderShop(); updateHeaderEvent(); alert('Evento resetado');
-});
-
-/* wiring event buttons */
-secretPanel.addEventListener('click', (e)=>{
-  const btn = e.target.closest('.event-btn');
-  if(!btn) return;
-  const ev = btn.getAttribute('data-event');
-  if(!ev) return;
-  activeEvent = ev;
-  localStorage.setItem('recall_active_event', ev);
-  localStorage.setItem('recall_theme_mode', ev);
-  applyEvent();
-  renderShop();
-  updateHeaderEvent();
-  alert('Evento ativado: ' + (eventDefinitions[ev]?.label || ev));
-});
-
-/* apply event visuals / discount logic */
-function applyEvent(){
-  // visuals: update body background and logo per event
-  const logo = document.getElementById('logoBox');
-  const label = document.getElementById('activeEventLabel');
-  const info = document.getElementById('activeEventInfo');
-
-  if(!activeEvent){
-    document.body.style.background = 'linear-gradient(180deg,#0b0d10,#111217)';
-    logo.style.background = 'linear-gradient(135deg,var(--accent),var(--purple))';
-    label.textContent = 'Nenhum evento';
-    label.style.background = 'rgba(255,255,255,0.02)';
-    info.textContent = '';
-    localStorage.removeItem('recall_theme_mode');
-    return;
+    document.getElementById('clearPlayers').addEventListener('click', ()=> {
+      if(confirm('Limpar toda a lista local?')){ players=[]; localStorage.setItem('recall_players', JSON.stringify(players)); renderTable(); }
+    });
+    document.querySelector('.btn.danger')?.addEventListener('click', ()=> {
+      const data = JSON.stringify(players,null,2); const blob = new Blob([data],{type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'recall_players.json'; a.click(); URL.revokeObjectURL(url);
+    });
+  }
+  function buildPlayerHeader(){
+    const header = document.getElementById('playerHeader'); header.innerHTML = '<th>Jogador</th>';
+    characters.forEach(c=> { const th = document.createElement('th'); th.textContent = c.key; header.appendChild(th); });
+  }
+  function renderTable(){
+    const tbody = document.getElementById('playerBody'); tbody.innerHTML = '';
+    players.forEach((p, idx)=>{
+      const tr = document.createElement('tr');
+      const tdName = document.createElement('td'); tdName.textContent = p.name; tr.appendChild(tdName);
+      characters.forEach(ch=>{
+        const td = document.createElement('td'); const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = !!p.characters[ch.key];
+        cb.addEventListener('change', ()=> { players[idx].characters[ch.key] = cb.checked; localStorage.setItem('recall_players', JSON.stringify(players));});
+        td.appendChild(cb); tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
   }
 
-  const def = eventDefinitions[activeEvent];
-  label.textContent = def?.label || activeEvent;
-  info.textContent = def?.rec || '';
-
-  // choose visuals per event key
-  if(activeEvent === 'halloween'){
-    document.body.style.background = `linear-gradient(180deg,var(--halloween-bg-start),var(--halloween-bg-end))`;
-    logo.style.background = 'linear-gradient(135deg,var(--orange),#6a1b9a)';
-  } else if(activeEvent === 'natal'){
-    document.body.style.background = `linear-gradient(180deg,var(--natal-bg-start),var(--natal-bg-end))`;
-    logo.style.background = 'linear-gradient(135deg,#0b8f6e,#ff4242)';
-  } else if(activeEvent === 'aniversario'){
-    document.body.style.background = `linear-gradient(180deg,var(--aniv-bg-start),var(--aniv-bg-end))`;
-    logo.style.background = 'linear-gradient(135deg,#ffd700,#ff8a00)';
-  } else if(eventDefinitions[activeEvent] && eventDefinitions[activeEvent].type === 'estacao'){
-    // lighter seasonal palettes
-    if(activeEvent === 'verao'){ document.body.style.background = 'linear-gradient(180deg,#05162b,#052b44)'; logo.style.background = 'linear-gradient(135deg,#ffd166,#ff8a00)'; }
-    if(activeEvent === 'primavera'){ document.body.style.background = 'linear-gradient(180deg,#06131b,#0b2b14)'; logo.style.background = 'linear-gradient(135deg,#a0ffb8,#5ce1a1)'; }
-    if(activeEvent === 'outono'){ document.body.style.background = 'linear-gradient(180deg,#1b0b00,#2b0f00)'; logo.style.background = 'linear-gradient(135deg,#ffb86b,#ff7b00)'; }
-    if(activeEvent === 'inverno'){ document.body.style.background = 'linear-gradient(180deg,#021027,#071a34)'; logo.style.background = 'linear-gradient(135deg,#bfe3ff,#6fb3ff)'; }
-  } else {
-    // generic event look
-    document.body.style.background = 'linear-gradient(180deg,#07121b,#181b2a)';
-    logo.style.background = 'linear-gradient(135deg,var(--accent),var(--purple))';
+  /* TRIOS */
+  function renderTrios(){
+    const grid = $('#trioGrid'); grid.innerHTML = '';
+    trios.forEach(t=>{
+      const card = document.createElement('div'); card.className = 'card';
+      const list = t.members.map(m=> `<li>${m}</li>`).join('');
+      card.innerHTML = `<div style="font-weight:900">${t.title}</div><div class="small">${t.desc}</div><div style="margin-top:8px"><ul class="trio-list">${list}</ul></div>`;
+      grid.appendChild(card);
+    });
   }
-}
 
-/* ---------- TIMER: auto-activate Halloween at 09/11 12:30 local (only if no manual event active) */
-function checkAutoActivate(){
-  try{
-    const now = new Date();
-    // determine target year as nearest upcoming (this or next year)
-    let year = now.getFullYear();
-    const targetThisYear = new Date(year, 10, 9, 12, 30, 0); // Nov 9
-    let target = targetThisYear;
-    if(now > targetThisYear) {
-      target = new Date(year+1,10,9,12,30,0);
+  /* UPDATES */
+  function renderUpdates(){
+    const area = $('#updates'); area.innerHTML = '<div class="group-title">Atualizações</div>';
+    const list = [
+      {title:"V1.3 — Cael Theme", desc:"Cael promovido a LENDÁRIO; tema Cael aplicado; painel de eventos removido desta build pública."},
+      {title:"V1.2", desc:"Adicionado Liora, Marin e Requiem; melhorias no tracker."},
+      {title:"V1.0", desc:"Versão inicial do Recall WI."}
+    ];
+    list.forEach(u=>{ const block = document.createElement('div'); block.className='card'; block.innerHTML = `<div style="font-weight:900">${u.title}</div><div class="small" style="margin-top:8px">${u.desc}</div>`; area.appendChild(block); });
+  }
+
+  /* Theme toggle (simple) */
+  $('#themeBtn').addEventListener('click', ()=>{
+    const cur = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', cur);
+    // simple palette swap for demo: invert hero background and logo colors
+    if(cur === 'light'){
+      document.body.style.background = 'linear-gradient(180deg,#f6f7fb,#e8eefc)';
+      $('#logoBox').style.background = 'linear-gradient(135deg,#d1b000,#6b3a99)';
+      document.querySelectorAll('.card').forEach(c=> c.style.background = '#ffffff');
+    } else {
+      document.body.style.background = 'linear-gradient(180deg,var(--cael-bg-start),var(--cael-bg-end))';
+      $('#logoBox').style.background = 'linear-gradient(135deg,#ffd700,#ff8a00)';
+      document.querySelectorAll('.card').forEach(c=> c.style.background = 'var(--card)');
     }
-    // Activate only if there is NO activeEvent (manual or persisted)
-    if(!activeEvent){
-      // if it's the exact time or after (during that minute) activate immediately
-      if(now >= target && now - target < (1000*60*60*24)){ // within 24h window after target: trigger once
-        activeEvent = 'halloween';
-        localStorage.setItem('recall_active_event', 'halloween');
-        localStorage.setItem('recall_theme_mode', 'halloween');
-        applyEvent(); renderShop(); updateHeaderEvent();
-      }
-    }
-  }catch(e){ console.error(e) }
-}
-checkAutoActivate();
+  });
 
-/* ---------- Export: generate a version of index.html with FORCE_GLOBAL_EVENT set ---------- */
-function generateExportHTML(forceEventKey){
-  // We will produce a copy of this file but with a small header variable FORCE_GLOBAL_EVENT set.
-  // For simplicity, create a minimal wrapper replacing the localStorage-based activation with hard-coded FORCE_GLOBAL_EVENT.
-  // This exported HTML will be a working standalone copy; user can upload it to GitHub to force the event for all visitors.
-  // Build a serialized copy of the HTML with FORCE_GLOBAL_EVENT inserted.
-  const htmlTemplate = `<!-- Generated index.html: FORCE_GLOBAL_EVENT = ${forceEventKey ? "'" + forceEventKey + "'" : "null"} -->\n` +
-  document.documentElement.outerHTML;
-  return htmlTemplate;
-}
-
-function downloadExportWithEvent(key){
-  const html = generateExportHTML(key);
-  const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  const name = key ? `index_force_${key}.html` : 'index_force_none.html';
-  a.download = name;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
-
-/* wire export buttons */
-document.getElementById('exportGlobalBtn').addEventListener('click', ()=>{
-  // quick export: uses the currently active event (if any) as FORCE_GLOBAL_EVENT
-  const ev = activeEvent;
-  const ok = confirm('Gerar um index.html PRONTO para upload (irá forçar o evento "' + (ev || 'none') + '" para todos os visitantes). Deseja continuar?');
-  if(!ok) return;
-  downloadExportWithEvent(ev);
+  /* ---------- INIT ---------- */
+  function init(){
+    renderCharacters(); renderShop(); renderMoney(); renderTrios(); renderUpdates();
+    // money table
+    const tbody = document.getElementById('moneyTableBody'); tbody.innerHTML='';
+    moneyTable.forEach(r=>{ const tr = document.createElement('tr'); tr.innerHTML = `<td>${r.action}</td><td>${r.value}</td>`; tbody.appendChild(tr); });
+    // set active "Cael" visuals already applied via CSS root; keep header badge
+    document.getElementById('activeEventLabel').textContent = 'Cael Theme';
+    document.getElementById('activeEventInfo').textContent = 'Cael visuals applied: golden logo, temporal background.';
+    // nav default
+    showSection('characters');
+  }
+  init();
 });
-
-document.getElementById('exportGlobalPrompt').addEventListener('click', ()=>{
-  const choice = prompt('Digite a chave do evento para forçar (ex: halloween, natal, aniversario). Deixe em branco para nenhuma:');
-  if(choice === null) return;
-  const key = choice.trim() || null;
-  if(key && !eventDefinitions[key]) { alert('Evento desconhecido: ' + key); return; }
-  downloadExportWithEvent(key);
-});
-
-/* ---------- Update header badge + initial UI ---------- */
-function updateHeaderEvent(){
-  const label = document.getElementById('activeEventLabel');
-  const info = document.getElementById('activeEventInfo');
-  if(!activeEvent){ label.textContent = 'Nenhum evento'; info.textContent = ''; return; }
-  const def = eventDefinitions[activeEvent];
-  label.textContent = def?.label || activeEvent;
-  info.textContent = def?.rec || '';
-}
-
-/* ---------- INIT ---------- */
-function init(){
-  renderCharacters(); renderShop(); renderMoney(); renderTrios(); renderUpdates();
-  // money table
-  const tbody = $('#moneyTableBody'); tbody.innerHTML='';
-  moneyTable.forEach(r=>{ const tr = document.createElement('tr'); tr.innerHTML = `<td>${r.action}</td><td>${r.value}</td>`; tbody.appendChild(tr); });
-  // set event from localStorage if present
-  if(activeEvent) applyEvent();
-  updateHeaderEvent();
-  // wire nav default
-  showSection('characters');
-  // wire secret panel behavior for event buttons' tooltips (done on unlock)
-}
-init();
-
 </script>
 </body>
 </html>
+
+</html>
+
