@@ -3,33 +3,47 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Recall WI — Oficial (Cael Theme)</title>
+<title>Recall WI — Oficial (Cael Theme - Red/Black)</title>
 <style>
   :root{
-    --bg:#0f1114; --panel:#15181b; --muted:#9aa4ad; --accent:#00d1ff;
-    --gold:#ffd700; --purple:#a44bff; --orange:#ff7b00;
-    --card:#1b1f23; --glass: rgba(255,255,255,0.03); --text:#e9eef2;
-    --cael-bg-start:#0b0710; --cael-bg-end:#1b0830;
-    --modal-bg: rgba(2,6,10,0.7);
+    --bg:#070406;                /* fundo geral (preto) */
+    --panel:#0b0b0b;             /* painel (preto profundo) */
+    --muted:#9aa4ad;
+    --accent:#00d1ff;
+    --gold:#ffd700;
+    --purple:#a44bff;
+    --orange:#ff7b00;
+    --card:#121212;
+    --glass: rgba(255,255,255,0.03);
+    --text:#e9eef2;
+
+    /* Cael -> agora escala vermelha para miticos */
+    --cael-bg-start:#1b0000;
+    --cael-bg-end:#050000;
+    --mitico-red:#ff2d2d;
+    --mitico-glow: rgba(255,45,45,0.12);
+
+    --modal-bg: rgba(2,6,10,0.85);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
     margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-    color:var(--text); background:linear-gradient(180deg,var(--cael-bg-start),var(--cael-bg-end));
+    color:var(--text);
+    background:linear-gradient(180deg,var(--cael-bg-start),var(--cael-bg-end));
     min-height:100vh; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     transition: background 450ms ease, color 350ms ease;
   }
   header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.12));border-bottom:1px solid rgba(255,255,255,0.03);position:sticky;top:0;z-index:40}
   .brand{display:flex;gap:12px;align-items:center}
-  .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#ffd700,#ff8a00);display:flex;align-items:center;justify-content:center;font-weight:900;color:#021;font-size:22px;box-shadow:0 10px 40px rgba(0,0,0,0.5)}
+  .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#2b0000,var(--mitico-red));display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:20px;box-shadow:0 10px 40px rgba(0,0,0,0.8)}
   nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .navbtn{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);cursor:pointer;font-weight:700}
-  .navbtn.active{outline:2px solid var(--gold); box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+  .navbtn.active{outline:2px solid var(--mitico-red); box-shadow:0 6px 18px rgba(0,0,0,0.35)}
   .controls{display:flex;gap:8px;align-items:center}
   main{padding:20px;max-width:1180px;margin:18px auto}
-  .panel{background:var(--panel);border-radius:14px;padding:18px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 12px 40px rgba(0,0,0,0.5)}
-  .group-title{font-size:18px;color:var(--gold);margin-bottom:10px;font-weight:900}
+  .panel{background:var(--panel);border-radius:14px;padding:18px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 12px 40px rgba(0,0,0,0.7)}
+  .group-title{font-size:18px;color:var(--mitico-red);margin-bottom:10px;font-weight:900}
   .small{font-size:13px;color:var(--muted)}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
   .card{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
@@ -41,29 +55,31 @@
   .raro{background:rgba(0,123,255,0.06);color:var(--accent)}
   .epico{background:rgba(164,75,255,0.06);color:var(--purple)}
   .lendario{background:linear-gradient(90deg,#ffd70020,#ff9a0020);color:var(--gold)}
+  .mitico{background:linear-gradient(90deg,var(--mitico-red),#b10000);color:#fff;box-shadow:0 8px 30px var(--mitico-glow)}
   .shop-line{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px}
   .old-price{text-decoration:line-through;color:#ffb3a3;margin-right:8px;font-size:13px;opacity:0.9}
-  .new-price{color:var(--gold);font-weight:900}
+  .new-price{color:var(--mitico-red);font-weight:900}
   table{width:100%;border-collapse:collapse}
   th,td{padding:10px;border:1px solid rgba(255,255,255,0.03);text-align:left}
   th{background:rgba(255,255,255,0.02)}
   .hidden{display:none}
-  .btn{padding:8px 12px;border-radius:10px;border:none;background:var(--gold);color:#021;font-weight:800;cursor:pointer}
+  .btn{padding:8px 12px;border-radius:10px;border:none;background:var(--mitico-red);color:#fff;font-weight:800;cursor:pointer}
+  .btn.alt{background:var(--gold);color:#021}
   .danger{background:#ff6b6b;color:#fff}
   .hero-banner{border-radius:12px;padding:18px;margin-bottom:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); display:flex;align-items:center;justify-content:space-between;gap:12px}
   .hero-left{max-width:70%}
-  .hero-title{font-size:22px;font-weight:900;color:var(--gold)}
+  .hero-title{font-size:22px;font-weight:900;color:var(--mitico-red)}
   .hero-desc{color:var(--muted);font-size:13px;margin-top:6px}
   .event-pill{padding:6px 10px;border-radius:8px;font-weight:800;background:rgba(255,255,255,0.03)}
   .rarity-block{margin-top:12px;border-radius:10px;padding:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
-  .rarity-title{font-weight:900;margin-bottom:8px}
+  .rarity-title{font-weight:900;margin-bottom:8px;color:var(--mitico-red)}
   .subtype-title{font-weight:800;margin-top:6px;margin-bottom:6px}
   /* Modal styles */
   .modal-root{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:120}
   .modal-overlay{position:absolute;inset:0;background:var(--modal-bg)}
-  .modal-card{position:relative;z-index:121;width:min(720px,96vw);background:var(--panel);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+  .modal-card{position:relative;z-index:121;width:min(760px,96vw);background:var(--panel);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 20px 60px rgba(0,0,0,0.8)}
   .modal-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
-  .modal-title{font-weight:900;font-size:18px}
+  .modal-title{font-weight:900;font-size:18px;color:var(--mitico-red)}
   .close-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:6px 10px;border-radius:8px;cursor:pointer;color:var(--muted)}
   .modal-body{margin-top:12px}
   .line{margin:6px 0}
@@ -76,7 +92,7 @@
     <div class="logo" id="logoBox">CAEL</div>
     <div>
       <h1 style="margin:0">Recall WI</h1>
-      <div class="small">Tudo que você precisa saber do Recall — Tema: Cael</div>
+      <div class="small">Tudo que você precisa saber do Recall — Tema: Cael (Red/Black)</div>
     </div>
   </div>
 
@@ -97,12 +113,12 @@
 <main>
   <div class="hero-banner panel" id="hero">
     <div class="hero-left">
-      <div class="hero-title">Recall WI — Tema: Cael</div>
-      <div class="hero-desc">Este index está focado no tema do Cael (efeitos visuais e badge). Painel de eventos removido nesta versão pública.</div>
+      <div class="hero-title">Recall WI — Tema: Cael (Red)</div>
+      <div class="hero-desc">Versão pública / estilo vermelho-preto. Miticos agora aparecem com destaque vermelho.</div>
     </div>
     <div style="text-align:right">
       <div id="activeEventLabel" class="event-pill">Cael Theme</div>
-      <div class="notice" id="activeEventInfo">Visuais aplicados: logo dourada, fundo temporal.</div>
+      <div class="notice" id="activeEventInfo">Visuais aplicados: logo vermelha, fundo escuro.</div>
     </div>
   </div>
 
@@ -156,25 +172,28 @@
   </div>
 </div>
 
-<footer style="position:relative">Recall WI — Tema Cael aplicado. Versão pública sem painel de eventos.</footer>
+<footer style="position:relative">Recall WI — Tema Cael (Red). Versão pública sem painel de eventos.</footer>
 
 <script>
 /* -------------------------
-   Atualizações aplicadas:
-   - TRACKER_PASSWORD = "BATATA"
-   - Salya adicionada (raro)
-   - Umbra, Nyra, Seraphina = grátis (price: 0)
-   - Loja mostra só nome/raridade/preço e separa por tipo
-   - Personagens: clicar abre modal central com habilidade + frases EN/PT
-   - Updates ordenadas v1.6 -> v1.0
+   Alterações aplicadas:
+   - Tema vermelho/preto
+   - Nova raridade: MITICO (visual vermelho)
+   - Adicionados dois míticos: Noctis (Assassino) e Lysander (Sobrevivente)
+   - Mantive Umbra, Nyra, Seraphina grátis
+   - Loja separada por tipo e raridade (inclui MITICO)
+   - Modal central para detalhes de personagens
+   - TRACKER com senha "BATATA"
    ------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
   const TRACKER_PASSWORD = "BATATA";
 
   const characters = [
+    // gratuitos
     {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", oldPrice:0, price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
     {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", oldPrice:0, price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
+    // sobreviventes comuns/raros/épicos/lendários
     {key:"Gideon", display:"Gideon — The Guardian", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:1000, ability:"Protege alguém de 1 ataque (escudo 10s).", phraseEN:"Stay behind me!", phrasePT:"Fiquem atrás de mim!"},
     {key:"Aether", display:"Aether — The Watcher", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:1000, ability:"Pergunta ao assassino o próximo alvo (1x).", phraseEN:"Who’s your next target?", phrasePT:"Qual é o seu próximo alvo?"},
     {key:"Salya", display:"Salya — A Calmaria", type:"Sobrevivente", rarity:"raro", oldPrice:1200, price:1200, ability:"Trégua — O assassino não pode levantar a arma por 3 segundos, mas ainda pode andar.", phraseEN:"Peace… even if brief.", phrasePT:"Paz… mesmo que curta."},
@@ -183,10 +202,21 @@ document.addEventListener('DOMContentLoaded', () => {
     {key:"Liora", display:"Liora — The Veiled", type:"Sobrevivente", rarity:"lendario", oldPrice:2600, price:2600, ability:"Faz assassino contar 8s parado (1x).", phraseEN:"Now you forget me…", phrasePT:"Agora você me esquece…"},
     {key:"Marin", display:"Marin — The Timebinder", type:"Sobrevivente", rarity:"lendario", oldPrice:2700, price:2700, ability:"Ativa 'Time Snare': assassino NÃO PODE CORRER 5s (1x).", phraseEN:"Slow down, time obeys me!", phrasePT:"Diminua, o tempo me obedece!"},
     {key:"Cael", display:"Cael — The Defier", type:"Sobrevivente", rarity:"lendario", oldPrice:2200, price:2200, ability:"Ao ser alvo: assassino NÃO PODE ATACAR por 2s e NÃO PODE CORRER por 8s (1x).", phraseEN:"Your turn to run.", phrasePT:"Agora é você quem corre."},
+
+    // assassinos existentes
     {key:"Umbra", display:"Umbra — The Shadow", type:"Assassino", rarity:"comum", oldPrice:0, price:0, ability:"Habilidade ativa somente se tentar pegar e falhar (1x).", phraseEN:"Shadow strike!", phrasePT:"Golpe das sombras!"},
     {key:"Darius", display:"Darius — The Hunter", type:"Assassino", rarity:"raro", oldPrice:800, price:800, ability:"Marked: bloqueia habilidades do alvo por 15s (1x).", phraseEN:"Marked!", phrasePT:"Marcado!"},
     {key:"Echo", display:"Echo — The Returned", type:"Assassino", rarity:"epico", oldPrice:1800, price:1800, ability:"Anula 1 poder usado contra ele (1x).", phraseEN:"Echo!", phrasePT:"Eco!"},
-    {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", oldPrice:3000, price:3000, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."}
+    {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", oldPrice:3000, price:3000, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."},
+
+    // **NOVIDADES MITICO** (adicionado)
+    {key:"Noctis", display:"Noctis — Mestre do Umbra", type:"Assassino", rarity:"mitico", oldPrice:5000, price:5000,
+      ability:"Sombra Absoluta — pode eliminar um alvo (1x) à distância sem precisar se aproximar; jogadores próximos ao alvo (1 passo) também são afetados. Uso único por partida (alto custo).",
+      phraseEN:"Night swallows all.", phrasePT:"A noite devora tudo."},
+
+    {key:"Lysander", display:"Lysander — The Sentinel", type:"Sobrevivente", rarity:"mitico", oldPrice:5000, price:5000,
+      ability:"Passos da Retirada — ao ativar, força inimigos alvo(s) a recuarem 3 passos e ficam paralisados por 2s (1x). Projetado para ser caro e com impacto forte.",
+      phraseEN:"One step back, now stand still.", phrasePT:"Um passo para trás, agora fique parado."}
   ];
 
   const moneyTable = [
@@ -205,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {title:"Tríade da Vida", desc:"Cura, proteção e resiliência", members:["Seraphina","Gideon","Requiem"]},
     {title:"Tríade da Mente", desc:"Observação, estratégia e previsão", members:["Aether","Elara","Orion"]},
     {title:"Tríade da Velocidade", desc:"Movimento, reflexo e precisão", members:["Nyra","Echo","Darius"]},
-    {title:"Tríade das Sombras", desc:"Engano, resistência e retribuição (Mestre do Umbra chegando)", members:["Umbra","Liora","???"]},
+    {title:"Tríade das Sombras", desc:"Engano, resistência e retribuição (Mestre do Umbra chegando)", members:["Umbra","Liora","Noctis"]},
     {title:"Tríade do Tempo", desc:"Controle temporal e manipulação", members:["Marin","Cael","Orion"]}
   ];
 
@@ -255,7 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     modalRoot.style.display = 'flex';
     modalRoot.setAttribute('aria-hidden','false');
-    // trap focus could be added; esc closes
     document.addEventListener('keydown', escHandler);
   }
   function closeCharModal(){
@@ -297,19 +326,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function createCharCard(ch){
     const card = document.createElement('div'); card.className = 'card';
-    // In "Personagens" we show the clickable name (opens modal) and hidden ability (not shown here)
     const header = document.createElement('div'); header.className = 'char-name';
-    // Make the left part a button-like element for accessibility
+
+    // left clickable name button
     const left = document.createElement('div');
     left.innerHTML = `<button class="navbtn" style="padding:6px 10px;border-radius:8px;font-weight:800;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text);cursor:pointer">${ch.display}</button>`;
-    // right side: rarity + type
-    const right = document.createElement('div'); right.className = 'small'; right.innerHTML = `<span class="tag ${ch.rarity}">${ch.rarity.toUpperCase()}</span> • ${ch.type}`;
+
+    // right: rarity tag + type
+    const right = document.createElement('div'); right.className = 'small';
+    right.innerHTML = `<span class="tag ${ch.rarity === 'mitico' ? 'mitico' : ch.rarity}">${ch.rarity.toUpperCase()}</span> • ${ch.type}`;
+
     header.appendChild(left); header.appendChild(right);
 
-    // clicking the left button opens the modal with details
     left.querySelector('button').addEventListener('click', ()=> openCharModal(ch));
-
-    // optional: also add keyboard accessibility
     left.querySelector('button').addEventListener('keydown', (e)=> { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCharModal(ch); } });
 
     card.appendChild(header);
@@ -325,15 +354,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function createTypeBlock(type){
       const block = document.createElement('div'); block.className = 'rarity-block';
       block.innerHTML = `<div class="rarity-title">${type}</div>`;
-      // group by rarity order: comum, raro, epico, lendario
-      const rarities = ['comum','raro','epico','lendario'];
+      // group by rarity order: comum, raro, epico, lendario, mitico
+      const rarities = ['comum','raro','epico','lendario','mitico'];
       rarities.forEach(r => {
         const list = characters.filter(c => c.type === type && c.rarity === r);
         if(!list.length) return;
         const sub = document.createElement('div');
         sub.innerHTML = `<div class="subtype-title">${r.toUpperCase()}</div>`;
         list.forEach(ch => {
-          const priceText = (ch.price === 0 || ch.price === 0) ? '<strong>GRÁTIS</strong>' : `${ch.price}E`;
+          const priceText = (ch.price === 0) ? '<strong>GRÁTIS</strong>' : (ch.rarity === 'mitico' ? `<span class="new-price">${ch.price}E</span>` : `${ch.price}E`);
           const row = document.createElement('div'); row.className = 'shop-line';
           row.innerHTML = `<div style="font-weight:800">${ch.display}</div><div class="small">${priceText}</div>`;
           sub.appendChild(row);
@@ -361,7 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let players = JSON.parse(localStorage.getItem('recall_players') || '[]');
   function renderTracker(){
     const area = $('#tracker');
-    area.innerHTML = '<div class="group-title">Lista secreta — Controle de Personagens</div><div class="small">Protegido localmente por senha.</div><div id="trackerArea" style="margin-top:12px"><div id="loginDiv"><p class="small">Digite a senha:</p><input id="trackerPass" type="password" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"><button id="trackerLogin" class="btn" style="margin-left:8px">Entrar</button></div><div id="trackerContent" class="hidden" style="margin-top:12px"><div style="overflow:auto"><table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button id="addPlayer" class="btn">Adicionar Jogador</button><button id="clearPlayers" class="btn">Limpar lista</button><button id="exportPlayers" class="btn danger">Exportar (JSON)</button></div></div></div>';
+    area.innerHTML = '<div class="group-title">Lista secreta — Controle de Personagens</div><div class="small">Protegido localmente por senha.</div><div id="trackerArea" style="margin-top:12px"><div id="loginDiv"><p class="small">Digite a senha:</p><input id="trackerPass" type="password" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"><button id="trackerLogin" class="btn" style="margin-left:8px">Entrar</button></div><div id="trackerContent" class="hidden" style="margin-top:12px"><div style="overflow:auto"><table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button id="addPlayer" class="btn alt">Adicionar Jogador</button><button id="clearPlayers" class="btn danger">Limpar lista</button><button id="exportPlayers" class="btn danger">Exportar (JSON)</button></div></div></div>';
     buildPlayerHeader();
 
     document.getElementById('trackerLogin').addEventListener('click', ()=> {
@@ -383,8 +412,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('clearPlayers').addEventListener('click', ()=> {
       if(confirm('Limpar toda a lista local?')){ players=[]; localStorage.setItem('recall_players', JSON.stringify(players)); renderTable(); }
     });
-    document.querySelector('.btn.danger')?.addEventListener('click', ()=> {
-      const data = JSON.stringify(players,null,2); const blob = new Blob([data],{type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'recall_players.json'; a.click(); URL.revokeObjectURL(url);
+    document.querySelectorAll('.btn.danger').forEach(btn=>{
+      btn.addEventListener('click', ()=> {
+        const data = JSON.stringify(players,null,2); const blob = new Blob([data],{type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'recall_players.json'; a.click(); URL.revokeObjectURL(url);
+      });
     });
   }
   function buildPlayerHeader(){
@@ -416,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* UPDATES (ordenado conforme seu pedido) */
+  /* UPDATES */
   function renderUpdates(){
     const area = $('#updates'); area.innerHTML = '<div class="group-title">Atualizações</div>';
     const list = [
@@ -436,13 +467,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const cur = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     document.body.setAttribute('data-theme', cur);
     if(cur === 'light'){
-      document.body.style.background = 'linear-gradient(180deg,#f6f7fb,#e8eefc)';
-      $('#logoBox').style.background = 'linear-gradient(135deg,#d1b000,#6b3a99)';
+      // versão clara (inverte)
+      document.body.style.background = 'linear-gradient(180deg,#fff5f5,#ffecec)';
+      $('#logoBox').style.background = 'linear-gradient(135deg,#b10000,#ff7b7b)';
       document.querySelectorAll('.card').forEach(c=> c.style.background = '#ffffff');
+      document.querySelectorAll('.navbtn').forEach(b=> b.style.color = '#111');
     } else {
       document.body.style.background = 'linear-gradient(180deg,var(--cael-bg-start),var(--cael-bg-end))';
-      $('#logoBox').style.background = 'linear-gradient(135deg,#ffd700,#ff8a00)';
+      $('#logoBox').style.background = 'linear-gradient(135deg,#2b0000,var(--mitico-red))';
       document.querySelectorAll('.card').forEach(c=> c.style.background = 'var(--card)');
+      document.querySelectorAll('.navbtn').forEach(b=> b.style.color = 'var(--text)');
     }
   });
 
@@ -453,8 +487,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const tbody = document.getElementById('moneyTableBody'); tbody.innerHTML='';
     moneyTable.forEach(r=>{ const tr = document.createElement('tr'); tr.innerHTML = `<td>${r.action}</td><td>${r.value}</td>`; tbody.appendChild(tr); });
     // header badge
-    document.getElementById('activeEventLabel').textContent = 'Cael Theme';
-    document.getElementById('activeEventInfo').textContent = 'Cael visuals applied: golden logo, temporal background.';
+    document.getElementById('activeEventLabel').textContent = 'Cael Theme (Red)';
+    document.getElementById('activeEventInfo').textContent = 'Visuais aplicados: logo vermelha, fundo escuro.';
     // nav default
     showSection('characters');
   }
@@ -464,4 +498,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
