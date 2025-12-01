@@ -3,499 +3,612 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Recall WI — Oficial (N&L Theme - Red/Black)</title>
+<title>Recall WI — Oficial</title>
+<meta name="description" content="Recall WI — Personagens, Loja, Presentes Diários e Evento" />
 <style>
   :root{
-    --bg:#070406;                /* fundo geral (preto) */
-    --panel:#0b0b0b;             /* painel (preto profundo) */
-    --muted:#9aa4ad;
-    --accent:#00d1ff;
-    --gold:#ffd700;
-    --purple:#a44bff;
-    --orange:#ff7b00;
-    --card:#121212;
-    --glass: rgba(255,255,255,0.03);
-    --text:#e9eef2;
-
-    /* Cael -> agora escala vermelha para miticos */
-    --Mitico-bg-start:#1b0000;
-    --Mitico-bg-end:#050000;
-    --mitico-red:#ff2d2d;
-    --mitico-glow: rgba(255,45,45,0.12);
-
-    --modal-bg: rgba(2,6,10,0.85);
+    --bg-1:#e9f6ff; --bg-2:#dff0ff; --panel:#ffffffee; --card:#ffffff; --muted:#52708a;
+    --accent:#2a9df4; --accent-dark:#176195; --christmas-red:#b3001b; --text:#042233;
+    --glass: rgba(255,255,255,0.7); --shadow: 0 10px 30px rgba(6,30,50,0.08); --modal-bg: rgba(3,8,14,0.6);
   }
+  body[data-theme="dark"]{
+    --bg-1:#07111a; --bg-2:#061420; --panel:#071a24; --card:#0c1b25; --muted:#98b1c6;
+    --accent:#5fb8ff; --accent-dark:#1e64a3; --christmas-red:#ff4b5c; --text:#e8f6ff;
+  }
+
   *{box-sizing:border-box}
-  html,body{height:100%}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased}
   body{
-    margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-    color:var(--text);
-    background:linear-gradient(180deg,var(--Mitico-bg-start),var(--Mitico-bg-end));
-    min-height:100vh; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    transition: background 450ms ease, color 350ms ease;
+    background: linear-gradient(180deg,var(--bg-1),var(--bg-2));
+    color:var(--text);min-height:100vh;
   }
-  header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.12));border-bottom:1px solid rgba(255,255,255,0.03);position:sticky;top:0;z-index:40}
+  header{position:sticky;top:0;z-index:80;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(90deg, rgba(255,255,255,0.65), rgba(255,255,255,0.35));border-bottom:1px solid rgba(0,0,0,0.04)}
   .brand{display:flex;gap:12px;align-items:center}
-  .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#2b0000,var(--mitico-red));display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:20px;box-shadow:0 10px 40px rgba(0,0,0,0.8)}
+  .logo{width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--christmas-red),#ff7b7b);box-shadow:var(--shadow);font-size:20px}
   nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .navbtn{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);cursor:pointer;font-weight:700}
-  .navbtn.active{outline:2px solid var(--mitico-red); box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+  .navbtn{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:800;color:var(--accent-dark)}
+  .navbtn.active{background:linear-gradient(90deg,var(--accent),var(--accent-dark));color:#fff;box-shadow:0 10px 30px rgba(30,90,150,0.08)}
   .controls{display:flex;gap:8px;align-items:center}
-  main{padding:20px;max-width:1180px;margin:18px auto}
-  .panel{background:var(--panel);border-radius:14px;padding:18px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 12px 40px rgba(0,0,0,0.7)}
-  .group-title{font-size:18px;color:var(--mitico-red);margin-bottom:10px;font-weight:900}
+  .themeToggle{padding:8px 12px;border-radius:10px;border:none;background:transparent;cursor:pointer;color:var(--accent-dark);font-weight:800}
+
+  main{max-width:1180px;margin:22px auto;padding:0 18px}
+  .panel{background:var(--panel);border-radius:12px;padding:18px;margin-bottom:18px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .group-title{font-size:18px;color:var(--accent-dark);margin-bottom:8px;font-weight:900}
   .small{font-size:13px;color:var(--muted)}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-  .card{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-  .char-name{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer;padding:8px;border-radius:8px}
-  .char-name:hover{background:rgba(255,255,255,0.02)}
-  .char-ability{display:none;margin-top:10px;padding:12px;background:rgba(0,0,0,0.06);border-radius:8px}
-  .tag{padding:6px 8px;border-radius:8px;font-weight:800;font-size:12px}
-  .comum{background:rgba(255,255,255,0.03);color:#ddd}
-  .raro{background:rgba(0,123,255,0.06);color:var(--accent)}
-  .epico{background:rgba(164,75,255,0.06);color:var(--purple)}
-  .lendario{background:linear-gradient(90deg,#ffd70020,#ff9a0020);color:var(--gold)}
-  .mitico{background:linear-gradient(90deg,var(--mitico-red),#b10000);color:#fff;box-shadow:0 8px 30px var(--mitico-glow)}
-  .shop-line{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px}
-  .old-price{text-decoration:line-through;color:#ffb3a3;margin-right:8px;font-size:13px;opacity:0.9}
-  .new-price{color:var(--mitico-red);font-weight:900}
-  table{width:100%;border-collapse:collapse}
-  th,td{padding:10px;border:1px solid rgba(255,255,255,0.03);text-align:left}
-  th{background:rgba(255,255,255,0.02)}
-  .hidden{display:none}
-  .btn{padding:8px 12px;border-radius:10px;border:none;background:var(--mitico-red);color:#fff;font-weight:800;cursor:pointer}
-  .btn.alt{background:var(--gold);color:#021}
-  .danger{background:#ff6b6b;color:#fff}
-  .hero-banner{border-radius:12px;padding:18px;margin-bottom:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .hero-left{max-width:70%}
-  .hero-title{font-size:22px;font-weight:900;color:var(--mitico-red)}
-  .hero-desc{color:var(--muted);font-size:13px;margin-top:6px}
-  .event-pill{padding:6px 10px;border-radius:8px;font-weight:800;background:rgba(255,255,255,0.03)}
-  .rarity-block{margin-top:12px;border-radius:10px;padding:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
-  .rarity-title{font-weight:900;margin-bottom:8px;color:var(--mitico-red)}
-  .subtype-title{font-weight:800;margin-top:6px;margin-bottom:6px}
-  /* Modal styles */
-  .modal-root{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:120}
+
+  .char-card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04)}
+  .char-title{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer}
+  .char-ability{display:none;margin-top:10px;padding:10px;background:rgba(2,32,54,0.02);border-radius:8px}
+
+  .tag{padding:6px 8px;border-radius:999px;font-weight:800;font-size:12px}
+  .comum{background:rgba(0,0,0,0.03);color:#2b70a6}
+  .raro{background:#eaf7f1;color:#087f5b}
+  .epico{background:#f3e9ff;color:#6b2fa0}
+  .lendario{background:linear-gradient(90deg,#fff3cc,#ffe6b3);color:var(--gold)}
+  .mitico{background:linear-gradient(90deg,#ffb3c0,#ffd8b3);color:#7b001a;box-shadow:0 8px 20px rgba(183,20,40,0.08)}
+
+  .shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .shop-card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04)}
+  .price{font-weight:900;font-size:18px;color:var(--christmas-red)}
+
+  .present-card{padding:14px;border-radius:12px;text-align:center;background:linear-gradient(180deg,#fff,#f6fbff);border:1px solid rgba(0,0,0,0.04)}
+  .present-locked{opacity:0.6;filter:grayscale(0.15)}
+  .present-reveal{animation:pop 240ms ease-out}
+  @keyframes pop{from{transform:scale(.97);opacity:0}to{transform:scale(1);opacity:1}}
+
+  .modal-root{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:140}
   .modal-overlay{position:absolute;inset:0;background:var(--modal-bg)}
-  .modal-card{position:relative;z-index:121;width:min(760px,96vw);background:var(--panel);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 20px 60px rgba(0,0,0,0.8)}
-  .modal-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
-  .modal-title{font-weight:900;font-size:18px;color:var(--mitico-red)}
-  .close-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:6px 10px;border-radius:8px;cursor:pointer;color:var(--muted)}
-  .modal-body{margin-top:12px}
-  .line{margin:6px 0}
-  @media (max-width:820px){ .hero-left{max-width:100%} main{padding:12px} header{flex-direction:column;gap:8px;align-items:flex-start} .modal-card{width:92vw} }
+  .modal-card{position:relative;z-index:141;width:min(820px,96vw);background:var(--panel);border-radius:12px;padding:18px;border:1px solid rgba(0,0,0,0.05);box-shadow:0 30px 80px rgba(0,0,0,0.5)}
+  .modal-title{font-weight:900;color:var(--christmas-red)}
+  .close-btn{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:6px 10px;border-radius:8px;cursor:pointer;color:var(--muted)}
+
+  .hidden{display:none}
+  .center{display:flex;align-items:center;justify-content:center;gap:8px}
+  .btn{padding:8px 12px;border-radius:8px;border:none;background:var(--christmas-red);color:#fff;font-weight:900;cursor:pointer}
+  .btn.secondary{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--accent-dark)}
+  .kv{font-size:13px;color:var(--muted)}
+  .footer{font-size:12px;color:var(--muted);text-align:center;margin:20px 0}
+
+  @media (max-width:820px){
+    header{flex-direction:column;align-items:flex-start;gap:12px}
+    .logo{width:44px;height:44px}
+  }
+  #snow-canvas{position:fixed;left:0;top:0;pointer-events:none;z-index:30;width:100%;height:100%}
 </style>
 </head>
-<body data-theme="dark">
+<body data-theme="light">
+<canvas id="snow-canvas"></canvas>
+
 <header>
   <div class="brand">
-    <div class="logo" id="logoBox">MITIC</div>
+    <div class="logo" id="logoBox">RW</div>
     <div>
       <h1 style="margin:0">Recall WI</h1>
-      <div class="small">Tudo que você precisa saber do Recall — Tema: MITICOS (Red/Black)</div>
+      <div class="small" id="subtitle">Tudo que você precisa saber do Recall</div>
     </div>
   </div>
 
-  <nav aria-label="Navegação principal">
+  <nav aria-label="Principal" id="mainNav">
     <button class="navbtn active" data-section="characters">Personagens</button>
     <button class="navbtn" data-section="shop">Loja</button>
-    <button class="navbtn" data-section="money">Economia</button>
-    <button class="navbtn" data-section="tracker">Lista secreta</button>
+    <button class="navbtn" data-section="economy">Economia</button>
     <button class="navbtn" data-section="trios">Tríades</button>
+    <button class="navbtn" data-section="tracker">Lista Secreta</button>
+    <button class="navbtn" data-section="shop-natal">Loja de Natal</button>
+    <button class="navbtn" data-section="presents">Presentes Diários</button>
     <button class="navbtn" data-section="updates">Atualizações</button>
   </nav>
 
   <div class="controls">
-    <button id="themeBtn" class="navbtn">Mudar tema</button>
+    <button id="themeBtn" class="themeToggle">Trocar tema</button>
   </div>
 </header>
 
 <main>
-  <div class="hero-banner panel" id="hero">
-    <div class="hero-left">
-      <div class="hero-title">Recall WI — Tema: Miticos (Red)</div>
-      <div class="hero-desc">Versão pública / estilo vermelho-preto. Miticos agora aparecem com destaque vermelho.</div>
-    </div>
-    <div style="text-align:right">
-      <div id="activeEventLabel" class="event-pill">Mitico Theme</div>
-      <div class="notice" id="activeEventInfo">Visuais aplicados: logo vermelha, fundo escuro.</div>
-    </div>
-  </div>
-
   <!-- Characters -->
-  <section id="characters" class="panel"></section>
-
-  <!-- Shop -->
-  <section id="shop" class="panel hidden"></section>
-
-  <!-- Money -->
-  <section id="money" class="panel hidden">
-    <div class="group-title">Como ganhar Essence</div>
-    <div class="small">Ações e recompensas</div>
-    <table style="margin-top:10px">
-      <thead><tr><th>Ação</th><th>Essence</th></tr></thead>
-      <tbody id="moneyTableBody"></tbody>
-    </table>
+  <section id="characters" class="panel">
+    <div class="group-title">Personagens</div>
+    <div class="small">Clique no nome para ver habilidade e frases (EN / PT).</div>
+    <div id="charactersGrid" class="grid" style="margin-top:12px"></div>
   </section>
 
-  <!-- Tracker -->
-  <section id="tracker" class="panel hidden"></section>
+  <!-- Shop regular -->
+  <section id="shop" class="panel hidden">
+    <div class="group-title">Loja</div>
+    <div class="small">Personagens por tipo e raridade — preços em Essence (catálogo).</div>
+    <div id="shopArea" style="margin-top:12px"></div>
+  </section>
+
+  <!-- Economy -->
+  <section id="economy" class="panel hidden">
+    <div class="group-title">Economia</div>
+    <div class="small">Tabela visual de recompensas (Essence) — sem integração de pagamento.</div>
+    <div id="economyArea" style="margin-top:12px"></div>
+  </section>
 
   <!-- Trios -->
   <section id="trios" class="panel hidden">
     <div class="group-title">Tríades</div>
-    <div class="small">Cada personagem pertence a uma tríade — ??? indica vaga.</div>
-    <div id="trioGrid" class="grid" style="margin-top:12px"></div>
+    <div class="small">Personagens com temática parecida (trios incompletos mostram ???).</div>
+    <div id="triosGrid" class="grid" style="margin-top:12px"></div>
+  </section>
+
+  <!-- Tracker -->
+  <section id="tracker" class="panel hidden">
+    <div class="group-title">Lista Secreta — Protegida</div>
+    <div class="small">A área é local (localStorage). Apenas quem tiver a senha pode editar.</div>
+    <div id="trackerArea" style="margin-top:12px"></div>
+  </section>
+
+  <!-- Shop Natal -->
+  <section id="shop-natal" class="panel hidden">
+    <div class="group-title">Loja de Natal — Catálogo</div>
+    <div class="small">Itens do evento (catálogo). Preços em Christmas Coins (MN).</div>
+    <div id="natalShopArea" style="margin-top:12px"></div>
+  </section>
+
+  <!-- Presents -->
+  <section id="presents" class="panel hidden">
+    <div class="group-title">Presentes Diários (1–25)</div>
+    <div class="small">Cada dia tem reveal:false por padrão — para revelar edite o array dailyGifts (veja comentário).</div>
+    <div id="presentsGrid" class="grid" style="margin-top:12px"></div>
+    <div class="kv" style="margin-top:10px">Dica: pressione <strong>Ctrl+R</strong> para abrir o painel secreto (requer senha) que permite revelar dias sem editar o arquivo.</div>
   </section>
 
   <!-- Updates -->
-  <section id="updates" class="panel hidden"></section>
+  <section id="updates" class="panel hidden">
+    <div class="group-title">Atualizações</div>
+    <div id="updatesArea" style="margin-top:12px"></div>
+  </section>
+
+  <div class="footer">Recall WI — Versão limpa e otimizada</div>
 </main>
 
-<!-- Modal (central) - usado apenas na aba Personagens -->
-<div id="charModal" class="modal-root" role="dialog" aria-hidden="true">
+<!-- Character modal -->
+<div id="charModal" class="modal-root" aria-hidden="true">
   <div class="modal-overlay" id="modalOverlay"></div>
   <div class="modal-card" role="document" aria-labelledby="modalTitle">
-    <div class="modal-head">
+    <div style="display:flex;justify-content:space-between;align-items:center">
       <div id="modalTitle" class="modal-title">Nome — Subtítulo</div>
-      <div>
-        <button class="close-btn" id="modalClose">Fechar</button>
-      </div>
+      <div><button id="modalClose" class="close-btn">Fechar</button></div>
     </div>
-    <div class="modal-body" id="modalBody">
-      <!-- preenchido dinamicamente -->
-      <div class="line"><strong>Habilidade:</strong> ...</div>
-      <div class="line"><strong>EN:</strong> ...</div>
-      <div class="line"><strong>PT:</strong> ...</div>
-      <div class="line small" style="margin-top:10px;color:var(--muted)">Clique fora ou em "Fechar" para sair.</div>
+    <div id="modalBody" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<!-- Secret Reveal Modal (Ctrl+R) -->
+<div id="revealModal" class="modal-root hidden" aria-hidden="true">
+  <div class="modal-overlay" id="revealOverlay"></div>
+  <div class="modal-card" role="document" aria-labelledby="revealTitle">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div id="revealTitle" class="modal-title">Painel secreto — Revelar Presentes</div>
+      <div><button id="revealClose" class="close-btn">Fechar</button></div>
+    </div>
+    <div id="revealBody" style="margin-top:12px">
+      <div class="small">Digite a senha para revelar dias ou marque manualmente.</div>
+      <div style="margin-top:8px"><input id="revealPass" type="password" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)"><button id="revealAuthBtn" class="btn" style="margin-left:8px">Entrar</button></div>
+      <div id="revealControls" style="margin-top:12px;display:none"></div>
     </div>
   </div>
 </div>
 
-<footer style="position:relative">Recall WI — Tema Cael (Red). Versão pública sem painel de eventos.</footer>
-
 <script>
+/* ===========================================================
+   Recall WI — Código aprimorado (versão limpa)
+   - Mantive o visual que você gostava
+   - Corrigi bugs de navegação
+   - Adicionei painel secreto (Ctrl+R) para revelar presentes
+   - Comentário grande indicando onde revelar dailyGifts (use Ctrl+F)
+   =========================================================== */
+
 /* -------------------------
-   Alterações aplicadas:
-   - Tema vermelho/preto
-   - Nova raridade: MITICO (visual vermelho)
-   - Adicionados dois míticos: Noctis (Assassino) e Lysander (Sobrevivente)
-   - Mantive Umbra, Nyra, Seraphina grátis
-   - Loja separada por tipo e raridade (inclui MITICO)
-   - Modal central para detalhes de personagens
-   - TRACKER com senha "BATATA"
+   UTIL HELPERS
+   ------------------------- */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
+
+/* -------------------------
+   DATA
    ------------------------- */
 
-document.addEventListener('DOMContentLoaded', () => {
-  const TRACKER_PASSWORD = "BATATA";
+/* Characters (conservados do seu arquivo original) */
+const characters = [
+  {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
+  {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
+  {key:"Gideon", display:"Gideon — The Guardian", type:"Sobrevivente", rarity:"raro", price:1000, ability:"Protege alguém de 1 ataque (escudo 10s).", phraseEN:"Stay behind me!", phrasePT:"Fiquem atrás de mim!"},
+  {key:"Aether", display:"Aether — The Watcher", type:"Sobrevivente", rarity:"raro", price:1000, ability:"Pergunta ao assassino o próximo alvo (1x).", phraseEN:"Who's your next target?", phrasePT:"Qual é o seu próximo alvo?"},
+  {key:"Salya", display:"Salya — A Calmaria", type:"Sobrevivente", rarity:"raro", price:1200, ability:"Trégua — O assassino não pode levantar a arma por 3s.", phraseEN:"Peace… even if brief.", phrasePT:"Paz… mesmo que curta."},
+  {key:"Elara", display:"Elara — The Strategist", type:"Sobrevivente", rarity:"epico", price:1600, ability:"Pode correr duas vezes seguidas sem ser pega (1x).", phraseEN:"Double move!", phrasePT:"Movimento duplo!"},
+  {key:"Orion", display:"Orion — The Illusionist", type:"Sobrevivente", rarity:"epico", price:1700, ability:"Diz 'Illusion!' → assassino deve perseguir outro alvo por 10s (1x).", phraseEN:"Can you catch a shadow of me?", phrasePT:"Consegue pegar só minha sombra?"},
+  {key:"Liora", display:"Liora — The Veiled", type:"Sobrevivente", rarity:"lendario", price:2600, ability:"Faz assassino contar 8s parado (1x).", phraseEN:"Now you forget me…", phrasePT:"Agora você me esquece…"},
+  {key:"Marin", display:"Marin — The Timebinder", type:"Sobrevivente", rarity:"lendario", price:2700, ability:"Ativa 'Time Snare': assassino NÃO PODE CORRER 5s (1x).", phraseEN:"Slow down, time obeys me!", phrasePT:"Diminua, o tempo me obedece!"},
+  {key:"Cael", display:"Cael — The Defier", type:"Sobrevivente", rarity:"lendario", price:2200, ability:"Ao ser alvo: assassino NÃO PODE ATACAR 2s e NÃO PODE CORRER 8s (1x).", phraseEN:"Your turn to run.", phrasePT:"Agora é você quem corre."},
 
-  const characters = [
-    // gratuitos
-    {key:"Seraphina", display:"Seraphina — The Healer", type:"Sobrevivente", rarity:"comum", oldPrice:0, price:0, ability:"Revive 1 jogador eliminado (1x).", phraseEN:"Rise again!", phrasePT:"Levante-se de novo!"},
-    {key:"Nyra", display:"Nyra — The Swift", type:"Sobrevivente", rarity:"comum", oldPrice:0, price:0, ability:"Escapa de 1 captura (1x).", phraseEN:"Too fast for you!", phrasePT:"Rápida demais pra você!"},
-    // sobreviventes comuns/raros/épicos/lendários
-    {key:"Gideon", display:"Gideon — The Guardian", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:1000, ability:"Protege alguém de 1 ataque (escudo 10s).", phraseEN:"Stay behind me!", phrasePT:"Fiquem atrás de mim!"},
-    {key:"Aether", display:"Aether — The Watcher", type:"Sobrevivente", rarity:"raro", oldPrice:1000, price:1000, ability:"Pergunta ao assassino o próximo alvo (1x).", phraseEN:"Who’s your next target?", phrasePT:"Qual é o seu próximo alvo?"},
-    {key:"Salya", display:"Salya — A Calmaria", type:"Sobrevivente", rarity:"raro", oldPrice:1200, price:1200, ability:"Trégua — O assassino não pode levantar a arma por 3 segundos, mas ainda pode andar.", phraseEN:"Peace… even if brief.", phrasePT:"Paz… mesmo que curta."},
-    {key:"Elara", display:"Elara — The Strategist", type:"Sobrevivente", rarity:"epico", oldPrice:1600, price:1600, ability:"Pode correr duas vezes seguidas sem ser pega (1x).", phraseEN:"Double move!", phrasePT:"Movimento duplo!"},
-    {key:"Orion", display:"Orion — The Illusionist", type:"Sobrevivente", rarity:"epico", oldPrice:1700, price:1700, ability:"Diz 'Illusion!' → assassino deve perseguir outro alvo por 10s (1x).", phraseEN:"Can you catch a shadow of me?", phrasePT:"Consegue pegar só minha sombra?"},
-    {key:"Liora", display:"Liora — The Veiled", type:"Sobrevivente", rarity:"lendario", oldPrice:2600, price:2600, ability:"Faz assassino contar 8s parado (1x).", phraseEN:"Now you forget me…", phrasePT:"Agora você me esquece…"},
-    {key:"Marin", display:"Marin — The Timebinder", type:"Sobrevivente", rarity:"lendario", oldPrice:2700, price:2700, ability:"Ativa 'Time Snare': assassino NÃO PODE CORRER 5s (1x).", phraseEN:"Slow down, time obeys me!", phrasePT:"Diminua, o tempo me obedece!"},
-    {key:"Cael", display:"Cael — The Defier", type:"Sobrevivente", rarity:"lendario", oldPrice:2200, price:2200, ability:"Ao ser alvo: assassino NÃO PODE ATACAR por 2s e NÃO PODE CORRER por 8s (1x).", phraseEN:"Your turn to run.", phrasePT:"Agora é você quem corre."},
+  {key:"Umbra", display:"Umbra — The Shadow", type:"Assassino", rarity:"comum", price:0, ability:"Habilidade ativa somente se tentar pegar e falhar (1x).", phraseEN:"Shadow strike!", phrasePT:"Golpe das sombras!"},
+  {key:"Darius", display:"Darius — The Hunter", type:"Assassino", rarity:"raro", price:800, ability:"Marked: bloqueia habilidades do alvo por 15s (1x).", phraseEN:"Marked!", phrasePT:"Marcado!"},
+  {key:"Echo", display:"Echo — The Returned", type:"Assassino", rarity:"epico", price:1800, ability:"Anula 1 poder usado contra ele (1x).", phraseEN:"Echo!", phrasePT:"Eco!"},
+  {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", price:3000, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."},
 
-    // assassinos existentes
-    {key:"Umbra", display:"Umbra — The Shadow", type:"Assassino", rarity:"comum", oldPrice:0, price:0, ability:"Habilidade ativa somente se tentar pegar e falhar (1x).", phraseEN:"Shadow strike!", phrasePT:"Golpe das sombras!"},
-    {key:"Darius", display:"Darius — The Hunter", type:"Assassino", rarity:"raro", oldPrice:800, price:800, ability:"Marked: bloqueia habilidades do alvo por 15s (1x).", phraseEN:"Marked!", phrasePT:"Marcado!"},
-    {key:"Echo", display:"Echo — The Returned", type:"Assassino", rarity:"epico", oldPrice:1800, price:1800, ability:"Anula 1 poder usado contra ele (1x).", phraseEN:"Echo!", phrasePT:"Eco!"},
-    {key:"Requiem", display:"Requiem — The Reaper", type:"Assassino", rarity:"lendario", oldPrice:3000, price:3000, ability:"Local da morte se torna letal por 15s (1x).", phraseEN:"Death remains...", phrasePT:"A morte permanece..."},
+  {key:"Noctis", display:"Noctis — King of Shadows", type:"Assassino", rarity:"mitico", price:5000, ability:"Sombra Absoluta — elimina 1 alvo à distância; uso único por partida.", phraseEN:"Night swallows all.", phrasePT:"A noite devora tudo."},
+  {key:"Lysander", display:"Lysander — The Sentinel", type:"Sobrevivente", rarity:"mitico", price:5000, ability:"Passos da Retirada — força inimigos a recuarem 3 passos; paralisia 2s (1x).", phraseEN:"One step back, now stand still.", phrasePT:"Um passo para trás, agora fique parado."}
+];
 
-    // **NOVIDADES MITICO** (adicionado)
-    {key:"Noctis", display:"Noctis — Mestre do Umbra", type:"Assassino", rarity:"mitico", oldPrice:5000, price:5000,
-      ability:"Sombra Absoluta — pode eliminar um alvo (1x) à distância sem precisar se aproximar; jogadores próximos ao alvo (1 passo) também são afetados. Uso único por partida (alto custo).",
-      phraseEN:"Night swallows all.", phrasePT:"A noite devora tudo."},
+/* Money / economy (visual) */
+const moneyTable = [
+  {action:"Sobrevive até o fim", value:"+50 Essence"},
+  {action:"Revive alguém", value:"+25 Essence"},
+  {action:"Usa habilidade com sucesso", value:"+20 Essence"},
+  {action:"Morre antes de 2min", value:"+10 Essence"},
+  {action:"Morre depois de 2min", value:"+30 Essence"},
+  {action:"Assassino elimina alguém", value:"+20 Essence"},
+  {action:"Assassino vence partida", value:"+100 Essence"},
+  {action:"Respeita as regras", value:"+5 Essence"},
+  {action:"Melhor da rodada", value:"+25 Essence"}
+];
 
-    {key:"Lysander", display:"Lysander — The Sentinel", type:"Sobrevivente", rarity:"mitico", oldPrice:5000, price:5000,
-      ability:"Passos da Retirada — ao ativar, força inimigos alvo(s) a recuarem 3 passos e ficam paralisados por 2s (1x). Projetado para ser caro e com impacto forte.",
-      phraseEN:"One step back, now stand still.", phrasePT:"Um passo para trás, agora fique parado."}
-  ];
+/* Trios (mantidos) */
+const trios = [
+  {title:"Tríade da Vida", desc:"Cura, proteção e resiliência", members:["Seraphina","Gideon","Requiem"]},
+  {title:"Tríade da Mente", desc:"Observação, estratégia e previsão", members:["Aether","Elara","Orion"]},
+  {title:"Tríade da Velocidade", desc:"Movimento, reflexo e precisão", members:["Nyra","Echo","Darius"]},
+  {title:"Tríade das Sombras", desc:"Engano e perseguição", members:["Umbra","Liora","Noctis"]},
+  {title:"Tríade do Tempo", desc:"Controle temporal", members:["Marin","Cael","Orion"]}
+];
 
-  const moneyTable = [
-    {action:"Sobrevive até o fim", value:"+50E"},
-    {action:"Revive alguém", value:"+25E"},
-    {action:"Usa habilidade com sucesso", value:"+20E"},
-    {action:"Morre antes de 2min", value:"+10E"},
-    {action:"Morre depois de 2min", value:"+30E"},
-    {action:"Assassino elimina alguém", value:"+20E"},
-    {action:"Assassino vence partida", value:"+100E"},
-    {action:"Respeita as regras", value:"+5E"},
-    {action:"Melhor da rodada", value:"+25E"}
-  ];
+/* Shop Natal (catalogue) */
+const shopItemsNatal = [
+  {id:"title", name:"Título Especial (Frostborn)", price:100, desc:"Muda falas para tema do evento (único).", category:"Cosmético"},
+  {id:"card", name:"Cartão Colecionável", price:50, desc:"Arte exclusiva do evento.", category:"Colecionável"},
+  {id:"emote1", name:"Emote I (Sino Gelado)", price:45, desc:"Sinaliza com um sininho.", category:"Emote"},
+  {id:"emote2", name:"Emote II (Pose Aurora)", price:45, desc:"Pose estilizada.", category:"Emote"},
+  {id:"emote3", name:"Emote III (Dança de Neve)", price:45, desc:"Dança festiva.", category:"Emote"},
+  {id:"coupon", name:"Cupom 20%", price:150, desc:"Desconto 20% para 1 personagem (limite 1).", category:"Funcional"},
+  {id:"daygold", name:"Dia de Ouro (+20%)", price:140, desc:"+20% ganhos por 24h (limite 1).", category:"Funcional"},
+  {id:"banner", name:"Banner / Wallpaper Premium", price:73, desc:"Imagem de perfil / papel de parede.", category:"Cosmético"},
+  {id:"esspack", name:"Pacote Essence (info)", price:0, desc:"Informação de pacotes (compra externa).", category:"Funcional"}
+];
 
-  const trios = [
-    {title:"Tríade da Vida", desc:"Cura, proteção e resiliência", members:["Seraphina","Gideon","Requiem"]},
-    {title:"Tríade da Mente", desc:"Observação, estratégia e previsão", members:["Aether","Elara","Orion"]},
-    {title:"Tríade da Velocidade", desc:"Movimento, reflexo e precisão", members:["Nyra","Echo","Darius"]},
-    {title:"Tríade das Sombras", desc:"Engano, resistência e retribuição (Mestre do Umbra chegando)", members:["Umbra","Liora","Noctis"]},
-    {title:"Tríade do Tempo", desc:"Controle temporal e manipulação", members:["Marin","Cael","Orion"]}
-  ];
+/* =========================================================
+   >>> ÁREA DOS PRESENTES DIÁRIOS — IMPORTANTE <<<
+   Para revelar um presente manualmente:
+   - Encontre o dia desejado no array "dailyGifts" abaixo
+   - Mude:  reveal:false
+     para: reveal:true
+   Exemplo:
+   { day:5, type:"coins", amount:5, reveal:true }
+   DICA: Use Ctrl+F e pesquise por "dailyGifts" para chegar aqui imediatamente.
+   ========================================================= */
 
-  /* HELPERS */
-  function $(sel){return document.querySelector(sel)}
-  function $all(sel){return Array.from(document.querySelectorAll(sel))}
+/* Daily gifts — reveal:false por padrão. editar aqui para liberar manualmente */
+const dailyGifts = [
+  {day:1,type:"coins",amount:3,reveal:false},
+  {day:2,type:"coins",amount:3,reveal:false},
+  {day:3,type:"coins",amount:3,reveal:false},
+  {day:4,type:"coins",amount:5,reveal:false},
+  {day:5,type:"coins",amount:5,reveal:false},
+  {day:6,type:"coins",amount:3,reveal:false},
+  {day:7,type:"coins",amount:3,reveal:false},
+  {day:8,type:"coins",amount:3,reveal:false},
+  {day:9,type:"coins",amount:5,reveal:false},
+  {day:10,type:"coins",amount:10,reveal:false},
+  {day:11,type:"coins",amount:3,reveal:false},
+  {day:12,type:"coins",amount:3,reveal:false},
+  {day:13,type:"coins",amount:3,reveal:false},
+  {day:14,type:"coins",amount:5,reveal:false},
+  {day:15,type:"coins",amount:5,reveal:false},
+  {day:16,type:"coins",amount:3,reveal:false},
+  {day:17,type:"mode",mode:"Campo Congelado",desc:"Modo especial 17–19 (velocidade reduzida).",reveal:false},
+  {day:18,type:"coins",amount:3,reveal:false},
+  {day:19,type:"coins",amount:5,reveal:false},
+  {day:20,type:"coins",amount:10,reveal:false},
+  {day:21,type:"coins",amount:3,reveal:false},
+  {day:22,type:"coins",amount:3,reveal:false},
+  {day:23,type:"coins",amount:3,reveal:false},
+  {day:24,type:"coins",amount:5,reveal:false},
+  {day:25,type:"character",character:"Aurora (Grátis)",rarity:"raro",reveal:false}
+];
 
-  /* NAV wiring */
-  $all('.navbtn').forEach(btn=>{
-    btn.addEventListener('click', ()=> {
-      $all('.navbtn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      const sec = btn.getAttribute('data-section');
-      showSection(sec);
+/* Tracker password (local) */
+const TRACKER_PASSWORD = "BATATA";
+
+/* -------------------------
+   RENDER / UI
+   ------------------------- */
+
+function createCharCard(ch){
+  const card = document.createElement('div'); card.className = 'char-card';
+  const nameBtn = document.createElement('button'); nameBtn.className = 'navbtn'; nameBtn.style.padding='8px 10px'; nameBtn.textContent = ch.display;
+  nameBtn.addEventListener('click', ()=> openCharModal(ch));
+  const right = document.createElement('div'); right.className='small'; right.innerHTML = `<span class="tag ${ch.rarity === 'mitico' ? 'mitico' : ch.rarity}">${ch.rarity.toUpperCase()}</span> • ${ch.type}`;
+  const header = document.createElement('div'); header.className='char-title'; header.appendChild(nameBtn); header.appendChild(right);
+  card.appendChild(header);
+  return card;
+}
+
+function renderCharacters(){
+  const container = $('#charactersGrid'); container.innerHTML = '';
+  const survivors = characters.filter(c=>c.type==='Sobrevivente');
+  if(survivors.length){
+    const head = document.createElement('div'); head.className='char-card'; head.style.gridColumn='1 / -1'; head.innerHTML=`<div style="font-weight:900">Sobreviventes</div><div class="small" style="margin-top:6px">Personagens que defendem e ajudam.</div>`;
+    container.appendChild(head);
+    survivors.forEach(s=> container.appendChild(createCharCard(s)));
+  }
+  const killers = characters.filter(c=>c.type==='Assassino');
+  if(killers.length){
+    const head = document.createElement('div'); head.className='char-card'; head.style.gridColumn='1 / -1'; head.innerHTML=`<div style="font-weight:900">Assassinos</div><div class="small" style="margin-top:6px">Personagens que caçam.</div>`;
+    container.appendChild(head);
+    killers.forEach(k=> container.appendChild(createCharCard(k)));
+  }
+}
+
+/* Modal char */
+const charModal = $('#charModal'); const charModalOverlay = $('#modalOverlay'); const charModalClose = $('#modalClose'); const modalTitle = $('#modalTitle'); const modalBody = $('#modalBody');
+function openCharModal(ch){
+  modalTitle.textContent = ch.display;
+  modalBody.innerHTML = `<div class="line"><strong>Raridade:</strong> ${ch.rarity.toUpperCase()} • <strong>Tipo:</strong> ${ch.type}</div>
+    <div class="line" style="margin-top:8px"><strong>Habilidade:</strong> ${ch.ability}</div>
+    <div class="line" style="margin-top:8px"><strong>EN:</strong> ${ch.phraseEN}</div>
+    <div class="line" style="margin-top:8px"><strong>PT:</strong> ${ch.phrasePT}</div>`;
+  charModal.style.display = 'flex';
+}
+function closeCharModal(){ charModal.style.display = 'none' }
+charModalOverlay.addEventListener('click', closeCharModal); charModalClose.addEventListener('click', closeCharModal);
+document.addEventListener('keydown', e=>{ if(e.key === 'Escape'){ closeCharModal(); closeRevealModal(); } });
+
+/* Shop render (characters) */
+function renderShop(){
+  const area = $('#shopArea'); area.innerHTML = '';
+  ['Sobrevivente','Assassino'].forEach(type=>{
+    const block = document.createElement('div'); block.className='panel'; block.style.marginBottom='12px'; block.innerHTML = `<div style="font-weight:900">${type}</div>`;
+    ['comum','raro','epico','lendario','mitico'].forEach(r=>{
+      const list = characters.filter(c=>c.type===type && c.rarity===r);
+      if(!list.length) return;
+      const sub = document.createElement('div'); sub.style.marginTop='8px'; sub.innerHTML = `<div class="small" style="font-weight:800;margin-bottom:6px">${r.toUpperCase()}</div>`;
+      list.forEach(ch=>{
+        const priceText = ch.price === 0 ? '<strong>GRÁTIS</strong>' : `${ch.price} E`;
+        const row = document.createElement('div'); row.className='char-card'; row.style.display='flex'; row.style.justifyContent='space-between'; row.style.alignItems='center'; row.style.padding='10px';
+        row.innerHTML = `<div><div style="font-weight:900">${ch.display}</div><div class="small">${ch.ability}</div></div><div class="small">${priceText}</div>`;
+        sub.appendChild(row);
+      });
+      block.appendChild(sub);
     });
+    area.appendChild(block);
   });
-  function showSection(id){
-    ['characters','shop','money','tracker','trios','updates'].forEach(s=>{
-      const el = document.getElementById(s);
-      if(!el) return;
-      el.classList.toggle('hidden', s !== id);
+}
+
+/* Economy */
+function renderEconomy(){
+  const area = $('#economyArea'); area.innerHTML = '';
+  const tbl = document.createElement('table'); tbl.style.width='100%';
+  tbl.innerHTML = `<thead><tr><th>Ação</th><th>Essence</th></tr></thead><tbody>${moneyTable.map(r=>`<tr><td>${r.action}</td><td>${r.value}</td></tr>`).join('')}</tbody>`;
+  area.appendChild(tbl);
+  const note = document.createElement('div'); note.className='panel'; note.style.marginTop='12px';
+  note.innerHTML = `<div style="font-weight:900">Notas</div><div class="small" style="margin-top:6px">Vitória do assassino: +5 MN • Vitória do sobrevivente: +2 MN (exemplo). Sistema real de moedas fica separado.</div>`;
+  area.appendChild(note);
+}
+
+/* Trios */
+function renderTrios(){
+  const grid = $('#triosGrid'); grid.innerHTML = '';
+  trios.forEach(t=>{
+    const c = document.createElement('div'); c.className='char-card';
+    const members = t.members.map(m=>{
+      const found = characters.find(ch=>ch.key===m);
+      return found ? `${found.display}` : `${m} (???)`;
+    }).join(' • ');
+    c.innerHTML = `<div style="font-weight:900">${t.title}</div><div class="small" style="margin-top:6px">${t.desc}</div><div style="margin-top:8px">${members}</div>`;
+    grid.appendChild(c);
+  });
+}
+
+/* Tracker (localStorage) */
+let players = JSON.parse(localStorage.getItem('recall_players') || '[]');
+function renderTracker(){
+  const area = $('#trackerArea'); area.innerHTML = '';
+  const login = document.createElement('div'); login.innerHTML = `
+    <div class="small">Protegido localmente. Digite a senha para editar (somente você).</div>
+    <div style="margin-top:8px"><input id="trackerPass" type="password" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)"><button id="trackerEnter" class="btn" style="margin-left:8px">Entrar</button></div>
+    <div id="trackerContent" class="hidden" style="margin-top:12px"></div>`;
+  area.appendChild(login);
+  $('#trackerEnter').addEventListener('click', ()=>{
+    const v = $('#trackerPass').value;
+    if(v === TRACKER_PASSWORD){
+      $('#trackerPass').value = '';
+      $('#trackerContent').classList.remove('hidden');
+      buildTrackerTable();
+    } else alert('Senha incorreta!');
+  });
+}
+function buildTrackerTable(){
+  const cont = $('#trackerContent'); cont.innerHTML = '';
+  const table = document.createElement('table'); table.style.width='100%';
+  const cols = ['Jogador', ...characters.map(c=>c.key)];
+  table.innerHTML = `<thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody id="ptbody"></tbody>`;
+  cont.appendChild(table);
+  const controls = document.createElement('div'); controls.style.marginTop='10px';
+  controls.innerHTML = `<button id="addP" class="btn">Adicionar Jogador</button> <button id="clearP" class="btn secondary">Limpar</button> <button id="exportP" class="btn secondary">Exportar</button>`;
+  cont.appendChild(controls);
+
+  document.getElementById('addP').addEventListener('click', ()=>{
+    const name = prompt('Nome do jogador:'); if(!name) return;
+    players.push({name, characters:{}}); localStorage.setItem('recall_players', JSON.stringify(players)); buildTrackerTable();
+  });
+  document.getElementById('clearP').addEventListener('click', ()=> {
+    if(confirm('Limpar lista?')){ players=[]; localStorage.setItem('recall_players', JSON.stringify(players)); buildTrackerTable(); }
+  });
+  document.getElementById('exportP').addEventListener('click', ()=>{
+    const data = JSON.stringify(players, null, 2); const blob = new Blob([data], {type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='recall_players.json'; a.click(); URL.revokeObjectURL(url);
+  });
+
+  const tbody = $('#ptbody'); tbody.innerHTML = '';
+  players.forEach((p, idx)=>{
+    const tr = document.createElement('tr');
+    const tdName = document.createElement('td'); tdName.textContent = p.name; tr.appendChild(tdName);
+    characters.forEach(ch=>{
+      const td = document.createElement('td'); const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = !!p.characters?.[ch.key];
+      cb.addEventListener('change', ()=>{ players[idx].characters[ch.key] = cb.checked; localStorage.setItem('recall_players', JSON.stringify(players)); });
+      td.appendChild(cb); tr.appendChild(td);
     });
-    if(id === 'characters') renderCharacters();
-    if(id === 'shop') renderShop();
-    if(id === 'money') renderMoney();
-    if(id === 'tracker') renderTracker();
-    if(id === 'trios') renderTrios();
-    if(id === 'updates') renderUpdates();
-  }
+    tbody.appendChild(tr);
+  });
+}
 
-  /* MODAL logic (central) */
-  const modalRoot = $('#charModal');
-  const modalOverlay = $('#modalOverlay');
-  const modalClose = $('#modalClose');
-  const modalTitle = $('#modalTitle');
-  const modalBody = $('#modalBody');
-
-  function openCharModal(ch){
-    modalTitle.textContent = ch.display;
-    // build body content
-    modalBody.innerHTML = `
-      <div class="line"><strong>Raridade:</strong> ${ch.rarity.toUpperCase()} • <strong>Tipo:</strong> ${ch.type}</div>
-      <div class="line"><strong>Habilidade:</strong> ${ch.ability}</div>
-      <div class="line"><strong>EN:</strong> ${ch.phraseEN}</div>
-      <div class="line"><strong>PT:</strong> ${ch.phrasePT}</div>
-      <div class="line small" style="margin-top:10px;color:var(--muted)">Fechar: Esc / clicar fora / botão Fechar.</div>
-    `;
-    modalRoot.style.display = 'flex';
-    modalRoot.setAttribute('aria-hidden','false');
-    document.addEventListener('keydown', escHandler);
-  }
-  function closeCharModal(){
-    modalRoot.style.display = 'none';
-    modalRoot.setAttribute('aria-hidden','true');
-    document.removeEventListener('keydown', escHandler);
-  }
-  function escHandler(e){
-    if(e.key === 'Escape') closeCharModal();
-  }
-  modalOverlay.addEventListener('click', closeCharModal);
-  modalClose.addEventListener('click', closeCharModal);
-
-  /* RENDER CHARACTERS (cards) */
-  function renderCharacters(){
-    const container = $('#characters');
-    container.innerHTML = '<div class="group-title">Personagens</div><div class="small">Clique no NOME para ver habilidade e falas (EN / PT).</div><div class="grid" id="charactersGrid" style="margin-top:12px"></div>';
-    const grid = $('#charactersGrid');
-    grid.innerHTML = '';
-
-    // Survivors block
-    const survivors = characters.filter(c=>c.type === "Sobrevivente");
-    if(survivors.length){
-      const block = document.createElement('div'); block.className='card'; block.style.gridColumn = '1 / -1';
-      block.innerHTML = `<div style="font-weight:900">Sobreviventes</div><div class="small" style="margin-top:6px">Personagens que defendem e ajudam.</div>`;
-      grid.appendChild(block);
-      survivors.forEach(ch=> grid.appendChild(createCharCard(ch)));
-    }
-
-    // Killers block
-    const killers = characters.filter(c=>c.type === "Assassino");
-    if(killers.length){
-      const block = document.createElement('div'); block.className='card'; block.style.gridColumn = '1 / -1';
-      block.innerHTML = `<div style="font-weight:900">Assassinos</div><div class="small" style="margin-top:6px">Personagens cujo objetivo é caçar.</div>`;
-      grid.appendChild(block);
-      killers.forEach(ch=> grid.appendChild(createCharCard(ch)));
-    }
-  }
-
-  function createCharCard(ch){
-    const card = document.createElement('div'); card.className = 'card';
-    const header = document.createElement('div'); header.className = 'char-name';
-
-    // left clickable name button
-    const left = document.createElement('div');
-    left.innerHTML = `<button class="navbtn" style="padding:6px 10px;border-radius:8px;font-weight:800;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text);cursor:pointer">${ch.display}</button>`;
-
-    // right: rarity tag + type
-    const right = document.createElement('div'); right.className = 'small';
-    right.innerHTML = `<span class="tag ${ch.rarity === 'mitico' ? 'mitico' : ch.rarity}">${ch.rarity.toUpperCase()}</span> • ${ch.type}`;
-
-    header.appendChild(left); header.appendChild(right);
-
-    left.querySelector('button').addEventListener('click', ()=> openCharModal(ch));
-    left.querySelector('button').addEventListener('keydown', (e)=> { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCharModal(ch); } });
-
-    card.appendChild(header);
-    return card;
-  }
-
-  /* RENDER SHOP: apenas nome, raridade e preço; separado por tipo */
-  function renderShop(){
-    const area = $('#shop'); area.innerHTML = '<div class="group-title">Loja</div><div class="small">Preços base (sem promoções). Umbra, Nyra e Seraphina são sempre GRÁTIS.</div>';
-    const wrapper = document.createElement('div');
-
-    // Helper to create blocks by type
-    function createTypeBlock(type){
-      const block = document.createElement('div'); block.className = 'rarity-block';
-      block.innerHTML = `<div class="rarity-title">${type}</div>`;
-      // group by rarity order: comum, raro, epico, lendario, mitico
-      const rarities = ['comum','raro','epico','lendario','mitico'];
-      rarities.forEach(r => {
-        const list = characters.filter(c => c.type === type && c.rarity === r);
-        if(!list.length) return;
-        const sub = document.createElement('div');
-        sub.innerHTML = `<div class="subtype-title">${r.toUpperCase()}</div>`;
-        list.forEach(ch => {
-          const priceText = (ch.price === 0) ? '<strong>GRÁTIS</strong>' : (ch.rarity === 'mitico' ? `<span class="new-price">${ch.price}E</span>` : `${ch.price}E`);
-          const row = document.createElement('div'); row.className = 'shop-line';
-          row.innerHTML = `<div style="font-weight:800">${ch.display}</div><div class="small">${priceText}</div>`;
-          sub.appendChild(row);
-        });
-        block.appendChild(sub);
-      });
-      return block;
-    }
-
-    wrapper.appendChild(createTypeBlock('Sobrevivente'));
-    wrapper.appendChild(createTypeBlock('Assassino'));
-    area.appendChild(wrapper);
-  }
-
-  /* MONEY */
-  function renderMoney(){
-    const tbody = $('#moneyTableBody'); tbody.innerHTML = '';
-    moneyTable.forEach(row=>{
-      const tr = document.createElement('tr'); tr.innerHTML = `<td>${row.action}</td><td>${row.value}</td>`;
-      tbody.appendChild(tr);
-    });
-  }
-
-  /* TRACKER (protected com senha) */
-  let players = JSON.parse(localStorage.getItem('recall_players') || '[]');
-  function renderTracker(){
-    const area = $('#tracker');
-    area.innerHTML = '<div class="group-title">Lista secreta — Controle de Personagens</div><div class="small">Protegido localmente por senha.</div><div id="trackerArea" style="margin-top:12px"><div id="loginDiv"><p class="small">Digite a senha:</p><input id="trackerPass" type="password" placeholder="Senha" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"><button id="trackerLogin" class="btn" style="margin-left:8px">Entrar</button></div><div id="trackerContent" class="hidden" style="margin-top:12px"><div style="overflow:auto"><table id="playerTable"><thead><tr id="playerHeader"><th>Jogador</th></tr></thead><tbody id="playerBody"></tbody></table></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button id="addPlayer" class="btn alt">Adicionar Jogador</button><button id="clearPlayers" class="btn danger">Limpar lista</button><button id="exportPlayers" class="btn danger">Exportar (JSON)</button></div></div></div>';
-    buildPlayerHeader();
-
-    document.getElementById('trackerLogin').addEventListener('click', ()=> {
-      const v = document.getElementById('trackerPass').value;
-      if(v === TRACKER_PASSWORD){
-        document.getElementById('trackerPass').value = '';
-        document.getElementById('loginDiv').style.display = 'none';
-        document.getElementById('trackerContent').classList.remove('hidden');
-        renderTable();
-      } else {
-        alert('Senha incorreta!');
-      }
-    });
-
-    document.getElementById('addPlayer').addEventListener('click', ()=> {
-      const name = prompt('Nome do jogador:'); if(!name) return;
-      players.push({name, characters:{}}); localStorage.setItem('recall_players', JSON.stringify(players)); renderTable();
-    });
-    document.getElementById('clearPlayers').addEventListener('click', ()=> {
-      if(confirm('Limpar toda a lista local?')){ players=[]; localStorage.setItem('recall_players', JSON.stringify(players)); renderTable(); }
-    });
-    document.querySelectorAll('.btn.danger').forEach(btn=>{
-      btn.addEventListener('click', ()=> {
-        const data = JSON.stringify(players,null,2); const blob = new Blob([data],{type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'recall_players.json'; a.click(); URL.revokeObjectURL(url);
-      });
-    });
-  }
-  function buildPlayerHeader(){
-    const header = document.getElementById('playerHeader'); header.innerHTML = '<th>Jogador</th>';
-    characters.forEach(c=> { const th = document.createElement('th'); th.textContent = c.key; header.appendChild(th); });
-  }
-  function renderTable(){
-    const tbody = document.getElementById('playerBody'); tbody.innerHTML = '';
-    players.forEach((p, idx)=>{
-      const tr = document.createElement('tr');
-      const tdName = document.createElement('td'); tdName.textContent = p.name; tr.appendChild(tdName);
-      characters.forEach(ch=>{
-        const td = document.createElement('td'); const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = !!p.characters[ch.key];
-        cb.addEventListener('change', ()=> { players[idx].characters[ch.key] = cb.checked; localStorage.setItem('recall_players', JSON.stringify(players));});
-        td.appendChild(cb); tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
-    });
-  }
-
-  /* TRIOS */
-  function renderTrios(){
-    const grid = $('#trioGrid'); grid.innerHTML = '';
-    trios.forEach(t=>{
-      const card = document.createElement('div'); card.className = 'card';
-      const list = t.members.map(m=> `<li>${m}</li>`).join('');
-      card.innerHTML = `<div style="font-weight:900">${t.title}</div><div class="small">${t.desc}</div><div style="margin-top:8px"><ul class="trio-list">${list}</ul></div>`;
+/* Natal shop render */
+function renderNatalShop(){
+  const area = $('#natalShopArea'); area.innerHTML = '';
+  const cats = {};
+  shopItemsNatal.forEach(it=> { if(!cats[it.category]) cats[it.category]=[]; cats[it.category].push(it); });
+  Object.keys(cats).forEach(cat=>{
+    const block = document.createElement('div'); block.className='panel'; block.style.marginBottom='12px';
+    block.innerHTML = `<div style="font-weight:900">${cat}</div><div class="small" style="margin-top:6px">Itens desta categoria.</div>`;
+    const grid = document.createElement('div'); grid.className='shop-grid'; grid.style.marginTop='10px';
+    cats[cat].forEach(it=>{
+      const card = document.createElement('div'); card.className='shop-card';
+      card.innerHTML = `<div style="font-weight:900">${it.name}</div><div class="small" style="margin-top:6px">${it.desc}</div><div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center"><div class="price">${it.price} MN</div><div class="small">Categoria: ${it.category}</div></div>`;
       grid.appendChild(card);
     });
-  }
-
-  /* UPDATES */
-  function renderUpdates(){
-    const area = $('#updates'); area.innerHTML = '<div class="group-title">Atualizações</div>';
-    const list = [
-      {title:"V1.6 — Salya update", desc:"Adicionada Salya — A Calmaria (raro). Ajustes de balanceamento e correção de preços."},
-      {title:"V1.5 — Halloween e Cael", desc:"Tema Cael refinado; suporte visual de Halloween ajustado."},
-      {title:"V1.4 — Requiem", desc:"Adicionado Requiem; mecânicas de zona letal ajustadas."},
-      {title:"V1.3 — Marin", desc:"Adicionado Marin — Timebinder; ajustes no tracker."},
-      {title:"V1.2 — Liora", desc:"Adicionado Liora — The Veiled; melhorias nas descrições."},
-      {title:"V1.1 — Orion", desc:"Adicionado Orion — The Illusionist."},
-      {title:"V1.0 — LANÇAMENTO", desc:"Versão inicial do Recall WI."}
-    ];
-    list.forEach(u=>{ const block = document.createElement('div'); block.className='card'; block.innerHTML = `<div style="font-weight:900">${u.title}</div><div class="small" style="margin-top:8px">${u.desc}</div>`; area.appendChild(block); });
-  }
-
-  /* Theme toggle */
-  $('#themeBtn').addEventListener('click', ()=>{
-    const cur = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    document.body.setAttribute('data-theme', cur);
-    if(cur === 'light'){
-      // versão clara (inverte)
-      document.body.style.background = 'linear-gradient(180deg,#fff5f5,#ffecec)';
-      $('#logoBox').style.background = 'linear-gradient(135deg,#b10000,#ff7b7b)';
-      document.querySelectorAll('.card').forEach(c=> c.style.background = '#ffffff');
-      document.querySelectorAll('.navbtn').forEach(b=> b.style.color = '#111');
-    } else {
-      document.body.style.background = 'linear-gradient(180deg,var(--cael-bg-start),var(--cael-bg-end))';
-      $('#logoBox').style.background = 'linear-gradient(135deg,#2b0000,var(--mitico-red))';
-      document.querySelectorAll('.card').forEach(c=> c.style.background = 'var(--card)');
-      document.querySelectorAll('.navbtn').forEach(b=> b.style.color = 'var(--text)');
-    }
+    block.appendChild(grid); area.appendChild(block);
   });
+}
 
-  /* INIT */
-  function init(){
-    renderCharacters(); renderShop(); renderMoney(); renderTrios(); renderUpdates();
-    // money table
-    const tbody = document.getElementById('moneyTableBody'); tbody.innerHTML='';
-    moneyTable.forEach(r=>{ const tr = document.createElement('tr'); tr.innerHTML = `<td>${r.action}</td><td>${r.value}</td>`; tbody.appendChild(tr); });
-    // header badge
-    document.getElementById('activeEventLabel').textContent = 'Cael Theme (Red)';
-    document.getElementById('activeEventInfo').textContent = 'Visuais aplicados: logo vermelha, fundo escuro.';
-    // nav default
-    showSection('characters');
-  }
-  init();
+/* Presents render (uses dailyGifts array) */
+function renderPresents(){
+  const grid = $('#presentsGrid'); grid.innerHTML = '';
+  dailyGifts.forEach(g=>{
+    const card = document.createElement('div'); card.className='present-card';
+    const locked = !g.reveal;
+    if(locked) card.classList.add('present-locked');
+    let inner = `<div style="font-weight:900">Dia ${g.day}</div>`;
+    if(!g.reveal) inner += `<div class="small" style="margin-top:8px">Trancado — editar dailyGifts para revelar.</div>`;
+    else {
+      if(g.type === 'coins') inner += `<div style="margin-top:8px">🎁 ${g.amount} Christmas Coins</div>`;
+      else if(g.type === 'mode') inner += `<div style="margin-top:8px">🔹 Modo: ${g.mode} — ${g.desc}</div>`;
+      else if(g.type === 'character') inner += `<div style="margin-top:8px">🎉 ${g.character} — ${g.rarity}</div>`;
+    }
+    card.innerHTML = inner;
+    grid.appendChild(card);
+    if(!locked) card.classList.add('present-reveal');
+  });
+}
 
+/* Updates render */
+function renderUpdates(){
+  const area = $('#updatesArea'); area.innerHTML = '';
+  const list = [
+    {v:"V1.7 — Evento de Natal", desc:"Loja de Natal (catálogo), Presentes Diários e melhorias."},
+    {v:"V1.6 — Salya", desc:"Adicionada Salya — A Calmaria (raro)."},
+    {v:"V1.5 — Visuais", desc:"Aprimoramentos visuais."},
+    {v:"V1.4 — Míticos", desc:"Noctis e Lysander adicionados."},
+    {v:"V1.3 — Requiem", desc:"Adicionado Requiem e correções."},
+    {v:"V1.2 — Personagens", desc:"Personagens básicos adicionados."},
+    {v:"V1.1 — Habilidades", desc:"Sistema de habilidades implementado."},
+    {v:"V1.0 — Lançamento", desc:"Versão inicial do Recall WI."}
+  ];
+  list.forEach(u=>{ const b = document.createElement('div'); b.className='char-card'; b.style.marginBottom='8px'; b.innerHTML = `<div style="font-weight:900">${u.v}</div><div class="small" style="margin-top:6px">${u.desc}</div>`; area.appendChild(b); });
+}
+
+/* Snow animation (lightweight) */
+function startSnow(){
+  const canvas = document.getElementById('snow-canvas'); if(!canvas) return;
+  const ctx = canvas.getContext('2d'); let w = canvas.width = window.innerWidth; let h = canvas.height = window.innerHeight;
+  const flakes = []; for(let i=0;i<100;i++) flakes.push({x:Math.random()*w, y:Math.random()*h, r:Math.random()*2+0.8, d:Math.random()*1});
+  function resize(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize);
+  function draw(){ ctx.clearRect(0,0,w,h); ctx.fillStyle='rgba(255,255,255,0.9)'; flakes.forEach(f=>{ ctx.beginPath(); ctx.arc(f.x,f.y,f.r,0,Math.PI*2); ctx.fill(); f.y += Math.cos(f.d)+0.5+f.r/2; f.x += Math.sin(f.d)*0.6; if(f.y>h){ f.y=-10; f.x=Math.random()*w; } }); requestAnimationFrame(draw); }
+  draw();
+}
+
+/* -------------------------
+   NAV & INIT
+   ------------------------- */
+$$('.navbtn').forEach(btn=> btn.addEventListener('click', ()=> {
+  $$('.navbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  showSection(btn.dataset.section);
+}));
+
+function showSection(id){
+  ['characters','shop','economy','trios','tracker','shop-natal','presents','updates'].forEach(s=>{
+    const el = document.getElementById(s); if(!el) return; el.classList.toggle('hidden', s !== id);
+  });
+  if(id === 'characters') renderCharacters();
+  if(id === 'shop') renderShop();
+  if(id === 'economy') renderEconomy();
+  if(id === 'trios') renderTrios();
+  if(id === 'tracker') renderTracker();
+  if(id === 'shop-natal') renderNatalShop();
+  if(id === 'presents') renderPresents();
+  if(id === 'updates') renderUpdates();
+}
+
+/* Theme toggle */
+$('#themeBtn').addEventListener('click', ()=> {
+  const cur = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  document.body.setAttribute('data-theme', cur);
+  if(cur === 'light') { document.body.style.background = 'linear-gradient(180deg,var(--bg-1),var(--bg-2))'; $('#logoBox').style.background = 'linear-gradient(135deg,var(--christmas-red),#ff8475)'; }
+  else { document.body.style.background = 'linear-gradient(180deg,#07111a,#061420)'; $('#logoBox').style.background = 'linear-gradient(135deg,var(--christmas-red),#ff7b7b)'; }
 });
+
+/* -------------------------
+   Secret Reveal Modal (Ctrl+R)
+   ------------------------- */
+const revealModal = $('#revealModal'); const revealOverlay = $('#revealOverlay'); const revealClose = $('#revealClose'); const revealAuthBtn = $('#revealAuthBtn'); const revealPass = $('#revealPass'); const revealControls = $('#revealControls');
+
+function openRevealModal(){ revealModal.classList.remove('hidden'); revealModal.style.display = 'flex'; $('#revealPass').value=''; $('#revealControls').style.display='none'; }
+function closeRevealModal(){ revealModal.classList.add('hidden'); revealModal.style.display = 'none'; }
+
+document.addEventListener('keydown', e=> {
+  if(e.ctrlKey && (e.key === 'r' || e.key === 'R')){ e.preventDefault(); openRevealModal(); }
+});
+
+$('#revealOverlay').addEventListener('click', closeRevealModal);
+$('#revealClose').addEventListener('click', closeRevealModal);
+
+$('#revealAuthBtn').addEventListener('click', ()=> {
+  if($('#revealPass').value === TRACKER_PASSWORD){
+    // show controls
+    const container = $('#revealControls'); container.style.display = 'block'; container.innerHTML = '';
+    dailyGifts.forEach((g, idx)=>{
+      const row = document.createElement('div'); row.style.display='flex'; row.style.alignItems='center'; row.style.justifyContent='space-between'; row.style.marginBottom='8px';
+      row.innerHTML = `<div><strong>Dia ${g.day}</strong> — ${g.type === 'coins' ? g.amount+' coins' : g.type === 'mode' ? g.mode : g.character}</div>
+        <div><label style="margin-right:8px"><input type="checkbox" ${g.reveal ? 'checked' : ''} data-idx="${idx}" class="revealChk"> Revelar</label><button class="btn revealAllBtn" data-idx="${idx}">Revelar e fechar</button></div>`;
+      container.appendChild(row);
+    });
+    // wire checkboxes and buttons
+    container.querySelectorAll('.revealChk').forEach(ch=>{
+      ch.addEventListener('change', (ev)=>{
+        const i = Number(ev.target.dataset.idx);
+        dailyGifts[i].reveal = !!ev.target.checked;
+        renderPresents();
+      });
+    });
+    container.querySelectorAll('.revealAllBtn').forEach(b=>{
+      b.addEventListener('click', (ev)=>{
+        const i = Number(ev.dataset.idx);
+        dailyGifts[i].reveal = true;
+        renderPresents();
+        closeRevealModal();
+      });
+    });
+  } else alert('Senha incorreta!');
+});
+
+/* -------------------------
+   INIT
+   ------------------------- */
+function init(){
+  renderCharacters(); renderShop(); renderEconomy(); renderTrios(); renderNatalShop(); renderPresents(); renderUpdates();
+  startSnow();
+  showSection('characters');
+}
+init();
+
+/* Save players on unload */
+window.addEventListener('beforeunload', ()=> localStorage.setItem('recall_players', JSON.stringify(players)));
+
 </script>
 </body>
 </html>
-
